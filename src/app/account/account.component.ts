@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { DragulaService } from 'ng2-dragula/ng2-dragula';
+
 import { AccountService } from './account.service';
 import { AccountCalculatorService } from './calculator/account-calculator.service';
 import { Account } from './account';
@@ -8,14 +10,14 @@ import { AccountOperation } from './operation/account-operation';
 @Component({
   selector: 'account',
   template: `
-      <div *ngIf="account" class="account-component">
+      <div *ngIf="account" class="account-component" [dragula]="'account-bag'" [dragulaModel]='account.operations'>
         <account-operation
           *ngFor="let operation of account.operations; let i = index;"
           [accountOperation]="operation"
           [index]="i"
           (valueChanged)="onValueChanged(account.operation, i)">
         </account-operation>
-      </div>()
+      </div>
     `
 })
 export class AccountComponent implements OnInit {
@@ -27,7 +29,13 @@ export class AccountComponent implements OnInit {
   /* debouncer used to reduce the number of request to the AccountCalculatorService */
   debouncer = new Subject();
 
-  constructor(private accountService: AccountService, private accountCalculator: AccountCalculatorService) { }
+  constructor(private accountService: AccountService, private accountCalculator: AccountCalculatorService, private dragulaService: DragulaService) {
+    dragulaService.setOptions('account-bag', {
+      moves: function (el, container, handle) {
+        return handle.className.indexOf('handle') != -1;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.debouncer

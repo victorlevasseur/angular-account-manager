@@ -13,9 +13,9 @@ import { AccountOperationComponent} from './../account/operation/account-operati
  * Top Level Component
  */
 @Component({
-    // The selector is what angular internally uses
-    selector: 'account-manager-app', // <app></app>
+    selector: 'account-manager-app',
     styleUrls: ['../styles/app.style.scss'],
+    encapsulation: ViewEncapsulation.None,
     template: `
     <div>
       <main>

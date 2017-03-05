@@ -81,6 +81,11 @@ var config = {
                 exclude: [helpers.root('app/index.html')]
             },
 
+            {
+                test: /\.css$/,
+                loader: 'style!css'
+            },
+
             // support for fonts
             {
                 test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
@@ -138,7 +143,7 @@ var config = {
 					}
 				}
             }
-        }),     
+        }),
 
         new webpack.ProvidePlugin({
               $: "jquery",

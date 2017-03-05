@@ -13,6 +13,8 @@ import { HttpModule } from '@angular/http';
 import { Store, StoreModule } from '@ngrx/store';
 import { authStore, authInitialState } from './store/auth.store';
 
+import { DragulaModule } from 'ng2-dragula/ng2-dragula';
+
 import "materialize-css";
 import "angular2-materialize";
 import "rxjs/Rx";
@@ -31,7 +33,6 @@ import { routes } from './app.routes';
 
 import { AccountService } from './account/account.service';
 import { AccountCalculatorService } from './account/calculator/account-calculator.service';
-import { WebWorkerService } from 'angular2-web-worker/web-worker.service';
 
 import { AccountComponent } from './account/account.component';
 import { AccountOperationComponent } from './account/operation/account-operation.component';
@@ -49,6 +50,7 @@ import { BankOperationComponent} from './account/operation/bank-operation.compon
         MaterializeModule,
         RouterModule.forRoot(routes, { useHash: true }),
         StoreModule.provideStore({ authStore }, { authStore: authInitialState }),
+        DragulaModule
     ],
     providers: [AccountService, AccountCalculatorService],
     declarations: [AppComponent, AccountComponent, AccountOperationComponent, BankOperationComponent],
