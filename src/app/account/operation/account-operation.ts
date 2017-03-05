@@ -1,5 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
+// Include the type info for big.js
+import Big = require('big.js/big');
+
 @Component({
   template: `
     <strong> Unimplemented component! </strong>`
@@ -14,14 +17,20 @@ export class AccountOperationRenderer {
 
 export abstract class AccountOperation {
 
-  partialSum: number = 0;
+  partialSum: Big;
+  partialCollectedSum: Big;
 
   valueChanged = new EventEmitter<void>();
 
-  abstract getValue(): number;
+  constructor() {
+    this.partialSum = new Big(0);
+    this.partialCollectedSum = new Big(0);
+  }
 
-  getCollectedValue(): number {
-    return 0;
+  abstract getValue(): Big;
+
+  getCollectedValue(): Big {
+    return new Big(0);
   }
 
   abstract getComponentClass(): { new(...args: any[]): AccountOperationRenderer; };

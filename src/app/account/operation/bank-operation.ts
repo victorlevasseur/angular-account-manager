@@ -1,6 +1,8 @@
 import { AccountOperation, AccountOperationRenderer } from './account-operation';
 import { BankOperationComponent } from './bank-operation.component';
 
+import Big = require('big.js/big');
+
 export class BankOperation extends AccountOperation {
   get collected(): boolean {
     return this._collected;
@@ -11,34 +13,46 @@ export class BankOperation extends AccountOperation {
     this.setValueChanged();
   }
 
-  get credit(): number {
+  get credit(): Big {
     return this._credit;
   }
 
-  set credit(val: number) {
-    this._credit = val;
+  set credit(val: Big) {
+    if(typeof val == "number") {
+      this._credit = new Big(val);
+    }
+    else {
+      this._credit = val;
+    }
+
     this.setValueChanged();
   }
 
-  get debit(): number {
+  get debit(): Big {
     return this._debit;
   }
 
-  set debit(val: number) {
-    this._debit = val;
+  set debit(val: Big) {
+    if(typeof val == "number") {
+      this._debit = new Big(val);
+    }
+    else {
+      this._debit = val;
+    }
+
     this.setValueChanged();
   }
 
-  constructor(private _collected: boolean, private date: Date, private type: string, private description: string, private _credit: number, private _debit: number) {
+  constructor(private _collected: boolean, private date: Date, private type: string, private description: string, private _credit: Big, private _debit: Big) {
     super();
   }
 
-  getValue(): number {
-    return this.credit - this.debit;
+  getValue(): Big {
+    return this._credit.sub(this._debit);
   }
 
-  getCollectedValue(): number {
-    return this.collected ? this.getValue() : 0;
+  getCollectedValue(): Big {
+    return this.collected ? this.getValue() : new Big(0);
   }
 
   getComponentClass(): { new(...args: any[]): AccountOperationRenderer; } {

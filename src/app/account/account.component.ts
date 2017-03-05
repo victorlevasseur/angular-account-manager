@@ -51,10 +51,11 @@ export class AccountComponent implements OnInit {
 
   /* The debounced callback */
   getNewSumsForAccount() {
-    this.accountCalculator.calculateSums(this.account).subscribe((values) => {
-      for(var i = 0; i < values.length && i < this.account.operations.length; i++) {
-        this.account.operations[i].partialSum = values[i].value;
-      }
-    });
+    var results = this.accountCalculator.calculateSums(this.account);
+
+    for(var i = 0; i < results.length && i < this.account.operations.length; i++) {
+      this.account.operations[i].partialSum = results[i].value;
+      this.account.operations[i].partialCollectedSum = results[i].collectedValue;
+    }
   }
 };

@@ -11,8 +11,19 @@ import { AccountOperation, AccountOperationRenderer } from './account-operation'
             <div class="col l10">
               <div #operationRenderer></div>
             </div>
-            <div class="operation-value col l2">
-              <input class="currency" type="text" [value]="accountOperation.partialSum + '€ '" readonly/>
+            <div class="operation-value col l1">
+              <input
+                class="currency"
+                type="text"
+                [value]="accountOperation.partialSum + ' €'"
+                readonly/>
+            </div>
+            <div class="operation-collected-value col l1">
+              <input
+                class="currency"
+                type="text"
+                [value]="accountOperation.partialCollectedSum + ' €'"
+                readonly/>
             </div>
           </div>
         </div>
