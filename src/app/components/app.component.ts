@@ -10,6 +10,8 @@ import { AccountOperationComponent} from './../account/operation/account-operati
 import { Tab } from '../tabbedwindow/tab';
 import { AccountTab } from '../account/account-tab';
 
+const remote = require('electron').remote;
+
 /*
  * App Component
  * Top Level Component
@@ -23,11 +25,11 @@ import { AccountTab } from '../account/account-tab';
       <div class="navbar-fixed">
         <nav class="nav-extended">
           <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Angular Account Manager</a>
+            <a href="#" class="brand-logo"><i class="material-icons">euro_symbol</i>Angular Account Manager</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-              <li><a href="sass.html">Sass</a></li>
-              <li><a href="badges.html">Components</a></li>
-              <li><a href="collapsible.html">JavaScript</a></li>
+              <li (click)="minimizeClicked()"><a href="#"><i class="material-icons">vertical_align_bottom</i></a></li>
+              <li (click)="maximizeClicked()"><a href="#"><i class="material-icons">fullscreen</i></a></li>
+              <li (click)="closeClicked()"><a href="#"><i class="material-icons">close</i></a></li>
             </ul>
           </div>
           <div class="nav-content">
@@ -36,6 +38,9 @@ import { AccountTab } from '../account/account-tab';
                 <a [href]="'#tab-n' + i">{{tab.getTabTitle()}}</a>
               </li>
             </ul>
+            <!--<ul class="right">
+              <li (click)="closeClicked()"><a href="#"><i class="material-icons">close</i></a></li>
+            </ul>-->
           </div>
         </nav>
       </div>
@@ -68,5 +73,22 @@ export class AppComponent implements OnInit {
 
   tabClicked(id: number) {
     this.selectedTab = id;
+  }
+
+  minimizeClicked() {
+    remote.getCurrentWindow().minimize();
+  }
+
+  maximizeClicked() {
+    var window = remote.getCurrentWindow();
+    if (!window.isMaximized()) {
+      window.maximize();
+    } else {
+      window.unmaximize();
+    }
+  }
+
+  closeClicked() {
+    remote.getCurrentWindow().close();
   }
 }

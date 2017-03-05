@@ -7,3 +7,16 @@
 .navbar-fixed {
     height: 128px /* need to specify the height for the tabs */
 }
+
+/* Make the title bar draggable (to move the window) */
+.nav-wrapper {
+    -webkit-app-region: drag;
+}
+/* except all the items inside it */
+.nav-wrapper > * {
+    -webkit-app-region: no-drag;
+}
+
+.brand-logo {
+    padding-left: 16px !important;
+}

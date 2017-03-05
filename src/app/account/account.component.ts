@@ -6,6 +6,9 @@ import { AccountService } from './account.service';
 import { AccountCalculatorService } from './calculator/account-calculator.service';
 import { Account } from './account';
 import { AccountOperation } from './operation/account-operation';
+import { BankOperation } from './operation/bank-operation';
+
+import Big = require('big.js/big');
 
 @Component({
   selector: 'account',
@@ -17,6 +20,25 @@ import { AccountOperation } from './operation/account-operation';
           [index]="i"
           (valueChanged)="onValueChanged(account.operation, i)">
         </account-operation>
+      </div>
+      <!-- TODO: A séparer dans un autre composant -->
+      <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red">
+          <i class="large material-icons">mode_edit</i>
+        </a>
+        <ul>
+          <li><a class="btn-floating btn-large red waves-effect waves-light tooltipped" data-position="left" data-delay="50" data-tooltip="Supprimer la sélection"><i class="material-icons">delete</i></a></li>
+          <li>
+            <a
+              class="btn-floating btn-large green waves-effect waves-light tooltipped"
+              data-position="left"
+              data-delay="50"
+              data-tooltip="Ajouter une ligne"
+              (click)="addOperation()">
+              <i class="material-icons">add</i>
+            </a>
+          </li>
+        </ul>
       </div>
     `,
   providers: [DragulaService] // To provide a different dragula service for each account
@@ -58,5 +80,16 @@ export class AccountComponent implements OnInit {
       this.account.operations[i].partialSum = results[i].value;
       this.account.operations[i].partialCollectedSum = results[i].collectedValue;
     }
+  }
+
+  addOperation() {
+    this.account.operations.push(new BankOperation(
+      false,
+      new Date(),
+      "",
+      "",
+      new Big(0),
+      new Big(0)
+    ));
   }
 };
