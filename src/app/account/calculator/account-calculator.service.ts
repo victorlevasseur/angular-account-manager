@@ -18,18 +18,24 @@ export class AccountCalculatorService {
 
   }
 
-  calculateSums(account: Account): Observable<Array<number>> {
+  calculateSums(account: Account): Observable<Array<{value: number, collectedValue: number}>> {
     console.log("Start a new sums calculation...")
 
-    var values = new Array<number>(account.operations.length);
+    var values = new Array<{value: number, collectedValue: number}>(account.operations.length);
     for(var i: number = 0; i < account.operations.length; i++) {
-      values[i] = account.operations[i].getValue();
+      values[i] = {
+        value: account.operations[i].getValue(),
+        collectedValue: account.operations[i].getCollectedValue()
+      };
     }
 
     return Observable.fromPromise(this.webWorkerService.run(opValues => {
-      var sums = new Array<number>(opValues.length);
+      var sums = new Array<{value: number, collectedValue: number}>(opValues.length);
       for(var i: number = 0; i < opValues.length; i++) {
-        sums[i] = (i != 0 ? sums[i-1] : 0) + opValues[i];
+        sums[i] = {
+          value: (i != 0 ? sums[i-1].value : 0) + opValues[i].value,
+          collectedValue: (i != 0 ? sums[i-1].collectedValue : 0) + opValues[i].collectedValue
+        };
       }
       return sums;
     }, values));

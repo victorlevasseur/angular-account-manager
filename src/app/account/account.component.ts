@@ -53,7 +53,7 @@ export class AccountComponent implements OnInit {
   getNewSumsForAccount() {
     this.accountCalculator.calculateSums(this.account).subscribe((values) => {
       for(var i = 0; i < values.length && i < this.account.operations.length; i++) {
-        this.account.operations[i].partialSum = values[i];
+        this.account.operations[i].partialSum = values[i].value;
       }
     });
   }

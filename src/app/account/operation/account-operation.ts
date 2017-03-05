@@ -19,6 +19,11 @@ export abstract class AccountOperation {
   valueChanged = new EventEmitter<void>();
 
   abstract getValue(): number;
+
+  getCollectedValue(): number {
+    return 0;
+  }
+
   abstract getComponentClass(): { new(...args: any[]): AccountOperationRenderer; };
 
   protected setValueChanged(): void {
