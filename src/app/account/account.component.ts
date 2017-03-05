@@ -18,7 +18,8 @@ import { AccountOperation } from './operation/account-operation';
           (valueChanged)="onValueChanged(account.operation, i)">
         </account-operation>
       </div>
-    `
+    `,
+  providers: [DragulaService] // To provide a different dragula service for each account
 })
 export class AccountComponent implements OnInit {
   @Input()

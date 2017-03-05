@@ -34,9 +34,12 @@ import { routes } from './app.routes';
 import { AccountService } from './account/account.service';
 import { AccountCalculatorService } from './account/calculator/account-calculator.service';
 
+import { AccountTabComponent } from './account/account-tab.component';
 import { AccountComponent } from './account/account.component';
 import { AccountOperationComponent } from './account/operation/account-operation.component';
 import { BankOperationComponent} from './account/operation/bank-operation.component';
+
+import { TabComponent } from './tabbedwindow/tab.component';
 
 /*
  * provide('AppStore', { useValue: appStore }),
@@ -53,9 +56,9 @@ import { BankOperationComponent} from './account/operation/bank-operation.compon
         DragulaModule
     ],
     providers: [AccountService, AccountCalculatorService],
-    declarations: [AppComponent, AccountComponent, AccountOperationComponent, BankOperationComponent],
+    declarations: [AppComponent, AccountComponent, AccountOperationComponent, BankOperationComponent, TabComponent, AccountTabComponent],
     bootstrap: [AppComponent],
-    entryComponents: [BankOperationComponent]
+    entryComponents: [BankOperationComponent, AccountTabComponent]
 })
 export class AppModule { }
 platformBrowserDynamic().bootstrapModule(AppModule);

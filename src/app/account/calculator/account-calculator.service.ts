@@ -9,7 +9,6 @@ import Big = require('big.js/big');
 
 import { Account } from '../account';
 import { AccountOperation } from '../operation/account-operation';
-import { TransferableBig } from '../../tools/big-tools';
 
 @Injectable()
 export class AccountCalculatorService {

@@ -9,8 +9,12 @@ import { BankOperation } from './bank-operation';
   template: `
     <div class="" materialize>
       <div class="col l1">
-        <input type="checkbox" class="counted-checkbox filled-in" [id]="'counted_' + index" [checked]="op.collected" (change)="op.collected = $event.target.checked"/>
-        <label class="counted-checkbox-label" [for]="'counted_' + index"></label>
+        <div class="switch">
+          <label>
+            <input type="checkbox" [(ngModel)]="op.collected">
+            <span class="lever"></span>
+          </label>
+        </div>
       </div>
       <div class="col l2">
         <input type="text" placeholder="Date" [(ngModel)]="op.date"/>
