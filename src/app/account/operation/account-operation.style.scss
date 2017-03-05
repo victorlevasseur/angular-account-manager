@@ -1,0 +1,49 @@
+.row {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.card {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.handle {
+    width: 32px;
+    margin-top: 0;
+    margin-bottom: 0;
+    background-color: lightgrey;
+}
+
+.card-content {
+    margin-top: 2px;
+    padding: 0px;
+    margin-right: 0px;
+}
+
+.card-action {
+    padding: 0px;
+    margin-left: 0px;
+}
+
+/deep/ input[type="text"] {
+    border-bottom-color: transparent;
+    margin: 5px;
+    padding: 5px;
+    height: auto;
+}
+
+/deep/ input[type="text"].valid:not(:focus) {
+    border-bottom-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.delete-btn {
+    height: auto;
+    color: grey !important;
+    margin-right: 0px !important;
+}
+
+/deep/ input.currency {
+    text-align: center;
+}

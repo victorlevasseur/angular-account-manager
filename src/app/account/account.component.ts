@@ -1,0 +1,52 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
+import { AccountService } from './account.service';
+import { AccountCalculatorService } from './calculator/account-calculator.service';
+import { Account } from './account';
+import { AccountOperation } from './operation/account-operation';
+
+@Component({
+  selector: 'account',
+  template: `
+      <div *ngIf="account" class="account-component">
+        <account-operation
+          *ngFor="let operation of account.operations; let i = index;"
+          [accountOperation]="operation"
+          [index]="i"
+          (valueChanged)="onValueChanged(account.operation, i)">
+        </account-operation>
+      </div>()
+    `
+})
+export class AccountComponent implements OnInit {
+  @Input()
+  accountFilename: string;
+
+  account: Account;
+
+  /* debouncer used to reduce the number of request to the AccountCalculatorService */
+  debouncer = new Subject();
+
+  constructor(private accountService: AccountService, private accountCalculator: AccountCalculatorService) { }
+
+  ngOnInit(): void {
+    this.debouncer
+      .debounceTime(100)
+      .subscribe((data: {operation: AccountOperation, index: number}) => {this.getNewSumsForAccount();});
+    this.account = this.accountService.getAccount(this.accountFilename);
+  }
+
+  /* The callback called each time an operation's value has changed */
+  onValueChanged(operation: AccountOperation, index: number): void {
+    this.debouncer.next({operation, index});
+  }
+
+  /* The debounced callback */
+  getNewSumsForAccount() {
+    this.accountCalculator.calculateSums(this.account).subscribe((values) => {
+      for(var i = 0; i < values.length && i < this.account.operations.length; i++) {
+        this.account.operations[i].partialSum = values[i];
+      }
+    });
+  }
+};
