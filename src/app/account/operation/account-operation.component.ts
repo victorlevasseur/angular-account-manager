@@ -7,15 +7,17 @@ import Big = require('big.js/big');
   selector: 'account-operation',
   template: `
       <div class="row">
-        <div class="account-operation-card z-depth-1">
-          <div style="width: 32px;"></div>
-          <div style="width: calc(100% - 32px);">
-            <div class="col l10">
+        <div class="account-operation-card z-depth-1 flex-container">
+          <div class="flex-item fixed24 handle">&nbsp;</div>
+          <div class="flex-item unfixed24 flex-container">
+            <div class="flex-item perc18">
               <div #operationRenderer></div>
             </div>
-            <div class="col l2">
-              <div *ngIf="partialSum == undefined" class="col l12">
-                Calcul en cours...
+            <div class="flex-item perc6">
+              <div *ngIf="partialSum == undefined" class="col l12 valign-wrapper">
+                <div class="valign">
+                  Calcul en cours...
+                </div>
               </div>
               <div *ngIf="partialSum != undefined" class="operation-value col l6">
                 <input

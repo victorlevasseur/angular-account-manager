@@ -33,12 +33,19 @@
     flex-direction: column;
 }
 
-.flex-item {
-    display: block;
+/* Proportional flex items (from 0 to 24) */
+@for $i from 1 through 24 {
+    .flex-item.perc#{$i} {
+        width: (100%/24)*$i;
+    }
 }
 
-@for $i from 1 through 24 {
-    .flex-item.w#{$i} {
-        width: 100%/$i;
+@for $i from 1 through 100 {
+    .flex-item.fixed#{$i} {
+        width: #{$i}px;
+    }
+
+    .flex-item.unfixed#{$i} {
+        width: calc(100% - #{$i}px);
     }
 }
