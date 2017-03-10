@@ -17,6 +17,7 @@ import Big = require('big.js/big');
         <account-operation
           *ngFor="let operation of account.operations; let i = index;"
           [accountOperation]="operation"
+          [partialSum]="partialSums[i]"
           [index]="i"
           (valueChanged)="onValueChanged(account.operation, i)">
         </account-operation>
@@ -27,10 +28,18 @@ import Big = require('big.js/big');
           <i class="large material-icons">mode_edit</i>
         </a>
         <ul>
-          <li><a class="btn-floating btn-large red waves-effect waves-light tooltipped" data-position="left" data-delay="50" data-tooltip="Supprimer la sélection"><i class="material-icons">delete</i></a></li>
           <li>
             <a
-              class="btn-floating btn-large green waves-effect waves-light tooltipped"
+              class="btn-floating red waves-effect waves-light tooltipped"
+              data-position="left"
+              data-delay="50"
+              data-tooltip="Supprimer la sélection">
+              <i class="material-icons">delete</i>
+            </a>
+          </li>
+          <li>
+            <a
+              class="btn-floating green waves-effect waves-light tooltipped"
               data-position="left"
               data-delay="50"
               data-tooltip="Ajouter une ligne"
@@ -48,6 +57,8 @@ export class AccountComponent implements OnInit {
   accountFilename: string;
 
   account: Account;
+
+  partialSums = new Array<{value: Big, collectedValue: Big}>();
 
   /* debouncer used to reduce the number of request to the AccountCalculatorService */
   debouncer = new Subject();
@@ -74,12 +85,7 @@ export class AccountComponent implements OnInit {
 
   /* The debounced callback */
   getNewSumsForAccount() {
-    var results = this.accountCalculator.calculateSums(this.account);
-
-    for(var i = 0; i < results.length && i < this.account.operations.length; i++) {
-      this.account.operations[i].partialSum = results[i].value;
-      this.account.operations[i].partialCollectedSum = results[i].collectedValue;
-    }
+    this.partialSums = this.accountCalculator.calculateSums(this.account);
   }
 
   addOperation() {

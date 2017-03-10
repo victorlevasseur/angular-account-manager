@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-// Include the type info for big.js
 import Big = require('big.js/big');
 
 @Component({

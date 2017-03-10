@@ -20,3 +20,25 @@
 .brand-logo {
     padding-left: 16px !important;
 }
+
+.flex-container {
+    display: flex;
+}
+
+.flex-container.horizontal {
+    flex-direction: row;
+}
+
+.flex-container.vertical {
+    flex-direction: column;
+}
+
+.flex-item {
+    display: block;
+}
+
+@for $i from 1 through 24 {
+    .flex-item.w#{$i} {
+        width: 100%/$i;
+    }
+}

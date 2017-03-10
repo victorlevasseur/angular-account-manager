@@ -1,29 +1,36 @@
 import { Component, Input, Output, EventEmitter, ComponentFactoryResolver, ViewContainerRef, OnInit, ViewChild } from '@angular/core';
 import { AccountOperation, AccountOperationRenderer } from './account-operation';
 
+import Big = require('big.js/big');
+
 @Component({
   selector: 'account-operation',
   template: `
       <div class="row">
-        <div class="card horizontal">
-          <div class="card-image handle waves-effect waves-light"></div>
-          <div class="card-content">
+        <div class="account-operation-card z-depth-1">
+          <div style="width: 32px;"></div>
+          <div style="width: calc(100% - 32px);">
             <div class="col l10">
               <div #operationRenderer></div>
             </div>
-            <div class="operation-value col l1">
-              <input
-                class="currency"
-                type="text"
-                [value]="accountOperation.partialSum + ' €'"
-                readonly/>
-            </div>
-            <div class="operation-collected-value col l1">
-              <input
-                class="currency"
-                type="text"
-                [value]="accountOperation.partialCollectedSum + ' €'"
-                readonly/>
+            <div class="col l2">
+              <div *ngIf="partialSum == undefined" class="col l12">
+                Calcul en cours...
+              </div>
+              <div *ngIf="partialSum != undefined" class="operation-value col l6">
+                <input
+                  class="currency"
+                  type="text"
+                  [value]="partialSum.value + ' €'"
+                  readonly/>
+              </div>
+              <div *ngIf="partialSum != undefined" class="operation-collected-value col l6">
+                <input
+                  class="currency"
+                  type="text"
+                  [value]="partialSum.collectedValue + ' €'"
+                  readonly/>
+              </div>
             </div>
           </div>
         </div>
@@ -34,6 +41,9 @@ import { AccountOperation, AccountOperationRenderer } from './account-operation'
 export class AccountOperationComponent implements OnInit {
   @Input()
   accountOperation: AccountOperation;
+
+  @Input()
+  partialSum: {value: Big, collectedValue: Big};
 
   @Input()
   index: number;
