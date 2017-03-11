@@ -40,6 +40,8 @@ import { BankOperationComponent} from './account/operation/bank-operation.compon
 
 import { TabComponent } from './tabbedwindow/tab.component';
 
+import { CurrencyInputDirective } from './tools/currency-input.directive';
+
 /*
  * provide('AppStore', { useValue: appStore }),
  */
@@ -54,7 +56,15 @@ import { TabComponent } from './tabbedwindow/tab.component';
         DragulaModule
     ],
     providers: [AccountService, AccountCalculatorService],
-    declarations: [AppComponent, AccountComponent, AccountOperationComponent, BankOperationComponent, TabComponent, AccountTabComponent],
+    declarations: [
+      AppComponent,
+      AccountComponent,
+      AccountOperationComponent,
+      BankOperationComponent,
+      TabComponent,
+      AccountTabComponent,
+      CurrencyInputDirective
+    ],
     bootstrap: [AppComponent],
     entryComponents: [BankOperationComponent, AccountTabComponent]
 })

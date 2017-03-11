@@ -26,10 +26,10 @@ import { BankOperation } from './bank-operation';
         <input type="text" placeholder="Description" [(ngModel)]="op.description"/>
       </div>
       <div class="col l2">
-        <input class="currency validate" type="text" pattern="[0-9]*\.[0-9]{0,2}" placeholder="Crédit" [(ngModel)]="op.credit"/>
+        <input appCurrencyInput [(currencyValue)]="op.credit" type="text" placeholder="Crédit" />
       </div>
       <div class="col l2">
-        <input class="currency" type="text" placeholder="Débit" [(ngModel)]="op.debit"/>
+        <input appCurrencyInput [(currencyValue)]="op.debit" type="text" placeholder="Débit" />
       </div>
     </div>`,
   styleUrls: ['bank-operation.style.scss']
