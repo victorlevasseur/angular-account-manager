@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Account } from './account';
 import { BankOperation } from './operation/bank-operation';
 
+import * as moment from 'moment';
 import Big = require('big.js/big');
 
 @Injectable()
@@ -11,7 +12,7 @@ export class AccountService {
     account.operations = [
       new BankOperation(
         true,
-        new Date(),
+        moment.utc(),
         "Virement",
         "Salaire",
         new Big(1500),
@@ -19,7 +20,7 @@ export class AccountService {
       ),
       new BankOperation(
         false,
-        new Date(),
+        moment.utc(),
         "Chèque",
         "Noël des enfants",
         new Big(0),
@@ -27,7 +28,7 @@ export class AccountService {
       ),
       new BankOperation(
         true,
-        new Date(),
+        moment.utc(),
         "Virement",
         "Salaire 2",
         new Big(1200.45),
@@ -35,7 +36,7 @@ export class AccountService {
       ),
       new BankOperation(
         true,
-        new Date(),
+        moment.utc(),
         "Virement",
         "Loyer",
         new Big(0),
@@ -43,7 +44,7 @@ export class AccountService {
       ),
       new BankOperation(
         false,
-        new Date(),
+        moment.utc(),
         "Chèque #1",
         "E.Leclerc",
         new Big(0),
@@ -54,7 +55,7 @@ export class AccountService {
     for(var i = 0; i < 2000; i++) {
       account.operations.push(new BankOperation(
         true,
-        new Date(),
+        moment.utc(),
         "Chèque #1",
         "E.Leclerc",
         new Big(0),

@@ -41,6 +41,7 @@ import { BankOperationComponent} from './account/operation/bank-operation.compon
 import { TabComponent } from './tabbedwindow/tab.component';
 
 import { CurrencyInputDirective } from './tools/currency-input.directive';
+import { DateInputDirective } from './tools/date-input.directive';
 
 /*
  * provide('AppStore', { useValue: appStore }),
@@ -63,7 +64,8 @@ import { CurrencyInputDirective } from './tools/currency-input.directive';
       BankOperationComponent,
       TabComponent,
       AccountTabComponent,
-      CurrencyInputDirective
+      CurrencyInputDirective,
+      DateInputDirective
     ],
     bootstrap: [AppComponent],
     entryComponents: [BankOperationComponent, AccountTabComponent]

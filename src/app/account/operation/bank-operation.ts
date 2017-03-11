@@ -1,6 +1,7 @@
 import { AccountOperation, AccountOperationRenderer } from './account-operation';
 import { BankOperationComponent } from './bank-operation.component';
 
+import * as moment from 'moment';
 import Big = require('big.js/big');
 
 export class BankOperation extends AccountOperation {
@@ -43,7 +44,7 @@ export class BankOperation extends AccountOperation {
     this.setValueChanged();
   }
 
-  constructor(private _collected: boolean, private date: Date, private type: string, private description: string, private _credit: Big, private _debit: Big) {
+  constructor(private _collected: boolean, private date: moment.Moment, private type: string, private description: string, private _credit: Big, private _debit: Big) {
     super();
   }
 

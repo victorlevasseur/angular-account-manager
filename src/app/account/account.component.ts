@@ -8,6 +8,7 @@ import { Account } from './account';
 import { AccountOperation } from './operation/account-operation';
 import { BankOperation } from './operation/bank-operation';
 
+import * as moment from 'moment';
 import Big = require('big.js/big');
 
 @Component({
@@ -92,7 +93,7 @@ export class AccountComponent implements OnInit {
   addOperation() {
     this.account.operations.push(new BankOperation(
       false,
-      new Date(),
+      moment.utc(),
       "",
       "",
       new Big(0),

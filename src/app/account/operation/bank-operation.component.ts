@@ -17,7 +17,7 @@ import { BankOperation } from './bank-operation';
         </div>
       </div>
       <div class="col l2">
-        <input type="text" placeholder="Date" [(ngModel)]="op.date"/>
+        <input appDateInput [(dateValue)]="op.date" type="text" placeholder="Date"/>
       </div>
       <div class="col l2">
         <input type="text" placeholder="Type" [(ngModel)]="op.type"/>
