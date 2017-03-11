@@ -16,21 +16,15 @@ export class AccountOperationRenderer {
 
 export abstract class AccountOperation {
 
-  partialSum: Big;
-  partialCollectedSum: Big;
-
   valueChanged = new EventEmitter<void>();
 
   constructor() {
-    this.partialSum = new Big(0);
-    this.partialCollectedSum = new Big(0);
+
   }
 
   abstract getValue(): Big;
 
-  getCollectedValue(): Big {
-    return new Big(0);
-  }
+  abstract getCollectedValue(): Big;
 
   abstract getComponentClass(): { new(...args: any[]): AccountOperationRenderer; };
 

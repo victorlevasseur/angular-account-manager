@@ -11,7 +11,6 @@ import { HttpModule } from '@angular/http';
 
 // Setup redux with ngrx
 import { Store, StoreModule } from '@ngrx/store';
-import { authStore, authInitialState } from './store/auth.store';
 
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 
@@ -52,7 +51,6 @@ import { TabComponent } from './tabbedwindow/tab.component';
         HttpModule,
         MaterializeModule,
         RouterModule.forRoot(routes, { useHash: true }),
-        StoreModule.provideStore({ authStore }, { authStore: authInitialState }),
         DragulaModule
     ],
     providers: [AccountService, AccountCalculatorService],

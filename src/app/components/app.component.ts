@@ -1,4 +1,3 @@
-import { AppState } from './../store/appState.store';
 /**
  * Import decorators and services from angular
  */

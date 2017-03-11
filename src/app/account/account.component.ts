@@ -74,13 +74,14 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {
     this.debouncer
       .debounceTime(100)
-      .subscribe((data: {operation: AccountOperation, index: number}) => {this.getNewSumsForAccount();});
+      .subscribe(() => {this.getNewSumsForAccount();});
     this.account = this.accountService.getAccount(this.accountFilename);
   }
 
   /* The callback called each time an operation's value has changed */
   onValueChanged(operation: AccountOperation, index: number): void {
-    this.debouncer.next({operation, index});
+    this.partialSums.length = 0;
+    this.debouncer.next();
   }
 
   /* The debounced callback */
