@@ -27,6 +27,7 @@
 }
 
 /deep/ input[type="text"] {
+    box-sizing: border-box;
     border-bottom-color: transparent;
     margin: 5px;
     padding: 5px;

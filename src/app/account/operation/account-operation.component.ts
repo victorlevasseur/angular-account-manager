@@ -7,7 +7,7 @@ import Big = require('big.js/big');
   selector: 'account-operation',
   template: `
       <div class="row">
-        <div class="account-operation-card z-depth-1 flex-container">
+        <div class="account-operation-card z-depth-1 flex-container horizontal">
           <div class="flex-item fixed24 handle">&nbsp;</div>
           <div class="flex-item unfixed24 flex-container">
             <div class="flex-item perc18">

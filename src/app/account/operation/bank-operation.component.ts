@@ -7,8 +7,8 @@ import { BankOperation } from './bank-operation';
 @Component({
   selector: 'bank-operation',
   template: `
-    <div class="" materialize>
-      <div class="col l1">
+    <div class="flex-container horizontal" materialize>
+      <div class="flex-item perc2">
         <div class="switch">
           <label>
             <input type="checkbox" [(ngModel)]="op.collected">
@@ -16,19 +16,19 @@ import { BankOperation } from './bank-operation';
           </label>
         </div>
       </div>
-      <div class="col l2">
+      <div class="flex-item perc4">
         <input appDateInput [(dateValue)]="op.date" type="text" placeholder="Date"/>
       </div>
-      <div class="col l2">
+      <div class="flex-item perc4">
         <input type="text" placeholder="Type" [(ngModel)]="op.type"/>
       </div>
-      <div class="col l3">
+      <div class="flex-item perc6">
         <input type="text" placeholder="Description" [(ngModel)]="op.description"/>
       </div>
-      <div class="col l2">
+      <div class="flex-item perc4">
         <input appCurrencyInput [(currencyValue)]="op.credit" type="text" placeholder="Crédit" />
       </div>
-      <div class="col l2">
+      <div class="flex-item perc4">
         <input appCurrencyInput [(currencyValue)]="op.debit" type="text" placeholder="Débit" />
       </div>
     </div>`,
