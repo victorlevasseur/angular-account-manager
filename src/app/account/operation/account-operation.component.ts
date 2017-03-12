@@ -21,16 +21,14 @@ import Big = require('big.js/big');
               </div>
               <div *ngIf="partialSum != undefined" class="operation-value col l6">
                 <input
-                  class="currency"
+                  appCurrencyInput [(currencyValue)]="partialSum.value"
                   type="text"
-                  [value]="partialSum.value + ' €'"
                   readonly/>
               </div>
               <div *ngIf="partialSum != undefined" class="operation-collected-value col l6">
                 <input
-                  class="currency"
+                  appCurrencyInput [(currencyValue)]="partialSum.collectedValue"
                   type="text"
-                  [value]="partialSum.collectedValue + ' €'"
                   readonly/>
               </div>
             </div>
