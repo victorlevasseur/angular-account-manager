@@ -13,19 +13,14 @@ import Big = require('big.js/big');
             <div class="flex-item perc18">
               <div #operationRenderer></div>
             </div>
-            <div class="flex-item perc6">
-              <div *ngIf="partialSum == undefined" class="col l12 valign-wrapper">
-                <div class="valign">
-                  Calcul en cours...
-                </div>
-              </div>
-              <div *ngIf="partialSum != undefined" class="operation-value col l6">
+            <div class="flex-item perc6 flex-container horizontal">
+              <div *ngIf="partialSum != undefined" class="operation-value flex-item perc12">
                 <input
                   appCurrencyInput [(currencyValue)]="partialSum.value"
                   type="text"
                   readonly/>
               </div>
-              <div *ngIf="partialSum != undefined" class="operation-collected-value col l6">
+              <div *ngIf="partialSum != undefined" class="operation-collected-value flex-item perc12">
                 <input
                   appCurrencyInput [(currencyValue)]="partialSum.collectedValue"
                   type="text"
