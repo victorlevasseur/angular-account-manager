@@ -8,8 +8,8 @@ import { BankOperation } from './bank-operation';
   selector: 'bank-operation',
   template: `
     <div class="flex-container horizontal" materialize>
-      <div class="flex-item perc2">
-        <div class="switch">
+      <div class="flex-item perc2 valign-wrapper">
+        <div class="switch valign">
           <label>
             <input type="checkbox" [(ngModel)]="op.collected">
             <span class="lever"></span>
