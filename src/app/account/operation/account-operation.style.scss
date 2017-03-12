@@ -1,3 +1,6 @@
+@import "~materialize-css/sass/components/mixins";
+@import "~materialize-css/sass/components/color";
+
 .row {
     margin-top: 4px;
     margin-bottom: 4px;
@@ -7,12 +10,20 @@
     margin-top: 2px;
     margin-bottom: 2px;
     background-color: white;
+
+    .handle {
+        margin-top: 0;
+        margin-bottom: 0;
+        background-color: lightgrey;
+    }
 }
 
-.handle {
-    margin-top: 0;
-    margin-bottom: 0;
-    background-color: lightgrey;
+.account-operation-card.selected {
+    @extend .blue, .lighten-4;
+
+    .handle {
+        @extend .blue, .lighten-2;
+    }
 }
 
 .card-content {
