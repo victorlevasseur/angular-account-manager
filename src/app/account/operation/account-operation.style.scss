@@ -62,3 +62,7 @@
     font-family: 'Consolas', 'Courier', monospace;
     font-size: 14px;
 }
+
+/deep/ .account-operation-card:not(:hover) .show-if-operation-hovered {
+    display: none;
+}

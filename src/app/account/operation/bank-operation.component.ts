@@ -20,7 +20,7 @@ import { BankOperation } from './bank-operation';
         <input appDateInput [(dateValue)]="op.date" type="text" placeholder="Date"/>
       </div>
       <div class="flex-item perc4">
-        <input type="text" placeholder="Type" [(ngModel)]="op.type"/>
+        <app-combobox cbButtonClass="show-if-operation-hovered" [(cbValue)]="op.type"></app-combobox>
       </div>
       <div class="flex-item perc9">
         <input type="text" placeholder="Description" [(ngModel)]="op.description"/>
