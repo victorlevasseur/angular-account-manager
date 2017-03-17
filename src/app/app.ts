@@ -40,6 +40,7 @@ import { BankOperationComponent} from './account/operation/bank-operation.compon
 
 import { TabComponent } from './tabbedwindow/tab.component';
 
+import { CheckboxComponent } from './tools/checkbox.component';
 import { ComboboxComponent } from './tools/combobox.component';
 import { CurrencyInputDirective } from './tools/currency-input.directive';
 import { DateInputDirective } from './tools/date-input.directive';
@@ -66,6 +67,7 @@ import { UniqueNumberService } from './tools/unique-number.service';
       BankOperationComponent,
       TabComponent,
       AccountTabComponent,
+      CheckboxComponent,
       ComboboxComponent,
       CurrencyInputDirective,
       DateInputDirective

@@ -1,3 +1,8 @@
 .counted-checkbox-label {
     margin-top: 8px;
 }
+
+app-checkbox /deep/ input[type='checkbox']+label {
+    margin-left: 15px;
+    height: 18px;
+}

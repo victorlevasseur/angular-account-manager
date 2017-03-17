@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 
 import { AccountOperationRenderer } from './account-operation';
@@ -9,12 +9,7 @@ import { BankOperation } from './bank-operation';
   template: `
     <div class="flex-container horizontal" materialize>
       <div class="flex-item perc2 valign-wrapper">
-        <div class="switch valign">
-          <label>
-            <input type="checkbox" [(ngModel)]="op.collected">
-            <span class="lever"></span>
-          </label>
-        </div>
+        <app-checkbox label="" [(checked)]='op.collected'></app-checkbox>
       </div>
       <div class="flex-item perc3">
         <input appDateInput [(dateValue)]="op.date" type="text" placeholder="Date"/>
