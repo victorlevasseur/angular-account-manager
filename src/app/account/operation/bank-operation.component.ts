@@ -20,7 +20,11 @@ import { BankOperation } from './bank-operation';
         <input appDateInput [(dateValue)]="op.date" type="text" placeholder="Date"/>
       </div>
       <div class="flex-item perc4">
-        <app-combobox cbButtonClass="show-if-operation-hovered" [(cbValue)]="op.type"></app-combobox>
+        <app-combobox
+          cbButtonClass="show-if-operation-hovered"
+          [(cbValue)]="op.type"
+          [cbDropdownItems]="[{displayString: 'Chèque'}, {displayString: 'Virement'}, {displayString: 'Prélèvement'}, {displayString: 'Chèque n°'}, {displayString: 'Carte bleue'}]">
+        </app-combobox>
       </div>
       <div class="flex-item perc9">
         <input type="text" placeholder="Description" [(ngModel)]="op.description"/>

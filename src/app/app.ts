@@ -43,6 +43,7 @@ import { TabComponent } from './tabbedwindow/tab.component';
 import { ComboboxComponent } from './tools/combobox.component';
 import { CurrencyInputDirective } from './tools/currency-input.directive';
 import { DateInputDirective } from './tools/date-input.directive';
+import { UniqueNumberService } from './tools/unique-number.service';
 
 /*
  * provide('AppStore', { useValue: appStore }),
@@ -57,7 +58,7 @@ import { DateInputDirective } from './tools/date-input.directive';
         RouterModule.forRoot(routes, { useHash: true }),
         DragulaModule
     ],
-    providers: [AccountService, AccountCalculatorService],
+    providers: [AccountService, AccountCalculatorService, UniqueNumberService],
     declarations: [
       AppComponent,
       AccountComponent,
