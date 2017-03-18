@@ -38,9 +38,7 @@ const remote = require('electron').remote;
         </nav>
       </div>
       <main>
-        <div *ngFor="let tab of tabsList.tabs; let i = index;" [hidden]="tabsList.selected != tab">
-          <tab  [tab]="tab" [tabId]="'tab-n' + i"></tab>
-        </div>
+        <app-tabs-container [tabsList]="tabsList"></app-tabs-container>
         <router-outlet></router-outlet>
       </main>
     </div>

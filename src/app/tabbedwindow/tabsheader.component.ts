@@ -7,7 +7,7 @@ import { TabsList } from './tabslist';
     selector: 'app-tabs-header',
     template: `
       <ul class="tabs tabs-transparent">
-        <li *ngFor="let tab of tabsList.tabs; let i = index;" class="tab" (click)="tabHeaderClicked(tab)">
+        <li *ngFor="let tab of tabsList.tabs;" class="tab" (click)="tabHeaderClicked(tab)">
           <ul><a class="left">{{tab.getTabTitle()}}</a></ul>
         </li>
       </ul>
