@@ -39,6 +39,7 @@ import { AccountOperationComponent } from './account/operation/account-operation
 import { BankOperationComponent} from './account/operation/bank-operation.component';
 
 import { TabComponent } from './tabbedwindow/tab.component';
+import { TabsHeaderComponent } from './tabbedwindow/tabsheader.component';
 
 import { CheckboxComponent } from './tools/checkbox.component';
 import { ComboboxComponent } from './tools/combobox.component';
@@ -66,6 +67,7 @@ import { UniqueNumberService } from './tools/unique-number.service';
       AccountOperationComponent,
       BankOperationComponent,
       TabComponent,
+      TabsHeaderComponent,
       AccountTabComponent,
       CheckboxComponent,
       ComboboxComponent,

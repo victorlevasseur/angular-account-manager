@@ -7,6 +7,7 @@ import { AccountOperation } from './../account/operation/account-operation';
 import { BankOperation } from './../account/operation/bank-operation';
 import { AccountOperationComponent} from './../account/operation/account-operation.component';
 import { Tab } from '../tabbedwindow/tab';
+import { TabsList } from '../tabbedwindow/tabslist';
 import { AccountTab } from '../account/account-tab';
 
 const remote = require('electron').remote;
@@ -32,19 +33,12 @@ const remote = require('electron').remote;
             </ul>
           </div>
           <div class="nav-content">
-            <ul class="tabs tabs-transparent">
-              <li *ngFor="let tab of tabs; let i = index;" class="tab" (click)="tabClicked(i)">
-                <a [href]="'#tab-n' + i">{{tab.getTabTitle()}}</a>
-              </li>
-            </ul>
-            <!--<ul class="right">
-              <li (click)="closeClicked()"><a href="#"><i class="material-icons">close</i></a></li>
-            </ul>-->
+            <app-tabs-header [tabsList]="tabsList"></app-tabs-header>
           </div>
         </nav>
       </div>
       <main>
-        <div *ngFor="let tab of tabs; let i = index;" [hidden]="selectedTab != i">
+        <div *ngFor="let tab of tabsList.tabs; let i = index;" [hidden]="tabsList.selected != tab">
           <tab  [tab]="tab" [tabId]="'tab-n' + i"></tab>
         </div>
         <router-outlet></router-outlet>
@@ -54,24 +48,20 @@ const remote = require('electron').remote;
 })
 export class AppComponent implements OnInit {
 
-  tabs: Tab[] = [
-    new AccountTab("compte courant.cpt"),
-    new AccountTab("pel.cpt"),
-    new AccountTab("remboursements.cpt")
-  ];
-
-  selectedTab: number = 0;
+  tabsList: TabsList;
 
   constructor() {
+    var tabs: Tab[] = [
+      new AccountTab("compte courant.cpt"),
+      new AccountTab("pel.cpt"),
+      new AccountTab("remboursements.cpt")
+    ];
 
+    this.tabsList = new TabsList(tabs);
   }
 
   ngOnInit() {
     //check authentication
-  }
-
-  tabClicked(id: number) {
-    this.selectedTab = id;
   }
 
   minimizeClicked() {
