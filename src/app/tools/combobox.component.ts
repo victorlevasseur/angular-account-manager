@@ -9,36 +9,25 @@ import { ComboboxItem } from './comboboxitem';
     <div materialize class="flex-container horizontal">
       <input [class]="'flex-item unfixed32 ' + inputClass" type="text" [value]="value" (input)="valueChange.emit($event.target.value)"/>
       <div class="flex-item fixed32">
-        <a materialize='dropdown' [materializeParams]="[{hover: false, alignment: 'right', constrainWidth: false}]"
-          [class]="'btn-flat dropdown-button ' + buttonClass"
-          [attr.data-activates]="'dropdown-' + id">
-          <i class="material-icons">arrow_drop_down</i>
-        </a>
+        <div class="dropdown">
+          <button [class]="'btn btn-flat dropdown-bt ' + buttonClass" (click)="onDropdownButtonClicked()"><!--<i class="material-icons">arrow_drop_down</i>-->V</button>
+          <ul [class]="'dropdown-menu ' + dropdownClass" [class.show]="open">
+            <li
+              [class.selected]="item.value ? (item.value === value) : (item.displayString === value)"
+              *ngFor="let item of dropdownItems;"
+              (click)="onItemClicked(item);">
+              {{item.displayString}}
+            </li>
+          </ul>
+        </div>
       </div>
-      <ul [id]="'dropdown-' + id" class='dropdown-content'>
-        <li
-          [class.selected]="item.value ? (item.value === value) : (item.displayString === value)"
-          *ngFor="let item of dropdownItems;">
-          <a (click)="onItemClicked(item);">
-            {{item.displayString}}
-          </a>
-        </li>
-      </ul>
     </div>
   `,
-  styles: [`
-    .btn-flat {
-      padding-left: 5px;
-      padding-right: 5px;
-      box-sizing: border-box;
-    }
-
-    .dropdown-content li.selected {
-      background-color: $primary-color-light;
-    }
-  `]
+  styleUrls: ['./combobox.style.scss']
 })
 export class ComboboxComponent implements OnInit {
+  open = false
+
   @Input('cbValue')
   value: string;
 
@@ -76,7 +65,12 @@ export class ComboboxComponent implements OnInit {
     }
   }
 
+  onDropdownButtonClicked() {
+    this.open = !this.open;
+  }
+
   onItemClicked(item: ComboboxItem) {
+    this.open = false;
     this.dropdownItemSelected.emit(item);
   }
 }

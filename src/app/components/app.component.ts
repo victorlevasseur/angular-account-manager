@@ -21,24 +21,18 @@ const remote = require('electron').remote;
     styleUrls: ['../styles/app.style.scss'],
     encapsulation: ViewEncapsulation.None,
     template: `
-    <div>
-      <div class="navbar-fixed">
-        <nav class="nav-extended">
-          <div class="nav-wrapper">
-            <a href="#" class="brand-logo"><i class="material-icons">euro_symbol</i>Angular Account Manager</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-              <li (click)="minimizeClicked()"><a href="#"><i class="material-icons">vertical_align_bottom</i></a></li>
-              <li (click)="maximizeClicked()"><a href="#"><i class="material-icons">fullscreen</i></a></li>
-              <li (click)="closeClicked()"><a href="#"><i class="material-icons">close</i></a></li>
-            </ul>
+    <div class="aam-main-container">
+      <div class="aam-main-tab-header">
+          <div class="flex-container">
+            <div class="flex-item perc24">
+              <app-tabs-header [tabsList]="tabsList"></app-tabs-header>
+            </div>
           </div>
-          <div class="nav-content">
-            <app-tabs-header [tabsList]="tabsList"></app-tabs-header>
-          </div>
-        </nav>
       </div>
-      <main>
-        <app-tabs-container [tabsList]="tabsList"></app-tabs-container>
+      <main class="aam-main-tab-container">
+        <div class="aam-vscrollable">
+          <app-tabs-container [tabsList]="tabsList"></app-tabs-container>
+        </div>
         <router-outlet></router-outlet>
       </main>
     </div>

@@ -1,21 +1,46 @@
 @import '~dragula/dist/dragula';
 @import './custom-materialize.style';
+@import './colors';
 
 .account-operations {
     margin: 8px;
 }
 
-.navbar-fixed {
-    height: 128px /* need to specify the height for the tabs */
+.aam-main-container {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background-color: $panel_bg_color;
 }
 
-/* Make the title bar draggable (to move the window) */
-.nav-wrapper {
-    -webkit-app-region: drag;
+.aam-main-tab-header {
+    width: 100%;
+
+    background-color: $window_bg_color;
+    color: white;
 }
-/* except all the items inside it */
-.nav-wrapper > * {
-    -webkit-app-region: no-drag;
+
+.aam-main-tab-container {
+    flex-grow: 1;
+    height: 0; /* Workaround to force the element to fill the remaining space without growing more than it */
+}
+
+.aam-vscrollable {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .brand-logo {

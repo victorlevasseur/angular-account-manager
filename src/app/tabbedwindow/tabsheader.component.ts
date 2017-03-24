@@ -6,12 +6,13 @@ import { TabsList } from './tabslist';
 @Component({
     selector: 'app-tabs-header',
     template: `
-      <ul class="tabs tabs-transparent">
-        <li *ngFor="let tab of tabsList.tabs;" class="tab" (click)="tabHeaderClicked(tab)">
-          <ul><a class="left">{{tab.getTabTitle()}}</a></ul>
+      <ul class="aam-tabs">
+        <li *ngFor="let tab of tabsList.tabs;" class="aam-tab" [class.selected]="tabsList.selected === tab" (click)="tabHeaderClicked(tab)">
+          {{tab.getTabTitle()}}
         </li>
       </ul>
     `,
+    styleUrls: ['./tabsheader.style.scss']
 })
 export class TabsHeaderComponent {
   @Input('tabsList')

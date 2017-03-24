@@ -1,0 +1,24 @@
+@import '../styles/colors';
+
+.aam-tabs {
+    display: flex;
+    flex-direction: row;
+
+    margin: 5px 5px 0 5px;
+
+    background-color: $window_bg_color;
+    color: white;
+
+    cursor: default;
+}
+
+.aam-tab {
+    min-width: 200px;
+    height: 100%;
+
+    padding: 10px;
+}
+
+.aam-tab.selected {
+    background-color: $panel_bg_color;
+}

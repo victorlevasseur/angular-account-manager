@@ -1,7 +1,7 @@
 /*
  * Angular Modules
  */
-import { enableProdMode, NgModule, Component } from '@angular/core';
+import { enableProdMode, NgModule, Component, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
@@ -17,7 +17,9 @@ import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import "materialize-css";
 import "angular2-materialize";
 import "rxjs/Rx";
+import Raven = require('raven-js');
 import { MaterializeModule } from "angular2-materialize";
+import { DropdownModule } from "ngx-dropdown";
 
 /**
  * Import our child components
@@ -48,6 +50,19 @@ import { CurrencyInputDirective } from './tools/currency-input.directive';
 import { DateInputDirective } from './tools/date-input.directive';
 import { UniqueNumberService } from './tools/unique-number.service';
 
+// Raven initialization
+Raven
+  .config('https://970f081d785e4896aa5b69133a5ea5dc@sentry.io/149444')
+  .install();
+
+// An error handler that redirects the errors to Raven
+export class RavenErrorHandler implements ErrorHandler {
+  handleError(err:any) : void {
+    console.log(err);
+    Raven.captureException(err.originalError || err);
+  }
+}
+
 /*
  * provide('AppStore', { useValue: appStore }),
  */
@@ -61,7 +76,12 @@ import { UniqueNumberService } from './tools/unique-number.service';
         RouterModule.forRoot(routes, { useHash: true }),
         DragulaModule
     ],
-    providers: [AccountService, AccountCalculatorService, UniqueNumberService],
+    providers: [
+      AccountService,
+      AccountCalculatorService,
+      UniqueNumberService,
+      { provide: ErrorHandler, useClass: RavenErrorHandler } // To redirect errors to raven
+    ],
     declarations: [
       AppComponent,
       AccountComponent,
