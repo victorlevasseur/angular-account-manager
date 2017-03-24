@@ -19,6 +19,12 @@
     padding: 10px;
 }
 
+.aam-tab:hover {
+    background-color: lighten($window_bg_color, 5%);
+    transition: background-color 0.1s ease-in;
+}
+
 .aam-tab.selected {
     background-color: $panel_bg_color;
+    transition: background-color 0.1s ease-in;
 }
