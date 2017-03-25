@@ -44,6 +44,8 @@ import { TabComponent } from './tabbedwindow/tab.component';
 import { TabsContainerComponent } from './tabbedwindow/tabscontainer.component';
 import { TabsHeaderComponent } from './tabbedwindow/tabsheader.component';
 
+import { ToolbarComponent } from './toolbar/toolbar.component';
+
 import { CheckboxComponent } from './tools/checkbox.component';
 import { ComboboxComponent } from './tools/combobox.component';
 import { CurrencyInputDirective } from './tools/currency-input.directive';
@@ -91,6 +93,7 @@ export class RavenErrorHandler implements ErrorHandler {
       TabsContainerComponent,
       TabsHeaderComponent,
       AccountTabComponent,
+      ToolbarComponent,
       CheckboxComponent,
       ComboboxComponent,
       CurrencyInputDirective,

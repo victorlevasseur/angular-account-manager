@@ -1,10 +1,13 @@
 $theme_color: rgb(128, 128, 128);
 
 $window_bg_color: darken($theme_color, 40%);
-$window_border_color: darken($theme_color, 50%);
+$window_border_color: darken($theme_color, 45%);
 
 $panel_bg_color: darken($theme_color, 30%);
-$panel_border_color: darken($theme_color, 40%);
+$panel_border_color: darken($theme_color, 35%);
+
+$toolbar_bg_color: darken($theme_color, 20);
+$toolbar_border_color: darken($theme_color, 25%);
 
 $text_color: white;
 

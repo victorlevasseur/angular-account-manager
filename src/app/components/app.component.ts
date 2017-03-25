@@ -21,7 +21,7 @@ const remote = require('electron').remote;
     styleUrls: ['../styles/app.style.scss'],
     encapsulation: ViewEncapsulation.None,
     template: `
-    <div class="aam-main-container">
+    <div class="aam-main-container flex-container vertical">
       <div class="aam-main-tab-header">
           <div class="flex-container">
             <div class="flex-item perc24">
@@ -29,8 +29,8 @@ const remote = require('electron').remote;
             </div>
           </div>
       </div>
-      <main class="aam-main-tab-container">
-        <div class="aam-vscrollable">
+      <main class="aam-main-tab-container flex-item flex-item-grow">
+        <div class="aam-noscroll">
           <app-tabs-container [tabsList]="tabsList"></app-tabs-container>
         </div>
         <router-outlet></router-outlet>

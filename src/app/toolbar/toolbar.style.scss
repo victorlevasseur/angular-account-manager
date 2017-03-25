@@ -1,0 +1,30 @@
+@import '../styles/colors';
+
+.aam-toolbar {
+    background-color: $toolbar_bg_color;
+
+    &.aam-toolbar-top {
+        width: 100%;
+
+        border-bottom: $toolbar_border_color solid 1px;
+    }
+
+    &.aam-toolbar-left {
+        height: 100%;
+
+        border-right: $toolbar_border_color solid 1px;
+    }
+
+    &.aam-toolbar-bottom {
+        width: 100%;
+
+        border-top: $toolbar_border_color solid 1px;
+    }
+
+    &.aam-toolbar-right {
+        height: 100%;
+
+        border-left: $toolbar_border_color solid 1px;
+    }
+
+}

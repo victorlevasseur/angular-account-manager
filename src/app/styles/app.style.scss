@@ -28,8 +28,16 @@
 }
 
 .aam-main-tab-container {
-    flex-grow: 1;
-    height: 0; /* Workaround to force the element to fill the remaining space without growing more than it */
+
+}
+
+.aam-noscroll {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
 }
 
 .aam-vscrollable {
@@ -74,10 +82,20 @@ input[type='text']:focus {
 
 .flex-container.horizontal {
     flex-direction: row;
+
+    .flex-item.flex-item-grow {
+        flex-grow: 1;
+        width: 0;
+    }
 }
 
 .flex-container.vertical {
     flex-direction: column;
+
+    .flex-item.flex-item-grow {
+        flex-grow: 1;
+        height: 0;
+    }
 }
 
 /* Proportional flex items (from 0 to 24) */

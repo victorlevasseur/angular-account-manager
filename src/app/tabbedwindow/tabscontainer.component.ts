@@ -6,7 +6,7 @@ import { TabsList } from './tabslist';
 @Component({
     selector: 'app-tabs-container',
     template: `
-      <div *ngFor="let tab of tabsList.tabs;" [hidden]="tabsList.selected != tab">
+      <div style="height: 100%;" *ngFor="let tab of tabsList.tabs;" [hidden]="tabsList.selected != tab">
         <tab [tab]="tab"></tab>
       </div>
     `,
