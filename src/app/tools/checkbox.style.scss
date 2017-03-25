@@ -1,0 +1,42 @@
+@import '../styles/colors';
+
+.aam-checkbox {
+    display: block;
+
+    position: relative;
+
+    width: 16px;
+    height: 16px;
+
+    border: $panel_border_color solid 1px;
+    background-color: $panel_bg_color;
+}
+
+.aam-checkbox.checked {
+    border: $primary_color solid 1px;
+}
+
+.aam-checkbox > .checker {
+    display: block;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    right: 50%;
+    bottom: 50%;
+
+    background-color: $primary_color;
+
+    transition:
+        left 50ms ease-in,
+        top 50ms ease-in,
+        right 50ms ease-in,
+        bottom 50ms ease-in;
+}
+
+.aam-checkbox > .checker.checked {
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}

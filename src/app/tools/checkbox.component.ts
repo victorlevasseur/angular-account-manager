@@ -5,9 +5,12 @@ import { UniqueNumberService } from './unique-number.service';
 @Component({
   selector: 'app-checkbox',
   template: `
-    <input class="filled-in" type="checkbox" [id]="'checkbox-' + id" [ngModel]="checked" (ngModelChange)="onCheckboxChanged($event);" />
-    <label [attr.for]="'checkbox-' + id">{{label}}</label>
-  `
+    <div class="aam-checkbox" [class.checked]="checked" (click)="onCheckboxClicked();">
+      <div class="checker" [class.checked]="checked">
+      </div>
+    </div>
+  `,
+  styleUrls: ['./checkbox.style.scss']
 })
 export class CheckboxComponent implements OnInit, OnDestroy {
   id: number;
@@ -33,7 +36,7 @@ export class CheckboxComponent implements OnInit, OnDestroy {
     //TODO: Give the id back
   }
 
-  onCheckboxChanged(event: boolean) {
-    this.checkedChange.emit(event);
+  onCheckboxClicked() {
+    this.checkedChange.emit(!this.checked);
   }
 }

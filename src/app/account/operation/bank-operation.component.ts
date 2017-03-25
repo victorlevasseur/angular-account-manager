@@ -8,8 +8,10 @@ import { BankOperation } from './bank-operation';
   selector: 'bank-operation',
   template: `
     <div class="flex-container horizontal" materialize>
-      <div class="flex-item perc2 valign-wrapper">
-        <app-checkbox label="" [(checked)]='op.collected'></app-checkbox>
+      <div class="flex-item perc1">
+        <div style="margin-left: 5px; margin-top: 5px">
+          <app-checkbox label="" [(checked)]='op.collected'></app-checkbox>
+        </div>
       </div>
       <div class="flex-item perc3">
         <input appDateInput [(dateValue)]="op.date" type="text" placeholder="Date"/>
@@ -22,7 +24,7 @@ import { BankOperation } from './bank-operation';
           [cbDropdownItems]="[{displayString: 'Chèque'}, {displayString: 'Virement'}, {displayString: 'Prélèvement'}, {displayString: 'Chèque n°'}, {displayString: 'Carte bleue'}]">
         </app-combobox>
       </div>
-      <div class="flex-item perc9">
+      <div class="flex-item perc10">
         <input type="text" placeholder="Description" [(ngModel)]="op.description"/>
       </div>
       <div class="flex-item perc3">
