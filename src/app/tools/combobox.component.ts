@@ -6,7 +6,7 @@ import { ComboboxItem } from './comboboxitem';
 @Component({
   selector: 'app-combobox',
   template: `
-    <div materialize class="flex-container horizontal">
+    <div materialize [class]="'flex-container horizontal ' + containerClass">
       <input [class]="'flex-item unfixed32 ' + inputClass" type="text" [value]="value" (input)="valueChange.emit($event.target.value)"/>
       <div class="flex-item fixed32">
         <div class="dropdown">
@@ -33,6 +33,9 @@ export class ComboboxComponent implements OnInit {
 
   @Output('cbValueChange')
   valueChange = new EventEmitter<string>();
+
+  @Input('cbContainerClass')
+  containerClass: string = '';
 
   @Input('cbInputClass')
   inputClass: string = '';

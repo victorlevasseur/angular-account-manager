@@ -6,26 +6,24 @@ import Big = require('big.js/big');
 @Component({
   selector: 'account-operation',
   template: `
-      <div class="row">
-        <div class="account-operation-card z-depth-1 flex-container horizontal">
-          <div class="flex-item fixed24 handle">&nbsp;</div>
-          <div class="flex-item unfixed24 flex-container">
-            <div class="flex-item perc18">
-              <div #operationRenderer></div>
+      <div class="aam-account-operation z-depth-1 flex-container horizontal">
+        <div class="flex-item fixed24 handle">&nbsp;</div>
+        <div class="flex-item unfixed24 flex-container">
+          <div class="flex-item perc18">
+            <div #operationRenderer></div>
+          </div>
+          <div class="flex-item perc6 flex-container horizontal">
+            <div *ngIf="partialSum != undefined" class="operation-value flex-item perc12">
+              <input
+                appCurrencyInput [(currencyValue)]="partialSum.value"
+                type="text"
+                readonly/>
             </div>
-            <div class="flex-item perc6 flex-container horizontal">
-              <div *ngIf="partialSum != undefined" class="operation-value flex-item perc12">
-                <input
-                  appCurrencyInput [(currencyValue)]="partialSum.value"
-                  type="text"
-                  readonly/>
-              </div>
-              <div *ngIf="partialSum != undefined" class="operation-collected-value flex-item perc12">
-                <input
-                  appCurrencyInput [(currencyValue)]="partialSum.collectedValue"
-                  type="text"
-                  readonly/>
-              </div>
+            <div *ngIf="partialSum != undefined" class="operation-collected-value flex-item perc12">
+              <input
+                appCurrencyInput [(currencyValue)]="partialSum.collectedValue"
+                type="text"
+                readonly/>
             </div>
           </div>
         </div>

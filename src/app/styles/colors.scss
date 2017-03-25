@@ -1,6 +1,11 @@
 $theme_color: rgb(128, 128, 128);
 
 $window_bg_color: darken($theme_color, 40%);
+$window_border_color: darken($theme_color, 50%);
+
 $panel_bg_color: darken($theme_color, 30%);
+$panel_border_color: darken($theme_color, 40%);
+
+$text_color: white;
 
 $primary_color: rgb(100, 100, 255);

@@ -1,15 +1,13 @@
-@import "~materialize-css/sass/components/mixins";
-@import "~materialize-css/sass/components/color";
+@import '../../styles/colors';
 
-.row {
-    margin-top: 4px;
-    margin-bottom: 4px;
-}
+.aam-account-operation {
+    background-color: $panel_bg_color;
 
-.account-operation-card {
-    margin-top: 2px;
-    margin-bottom: 2px;
-    background-color: white;
+    color: $text_color;
+
+    border-bottom: $panel_border_color solid 1px;
+
+    transition: background-color 0.2s ease-in-out;
 
     .handle {
         margin-top: 0;
@@ -18,43 +16,25 @@
     }
 }
 
-.account-operation-card.selected {
-    @extend .blue, .lighten-4;
-
-    .handle {
-        @extend .blue, .lighten-2;
-    }
+.aam-account-operation:hover {
+    background-color: lighten($panel_bg_color, 5%);
 }
 
-.card-content {
-    margin-top: 2px;
-    padding: 0px;
-    margin-right: 0px;
-}
+/deep/ input {
+    width: 100%;
 
-.card-action {
-    padding: 0px;
-    margin-left: 0px;
+    color: white;
 }
 
 /deep/ input[type="text"] {
+    height: 100%;
+
     box-sizing: border-box;
-    border-bottom-color: transparent;
-    margin-top: 5px;
-    margin-bottom: 5px;
+
     padding: 5px;
-    height: auto;
-}
 
-/deep/ input[type="text"].valid:not(:focus) {
-    border-bottom-color: transparent !important;
-    box-shadow: none !important;
-}
-
-.delete-btn {
-    height: auto;
-    color: grey !important;
-    margin-right: 0px !important;
+    background: transparent;
+    border: transparent;
 }
 
 /deep/ input.currency {
@@ -63,6 +43,6 @@
     font-size: 14px;
 }
 
-/deep/ .account-operation-card:not(:hover) .show-if-operation-hovered {
+/deep/ .aam-account-operation:not(:hover) .show-if-operation-hovered {
     display: none;
 }

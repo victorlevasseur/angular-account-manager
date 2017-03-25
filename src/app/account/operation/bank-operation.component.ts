@@ -16,6 +16,7 @@ import { BankOperation } from './bank-operation';
       </div>
       <div class="flex-item perc4">
         <app-combobox
+          cbContainerClass="full-height"
           cbButtonClass="show-if-operation-hovered"
           [(cbValue)]="op.type"
           [cbDropdownItems]="[{displayString: 'Chèque'}, {displayString: 'Virement'}, {displayString: 'Prélèvement'}, {displayString: 'Chèque n°'}, {displayString: 'Carte bleue'}]">

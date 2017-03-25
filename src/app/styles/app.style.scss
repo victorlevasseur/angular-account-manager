@@ -1,5 +1,4 @@
 @import '~dragula/dist/dragula';
-@import './custom-materialize.style';
 @import './colors';
 
 .account-operations {
@@ -43,8 +42,30 @@
     overflow-y: scroll;
 }
 
-.brand-logo {
-    padding-left: 16px !important;
+input[type='text'] {
+    padding: 5px;
+
+    background-color: $panel_bg_color;
+    border: $panel_border_color solid 1px;
+    outline: none;
+
+    color: $text_color;
+}
+
+input[type='text']:focus {
+    background-color: lighten($panel_bg_color, 20%);
+    border: lighten($panel_border_color, 20%) solid 1px;
+    outline: none;
+
+    color: $text_color;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.full-height {
+    height: 100%;
 }
 
 .flex-container {

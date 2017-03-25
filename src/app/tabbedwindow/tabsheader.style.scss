@@ -5,11 +5,14 @@
     flex-direction: row;
 
     margin: 5px 5px 0 5px;
+    padding-left: 0;
 
     background-color: $window_bg_color;
-    color: white;
+    color: $text_color;
 
     cursor: default;
+
+    list-style-type: none;
 }
 
 .aam-tab {
