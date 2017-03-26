@@ -8,6 +8,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { DynamicComponentModule } from 'angular2-dynamic-component/index';
 
 // Setup redux with ngrx
 import { Store, StoreModule } from '@ngrx/store';
@@ -45,6 +46,7 @@ import { TabsContainerComponent } from './tabbedwindow/tabscontainer.component';
 import { TabsHeaderComponent } from './tabbedwindow/tabsheader.component';
 
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { ButtonToolbarItemComponent } from './toolbar/button-toolbar-item';
 
 import { CheckboxComponent } from './tools/checkbox.component';
 import { ComboboxComponent } from './tools/combobox.component';
@@ -76,7 +78,8 @@ export class RavenErrorHandler implements ErrorHandler {
         HttpModule,
         MaterializeModule,
         RouterModule.forRoot(routes, { useHash: true }),
-        DragulaModule
+        DragulaModule,
+        DynamicComponentModule
     ],
     providers: [
       AccountService,
@@ -94,13 +97,14 @@ export class RavenErrorHandler implements ErrorHandler {
       TabsHeaderComponent,
       AccountTabComponent,
       ToolbarComponent,
+      ButtonToolbarItemComponent,
       CheckboxComponent,
       ComboboxComponent,
       CurrencyInputDirective,
       DateInputDirective
     ],
     bootstrap: [AppComponent],
-    entryComponents: [BankOperationComponent, AccountTabComponent]
+    entryComponents: [BankOperationComponent, AccountTabComponent, ButtonToolbarItemComponent]
 })
 export class AppModule { }
 platformBrowserDynamic().bootstrapModule(AppModule);
