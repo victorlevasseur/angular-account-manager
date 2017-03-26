@@ -12,14 +12,14 @@ const arch = argv.arch || 'all';
 const platform = argv.platform || 'darwin';
 
 const DEFAULT_OPTS = {
-    dir: './src/app',
+    dir: './build/app',
     name: appName,
     asar: shouldUseAsar,
     ignore: [
     ].concat(devDeps.map(name => `/node_modules/${name}($|/)`))
 };
 
-const icon = './src/app/dist/assets/app-icon';
+const icon = './build/app/dist/assets/app-icon';
 
 if (icon) {
     DEFAULT_OPTS.icon = icon;

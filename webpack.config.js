@@ -27,7 +27,7 @@ var config = {
 
     // Config for our build files
     output: {
-        path: helpers.root('src/app/dist'),
+        path: helpers.root('build/app/dist'),
         publicPath: 'dist',
         filename: '[name].js',
         sourceMapFilename: '[name].map',
