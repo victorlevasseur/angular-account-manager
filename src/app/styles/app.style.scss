@@ -62,7 +62,7 @@ input[type='text'] {
     color: $text_color;
 }
 
-input[type='text']:focus {
+input[type='text']:focus:not(:read-only) {
     background-color: lighten($panel_bg_color, 20%);
     border: lighten($panel_border_color, 20%) solid 1px;
     outline: none;

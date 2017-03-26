@@ -14,10 +14,10 @@ import { BankOperation } from './bank-operation';
         </div>
       </div>
       <div class="flex-item perc3">
-        <input appDateInput [(dateValue)]="op.date" type="text" placeholder="Date"/>
+        <input appDateInput aam-doubleclickInput [(dateValue)]="op.date" type="text" placeholder="Date"/>
       </div>
       <div class="flex-item perc4">
-        <app-combobox
+        <app-combobox aam-doubleclickInput
           cbContainerClass="full-height"
           cbButtonClass="show-if-operation-hovered"
           [(cbValue)]="op.type"
@@ -25,13 +25,13 @@ import { BankOperation } from './bank-operation';
         </app-combobox>
       </div>
       <div class="flex-item perc10">
-        <input type="text" placeholder="Description" [(ngModel)]="op.description"/>
+        <input aam-doubleclickInput type="text" placeholder="Description" [(ngModel)]="op.description"/>
       </div>
       <div class="flex-item perc3">
-        <input appCurrencyInput [(currencyValue)]="op.credit" type="text" placeholder="Crédit" />
+        <input appCurrencyInput aam-doubleclickInput [(currencyValue)]="op.credit" type="text" placeholder="Crédit" />
       </div>
       <div class="flex-item perc3">
-        <input appCurrencyInput [(currencyValue)]="op.debit" type="text" placeholder="Débit" />
+        <input appCurrencyInput aam-doubleclickInput [(currencyValue)]="op.debit" type="text" placeholder="Débit" />
       </div>
     </div>`,
   styleUrls: ['bank-operation.style.scss']

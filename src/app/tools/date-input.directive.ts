@@ -33,6 +33,9 @@ export class DateInputDirective implements OnChanges {
 
   @HostListener("focus")
   inputFocused() {
+    if(this.el.nativeElement.readOnly) {
+      return;
+    }
     this.focused = true;
     this.updateFromValue(false);
     this.el.nativeElement.select();

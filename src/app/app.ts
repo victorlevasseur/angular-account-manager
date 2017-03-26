@@ -52,6 +52,7 @@ import { CheckboxComponent } from './tools/checkbox.component';
 import { ComboboxComponent } from './tools/combobox.component';
 import { CurrencyInputDirective } from './tools/currency-input.directive';
 import { DateInputDirective } from './tools/date-input.directive';
+import { DoubleclickInputDirective } from './tools/doubleclick-input.directive';
 import { UniqueNumberService } from './tools/unique-number.service';
 
 // Raven initialization
@@ -101,7 +102,8 @@ export class RavenErrorHandler implements ErrorHandler {
       CheckboxComponent,
       ComboboxComponent,
       CurrencyInputDirective,
-      DateInputDirective
+      DateInputDirective,
+      DoubleclickInputDirective
     ],
     bootstrap: [AppComponent],
     entryComponents: [BankOperationComponent, AccountTabComponent, ButtonToolbarItemComponent]
