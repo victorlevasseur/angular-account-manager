@@ -66806,6 +66806,7 @@ AccountComponent = __decorate([
     core_1.Component({
         selector: 'account',
         template: "\n      <div *ngIf=\"account\" class=\"account-component\" [dragula]=\"'account-bag'\" [dragulaModel]='account.operations'>\n        <account-operation\n          *ngFor=\"let operation of account.operations; let i = index;\"\n          [accountOperation]=\"operation\"\n          [partialSum]=\"partialSums[i]\"\n          [index]=\"i\"\n          (valueChanged)=\"onValueChanged(account.operation, i)\">\n        </account-operation>\n      </div>\n    ",
+        styles: [__webpack_require__(1167)],
         providers: [ng2_dragula_1.DragulaService] // To provide a different dragula service for each account
     }),
     __metadata("design:paramtypes", [account_service_1.AccountService, account_calculator_service_1.AccountCalculatorService, ng2_dragula_1.DragulaService])
@@ -91468,6 +91469,36 @@ AppModule = __decorate([
 exports.AppModule = AppModule;
 platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(AppModule);
 
+
+/***/ },
+/* 1164 */,
+/* 1165 */,
+/* 1166 */
+/***/ function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(89)();
+// imports
+
+
+// module
+exports.push([module.i, ".account-component {\n  padding: 4px; }\n", ""]);
+
+// exports
+
+
+/***/ },
+/* 1167 */
+/***/ function(module, exports, __webpack_require__) {
+
+
+        var result = __webpack_require__(1166);
+
+        if (typeof result === "string") {
+            module.exports = result;
+        } else {
+            module.exports = result.toString();
+        }
+    
 
 /***/ }
 ],[1163]);

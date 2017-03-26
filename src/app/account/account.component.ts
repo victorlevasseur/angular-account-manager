@@ -24,6 +24,7 @@ import Big = require('big.js/big');
         </account-operation>
       </div>
     `,
+  styleUrls: ['./account.style.scss'],
   providers: [DragulaService] // To provide a different dragula service for each account
 })
 export class AccountComponent implements OnInit {
