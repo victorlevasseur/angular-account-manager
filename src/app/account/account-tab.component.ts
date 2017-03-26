@@ -30,7 +30,7 @@ export class AccountTabComponent implements OnInit {
 
   toolbarItems: Array<ToolbarItem> = [
     new ButtonToolbarItem({
-      text: 'ITEM',
+      text: 'Ajouter une opération',
       clickedCallback: (item) => {
         this.addOperation();
       }

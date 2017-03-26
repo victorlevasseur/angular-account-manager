@@ -28,6 +28,7 @@ var config = {
     // Config for our build files
     output: {
         path: helpers.root('src/app/dist'),
+        publicPath: 'dist',
         filename: '[name].js',
         sourceMapFilename: '[name].map',
         chunkFilename: '[id].chunk.js'
@@ -71,10 +72,10 @@ var config = {
             {
                 test: /\.scss$/,
                 exclude: /node_modules/,
-                loaders: ['raw-loader', 'sass-loader'] // sass-loader not scss-loader
+                loaders: ['to-string-loader', 'css-loader', 'sass-loader'] // sass-loader not scss-loader
             },
 
-            // support for .html antd .css as raw text
+            // support for .html as raw text
             {
                 test: /\.html$/,
                 loader: 'raw-loader',
@@ -88,11 +89,11 @@ var config = {
 
             // support for fonts
             {
-                test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
-                loader: 'file-loader?name=dist/[name]-[hash].[ext]'
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                loader: 'file-loader?name=/fonts/[name].[ext]'
             },
 
-            { test: /.(png|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/, loader: 'url-loader?limit=100000' },
+            { test: /.(png|woff(2)?|eot|svg)(\?[a-z0-9=\.]+)?$/, loader: 'url-loader?limit=100000' },
 
             // support for svg icons
             {

@@ -5,6 +5,7 @@ import { ToolbarItem } from './toolbar-item';
 @Component({
   template: `
     <div class="aam-toolbar-button" (click)="onClicked();">
+      <span *ngIf="icon && icon != ''">aa</span>
       {{item.text}}
     </div>
   `
@@ -20,12 +21,14 @@ export class ButtonToolbarItemComponent {
 }
 
 export interface ButtonItemData {
+  icon?: string;
   text: string;
   clickedCallback?: (ButtonToolbarItemComponent) => void;
 }
 
 export class ButtonToolbarItem implements ToolbarItem, ButtonItemData {
   type = ButtonToolbarItemComponent;
+  icon: string = '';
   text: string;
   clickedCallback: (ButtonToolbarItemComponent) => void = function(item){ alert('aa'); };
 

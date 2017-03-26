@@ -1,5 +1,6 @@
 @import '~dragula/dist/dragula';
 @import './colors';
+@import './roboto';
 
 .account-operations {
     margin: 8px;
@@ -18,6 +19,7 @@
     overflow: hidden;
 
     background-color: $panel_bg_color;
+    font-family: 'Roboto';
 }
 
 .aam-main-tab-header {
