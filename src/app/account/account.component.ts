@@ -16,10 +16,10 @@ import Big = require('big.js/big');
   template: `
       <div *ngIf="account" class="account-component" [dragula]="'account-bag'" [dragulaModel]='account.operations'>
         <account-operation
-          *ngFor="let operation of account.operations; let i = index;"
+          *ngFor="let operation of account.operations; let i = index; let odd = odd;"
           [accountOperation]="operation"
           [partialSum]="partialSums[i]"
-          [index]="i"
+          [customClass]="odd ? 'odd' : 'even'"
           (valueChanged)="onValueChanged(account.operation, i)">
         </account-operation>
       </div>

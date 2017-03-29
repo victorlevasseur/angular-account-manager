@@ -6,7 +6,7 @@ import Big = require('big.js/big');
 @Component({
   selector: 'account-operation',
   template: `
-      <div class="aam-account-operation z-depth-1 flex-container horizontal">
+      <div [class]="'aam-account-operation z-depth-1 flex-container horizontal ' + customClass">
         <div class="flex-item fixed24 handle">&nbsp;</div>
         <div class="flex-item unfixed24 flex-container">
           <div class="flex-item perc18">
@@ -39,7 +39,7 @@ export class AccountOperationComponent implements OnInit {
   partialSum: {value: Big, collectedValue: Big};
 
   @Input()
-  index: number;
+  customClass: String = "";
 
   @Output()
   valueChanged = new EventEmitter<void>();
@@ -56,7 +56,6 @@ export class AccountOperationComponent implements OnInit {
     const factory = this.componentFactoryResolver.resolveComponentFactory(this.accountOperation.getComponentClass());
     const ref = this.operationRendererContainer.createComponent(factory, 0);
     ref.instance.op = this.accountOperation;
-    ref.instance.index = this.index;
     ref.changeDetectorRef.detectChanges();
 
     // Connect to the valueChanged emitter of the AccountOperation

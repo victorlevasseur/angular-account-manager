@@ -9,9 +9,6 @@ import Big = require('big.js/big');
 export class AccountOperationRenderer {
   @Input()
   op: AccountOperation;
-
-  @Input()
-  index: number;
 }
 
 export abstract class AccountOperation {
