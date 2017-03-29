@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, Output, OnInit, AfterViewInit, HostListener, ContentChildren, EventEmitter } from '@angular/core';
+import { Directive, ElementRef, Input, Output, OnInit, OnDestroy, AfterViewInit, EventEmitter } from '@angular/core';
 const $ = require('jquery');
 
 /**
@@ -9,9 +9,19 @@ const $ = require('jquery');
 @Directive({
   selector: '[aam-doubleclickInput]'
 })
-export class DoubleclickInputDirective implements AfterViewInit {
+export class DoubleclickInputDirective implements AfterViewInit, OnDestroy {
 
-  managedInputs = new Array<any>();
+  private managedInputs = new Array<any>();
+
+  private dblClickEventHandler = ($event) => {
+    this.blurElement($event.target);
+    this.enableElement($event.target, true);
+    this.focusElement($event.target);
+  };
+
+  private blurEventHandler = ($event) => {
+    this.enableElement($event.target, false);
+  }
 
   constructor(private el: ElementRef) {
 
@@ -35,31 +45,20 @@ export class DoubleclickInputDirective implements AfterViewInit {
       this.enableElement(this.managedInputs[i], false);
 
       // Register a double click event on the input
-      $(this.managedInputs[i]).off('dblclick').on('dblclick', ($event) => {
-        this.blurElement($event.target);
-        this.enableElement($event.target, true);
-        this.focusElement($event.target);
-      });
+      $(this.managedInputs[i]).off('dblclick').on('dblclick', this.dblClickEventHandler);
 
       // Register a blur event on the input
-      $(this.managedInputs[i]).off('blur').on('blur', ($event) => {
-        this.enableElement($event.target, false);
-      });
+      $(this.managedInputs[i]).off('blur').on('blur', this.blurEventHandler);
     }
   }
 
-/*  @HostListener('dblclick')
-  onDblClicked() {
-    // To force a call to the focus callback
-    this.blurElement();
-    this.enableElement(true);
-    this.focusElement();
+  ngOnDestroy() {
+    //Unbind all events to avoid leaks
+    for(var i = 0; i < this.managedInputs.length; ++i) {
+      $(this.managedInputs[i]).off('dblclick', this.dblClickEventHandler);
+      $(this.managedInputs[i]).off('blur', this.blurEventHandler);
+    }
   }
-
-  @HostListener('blur')
-  onBlur() {
-    this.enableElement(false);
-  }*/
 
   private enableElement(element: any, enable: boolean) {
     element.readOnly = !enable;
