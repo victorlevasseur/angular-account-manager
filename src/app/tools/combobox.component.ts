@@ -6,11 +6,14 @@ import { ComboboxItem } from './comboboxitem';
 @Component({
   selector: 'app-combobox',
   template: `
-    <div materialize [class]="'flex-container horizontal ' + containerClass">
+    <div materialize [class]="'flex-container horizontal ' + containerClass" (mouseenter)="onMouseEnter();" (mouseleave)="onMouseLeave()">
       <input [class]="'flex-item unfixed32 ' + inputClass" type="text" [value]="value" (input)="valueChange.emit($event.target.value)"/>
-      <div class="flex-item fixed32">
+      <div aam-click-outside-event class="flex-item fixed32 full-height" (clickOutside)="onClickOutside();">
+        <button
+          [class]="'btn btn-flat dropdown-bt ' + buttonClass"
+          (click)="onDropdownButtonClicked()"
+          *ngIf="displayButton || open">⏷</button>
         <div class="dropdown">
-          <button [class]="'btn btn-flat dropdown-bt ' + buttonClass" (click)="onDropdownButtonClicked()"><!--<i class="material-icons">arrow_drop_down</i>-->V</button>
           <ul [class]="'dropdown-menu ' + dropdownClass" [class.show]="open">
             <li
               [class.selected]="item.value ? (item.value === value) : (item.displayString === value)"
@@ -26,7 +29,9 @@ import { ComboboxItem } from './comboboxitem';
   styleUrls: ['./combobox.style.scss']
 })
 export class ComboboxComponent implements OnInit {
-  open = false
+  open = false;
+
+  displayButton = false;
 
   @Input('cbValue')
   value: string;
@@ -43,6 +48,9 @@ export class ComboboxComponent implements OnInit {
   @Input('cbButtonClass')
   buttonClass: string = '';
 
+  @Input('cbButtonDisplayedOnHover')
+  buttonDisplayedOnHover: boolean = false;
+
   @Input('cbDropdownClass')
   dropdownClass: string = '';
 
@@ -52,10 +60,8 @@ export class ComboboxComponent implements OnInit {
   @Output('cbDropdownItemSelected')
   dropdownItemSelected = new EventEmitter<ComboboxItem>();
 
-  id: number;
+  constructor() {
 
-  constructor(private uniqueNumberSrv: UniqueNumberService) {
-    this.id = uniqueNumberSrv.getUniqueNumber();
   }
 
   ngOnInit() {
@@ -68,8 +74,21 @@ export class ComboboxComponent implements OnInit {
     }
   }
 
+  onMouseEnter() {
+    console.log("mouseenter");
+    this.displayButton = true;
+  }
+
+  onMouseLeave() {
+    this.displayButton = false;
+  }
+
   onDropdownButtonClicked() {
     this.open = !this.open;
+  }
+
+  onClickOutside() {
+    this.open = false;
   }
 
   onItemClicked(item: ComboboxItem) {
