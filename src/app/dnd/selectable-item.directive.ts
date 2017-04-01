@@ -1,11 +1,19 @@
-import { Directive, Input, Output, HostListener, OnInit, EventEmitter } from '@angular/core';
+import {
+  Directive,
+  Input,
+  Output,
+  HostListener,
+  EventEmitter,
+  OnDestroy,
+  OnChanges,
+  SimpleChanges } from '@angular/core';
 
 import { SelectionService } from './selection.service';
 
 @Directive({
   selector: '[aam-selectableItem]'
 })
-export class SelectableItemDirective {
+export class SelectableItemDirective implements OnDestroy, OnChanges {
 
   @Input('aam-trackBy')
   trackBy: any;
@@ -17,6 +25,22 @@ export class SelectableItemDirective {
     selectionService.selectedChanged.subscribe(() => {
       this.onSelectionChanged();
     });
+  }
+
+  ngOnDestroy() {
+    this.selectionService.removeFromSelection(this.trackBy);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes.hasOwnProperty('trackBy') && changes['trackBy'] && !changes['trackBy'].isFirstChange()) {
+      let oldTrackBy = changes['trackBy'].previousValue;
+      let newTrackBy = changes['trackBy'].currentValue;
+
+      if(this.selectionService.isSelected(oldTrackBy)) {
+        this.selectionService.removeFromSelection(oldTrackBy);
+        this.selectionService.addToSelection(newTrackBy);
+      }
+    }
   }
 
   @HostListener('click', ['$event'])
@@ -33,7 +57,7 @@ export class SelectableItemDirective {
     }
   }
 
-  onSelectionChanged() {
+  private onSelectionChanged() {
     this.selectedChange.next(this.selectionService.isSelected(this.trackBy));
   }
 }

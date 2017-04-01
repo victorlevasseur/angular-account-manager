@@ -29,20 +29,20 @@
     }
 
     &:hover {
+        background-color: lighten($panel_bg_color, 5%);
+
         .handle {
             background-color: transparentize($primary_color, 0.8);
         }
 
         &.selected {
+            background-color: lighten(mix($panel_bg_color, $primary_color, 80%), 5%);
+
             .handle {
                 background-color: transparentize($primary_color, 0.7);
             }
         }
     }
-}
-
-.aam-account-operation:hover {
-    background-color: lighten($panel_bg_color, 5%);
 }
 
 /deep/ input {

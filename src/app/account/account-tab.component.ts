@@ -38,6 +38,12 @@ export class AccountTabComponent implements OnInit {
         this.addOperation();
       }
     }),
+    new ButtonToolbarItem({
+      text: "TEST",
+      clickedCallback: (item) => {
+        [this.account.operations[2], this.account.operations[3]] = [this.account.operations[3], this.account.operations[2]];
+      }
+    })
   ];
 
   constructor(private accountService: AccountService) {

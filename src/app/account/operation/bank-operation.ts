@@ -44,7 +44,7 @@ export class BankOperation extends AccountOperation {
     this.setValueChanged();
   }
 
-  constructor(private _collected: boolean, private date: moment.Moment, private type: string, private description: string, private _credit: Big, private _debit: Big) {
+  constructor(private _collected: boolean, private date: moment.Moment, private type: string, public description: string, private _credit: Big, private _debit: Big) {
     super();
   }
 

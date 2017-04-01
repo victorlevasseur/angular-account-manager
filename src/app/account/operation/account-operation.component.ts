@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, ComponentFactoryResolver, ViewContainerRef, OnInit, ViewChild, Optional } from '@angular/core';
 import { AccountOperation, AccountOperationRenderer } from './account-operation';
+import { BankOperation } from './bank-operation';
 
 import { SelectionService } from '../../dnd/selection.service';
 
@@ -11,8 +12,7 @@ import Big = require('big.js/big');
       <div aam-selectableItem
         [aam-trackBy]="accountOperation"
         (aam-selectStateChange)="onSelected($event);"
-        [class]="'aam-account-operation z-depth-1 flex-container horizontal ' + customClass"
-        [class.selected]='selected'>
+        [class]="'aam-account-operation z-depth-1 flex-container horizontal ' + customClass + (selected ? ' selected':'')">
         <div class="flex-item fixed24 handle">&nbsp;</div>
         <div class="flex-item unfixed24 flex-container">
           <div class="flex-item perc18">

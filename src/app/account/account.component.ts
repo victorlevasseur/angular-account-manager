@@ -17,9 +17,7 @@ import Big = require('big.js/big');
       <div aam-selectableList
         [(aam-selectedItems)]="selection"
         *ngIf="account"
-        class="account-component"
-        [dragula]="'account-bag'"
-        [dragulaModel]='account.operations'>
+        class="account-component">
         <account-operation
           *ngFor="let operation of account.operations; let i = index; let odd = odd;"
           [accountOperation]="operation"

@@ -15,9 +15,6 @@ export class SelectableListDirective implements OnChanges {
   @Input('aam-selectedItemsChange')
   selectedItemsChange = new EventEmitter<Array<any>>();
 
-  @ContentChildren('[aam-selectableItem]')
-  selectableItems: QueryList<SelectableItemDirective>;
-
   constructor(private selectionService: SelectionService) {
     selectionService.selectedChanged.subscribe((newSelection: Array<any>) => {
       this.onSelectionChanged(newSelection);
