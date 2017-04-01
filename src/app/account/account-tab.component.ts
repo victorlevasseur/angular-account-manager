@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 
 import { AccountComponent } from './account.component';
 import { AccountService } from './account.service';
 import { Account } from './account';
+import { AccountOperation } from './operation/account-operation';
 import { BankOperation } from './operation/bank-operation';
 import { ToolbarItem } from '../toolbar/toolbar-item';
 import { ButtonToolbarItem } from '../toolbar/button-toolbar-item';
@@ -18,7 +19,7 @@ import Big = require('big.js/big');
       <aam-toolbar [items]="toolbarItems"></aam-toolbar>
       <div class="flex-item flex-item-grow">
         <div class="aam-vscrollable">
-          <account [account]="account"></account>
+          <account #accountComponent [account]="account"></account>
         </div>
       </div>
     </div>
@@ -31,11 +32,20 @@ export class AccountTabComponent implements OnInit {
 
   account: Account;
 
+  @ViewChild('accountComponent')
+  accountComponent: AccountComponent;
+
   toolbarItems: Array<ToolbarItem> = [
     new ButtonToolbarItem({
       text: 'Ajouter une opération',
       clickedCallback: (item) => {
         this.addOperation();
+      }
+    }),
+    new ButtonToolbarItem({
+      text: 'Supprimer',
+      clickedCallback: (item) => {
+        this.removeSelectedOperations();
       }
     }),
     new ButtonToolbarItem({
@@ -63,5 +73,16 @@ export class AccountTabComponent implements OnInit {
       new Big(0),
       new Big(0)
     ));
+  }
+
+  removeSelectedOperations() {
+    this.accountComponent.selection.forEach((selectedItem: AccountOperation) => {
+      let itemIndex = this.account.operations.indexOf(selectedItem);
+      if(itemIndex === -1) {
+        return;
+      }
+      this.account.operations.splice(itemIndex, 1);
+    });
+    this.accountComponent.selection = []
   }
 }

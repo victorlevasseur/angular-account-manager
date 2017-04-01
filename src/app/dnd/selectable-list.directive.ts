@@ -31,7 +31,7 @@ export class SelectableListDirective implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if(changes.hasOwnProperty('selectedItems') && changes['selectedItems']) {
-      this.selectionService.selected = changes['selectedItems'].currentValue;
+      this.selectionService.setSelection(changes['selectedItems'].currentValue);
     }
   }
 
