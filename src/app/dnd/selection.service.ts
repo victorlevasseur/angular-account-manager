@@ -5,6 +5,7 @@ export class SelectionService {
 
   selected: Array<any> = null;
   selectedChanged = new EventEmitter<Array<any>>();
+  selectableItems: Array<any> = null;
 
   constructor() {
 
@@ -32,6 +33,54 @@ export class SelectionService {
     return this.selected[i];
   }
 
+  getLatestSelected() {
+    if(this.selected.length == 0) {
+      return null;
+    }
+
+    return this.selected[this.selected.length - 1];
+  }
+
+  getEarliestSelected() {
+    if(this.selected.length == 0) {
+      return null;
+    }
+
+    return this.selected[0];
+  }
+
+  getFirstSelectableSelected() {
+    if(this.selected.length === 0) {
+      return null;
+    }
+
+    let firstIndex = this.selectableItems.indexOf(this.selected[0]);
+    for(let i = 1; i < this.selected.length; ++i) {
+      let index = this.selectableItems.indexOf(this.selected[i]);
+      if(index < firstIndex) {
+        firstIndex = index;
+      }
+    }
+
+    return firstIndex;
+  }
+
+  getLastSelectableSelected() {
+    if(this.getSelectedCount() === 0) {
+      return null;
+    }
+
+    let lastIndex = this.selectableItems.indexOf(this.selected[0]);
+    for(let i = 1; i < this.selected.length; ++i) {
+      let index = this.selectableItems.indexOf(this.selected[i]);
+      if(index > lastIndex) {
+        lastIndex = index;
+      }
+    }
+
+    return lastIndex;
+  }
+
   clearSelection() {
     this.selected.length = 0;
     this.propagateSelectionChange();
@@ -46,6 +95,28 @@ export class SelectionService {
     return true;
   }
 
+  /**
+   * Add the items in the interval [from, to]
+   * to the selection.
+   * Note: if "to" is before "from", there're inverted
+   */
+  addRangeToSelection(from, to): boolean {
+    let itemsToSelect = [];
+
+    let startPos = this.selectableItems.indexOf(from);
+    let endPos = this.selectableItems.indexOf(to);
+    if(startPos === -1 || endPos === -1) {
+      return false;
+    }
+    if(startPos > endPos) {
+      [startPos, endPos] = [endPos, startPos];
+    }
+
+    this.selected = this.selected.concat(this.selectableItems.slice(startPos, endPos+1));
+    this.propagateSelectionChange();
+    return true;
+  }
+
   removeFromSelection(item): boolean {
     for(var i = 0; i < this.selected.length; ++i) {
       if(this.selected[i] === item) {
@@ -55,6 +126,11 @@ export class SelectionService {
       }
     }
     return false;
+  }
+
+  selectAll() {
+    this.selected = this.selectableItems.slice();
+    this.propagateSelectionChange();
   }
 
   private propagateSelectionChange() {

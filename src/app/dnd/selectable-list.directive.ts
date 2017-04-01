@@ -1,4 +1,4 @@
-import { Directive, Input, ContentChildren, QueryList, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
+import { Directive, Input, ContentChildren, QueryList, OnInit, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
 
 import { SelectableItemDirective } from './selectable-item.directive';
 import { SelectionService } from './selection.service';
@@ -7,7 +7,7 @@ import { SelectionService } from './selection.service';
   selector: '[aam-selectableList]',
   providers: [SelectionService]
 })
-export class SelectableListDirective implements OnChanges {
+export class SelectableListDirective implements OnInit, OnChanges {
 
   @Input('aam-selectedItems')
   selectedItems = new Array<any>();
@@ -15,10 +15,18 @@ export class SelectableListDirective implements OnChanges {
   @Input('aam-selectedItemsChange')
   selectedItemsChange = new EventEmitter<Array<any>>();
 
+  @Input('aam-selectableItems')
+  selectableItems: Array<any> = null;
+
   constructor(private selectionService: SelectionService) {
     selectionService.selectedChanged.subscribe((newSelection: Array<any>) => {
       this.onSelectionChanged(newSelection);
     });
+  }
+
+  ngOnInit() {
+    //TODO: Throw if null
+    this.selectionService.selectableItems = this.selectableItems;
   }
 
   ngOnChanges(changes: SimpleChanges) {

@@ -45,12 +45,17 @@ export class SelectableItemDirective implements OnDestroy, OnChanges {
 
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent) {
+    let latestSelected = this.selectionService.getLatestSelected(); // Need to keep it before maybe cleaning the selection
+    
     if(!event.ctrlKey) {
       this.selectionService.clearSelection();
     }
 
     if(event.ctrlKey && this.selectionService.isSelected(this.trackBy)) {
       this.selectionService.removeFromSelection(this.trackBy);
+    }
+    else if(event.shiftKey) {
+      this.selectionService.addRangeToSelection(latestSelected, this.trackBy);
     }
     else {
       this.selectionService.addToSelection(this.trackBy);

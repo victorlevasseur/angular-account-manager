@@ -16,6 +16,7 @@ import Big = require('big.js/big');
   template: `
       <div aam-selectableList
         [(aam-selectedItems)]="selection"
+        [aam-selectableItems]="account.operations"
         *ngIf="account"
         class="account-component">
         <account-operation
