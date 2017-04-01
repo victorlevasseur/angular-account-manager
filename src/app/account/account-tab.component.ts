@@ -7,6 +7,8 @@ import { BankOperation } from './operation/bank-operation';
 import { ToolbarItem } from '../toolbar/toolbar-item';
 import { ButtonToolbarItem } from '../toolbar/button-toolbar-item';
 
+import { SelectionService } from '../dnd/selection.service';
+
 import * as moment from 'moment';
 import Big = require('big.js/big');
 
@@ -20,7 +22,8 @@ import Big = require('big.js/big');
         </div>
       </div>
     </div>
-  `
+  `,
+  providers: [SelectionService]
 })
 export class AccountTabComponent implements OnInit {
   @Input()

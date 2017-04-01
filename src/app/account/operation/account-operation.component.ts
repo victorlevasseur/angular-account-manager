@@ -1,12 +1,18 @@
-import { Component, Input, Output, EventEmitter, ComponentFactoryResolver, ViewContainerRef, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ComponentFactoryResolver, ViewContainerRef, OnInit, ViewChild, Optional } from '@angular/core';
 import { AccountOperation, AccountOperationRenderer } from './account-operation';
+
+import { SelectionService } from '../../dnd/selection.service';
 
 import Big = require('big.js/big');
 
 @Component({
   selector: 'account-operation',
   template: `
-      <div [class]="'aam-account-operation z-depth-1 flex-container horizontal ' + customClass">
+      <div aam-selectableItem
+        [aam-trackBy]="accountOperation"
+        (aam-selectStateChange)="onSelected($event);"
+        [class]="'aam-account-operation z-depth-1 flex-container horizontal ' + customClass"
+        [class.selected]='selected'>
         <div class="flex-item fixed24 handle">&nbsp;</div>
         <div class="flex-item unfixed24 flex-container">
           <div class="flex-item perc18">
@@ -32,6 +38,8 @@ import Big = require('big.js/big');
   styleUrls: ['account-operation.style.scss']
 })
 export class AccountOperationComponent implements OnInit {
+  selected = false;
+
   @Input()
   accountOperation: AccountOperation;
 
@@ -51,7 +59,7 @@ export class AccountOperationComponent implements OnInit {
     private componentFactoryResolver: ComponentFactoryResolver,
     private viewContainerRef: ViewContainerRef) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     // Chargement du composant qui va faire le rendu de la ligne de compte
     const factory = this.componentFactoryResolver.resolveComponentFactory(this.accountOperation.getComponentClass());
     const ref = this.operationRendererContainer.createComponent(factory, 0);
@@ -62,7 +70,11 @@ export class AccountOperationComponent implements OnInit {
     this.accountOperation.valueChanged.subscribe(() => {this.onAccountOperationValueChanged();});
   }
 
-  onAccountOperationValueChanged(): void {
+  onAccountOperationValueChanged() {
     this.valueChanged.next();
+  }
+
+  onSelected(selected: boolean) {
+    this.selected = selected;
   }
 };

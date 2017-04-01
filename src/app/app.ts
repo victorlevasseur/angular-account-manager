@@ -41,6 +41,9 @@ import { AccountComponent } from './account/account.component';
 import { AccountOperationComponent } from './account/operation/account-operation.component';
 import { BankOperationComponent} from './account/operation/bank-operation.component';
 
+import { SelectableListDirective } from './dnd/selectable-list.directive';
+import { SelectableItemDirective } from './dnd/selectable-item.directive';
+
 import { TabComponent } from './tabbedwindow/tab.component';
 import { TabsContainerComponent } from './tabbedwindow/tabscontainer.component';
 import { TabsHeaderComponent } from './tabbedwindow/tabsheader.component';
@@ -105,7 +108,9 @@ export class RavenErrorHandler implements ErrorHandler {
       ComboboxComponent,
       CurrencyInputDirective,
       DateInputDirective,
-      DoubleclickInputDirective
+      DoubleclickInputDirective,
+      SelectableListDirective,
+      SelectableItemDirective
     ],
     bootstrap: [AppComponent],
     entryComponents: [BankOperationComponent, AccountTabComponent, ButtonToolbarItemComponent]

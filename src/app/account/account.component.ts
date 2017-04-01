@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Optional } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 
@@ -14,7 +14,12 @@ import Big = require('big.js/big');
 @Component({
   selector: 'account',
   template: `
-      <div *ngIf="account" class="account-component" [dragula]="'account-bag'" [dragulaModel]='account.operations'>
+      <div aam-selectableList
+        [(aam-selectedItems)]="selection"
+        *ngIf="account"
+        class="account-component"
+        [dragula]="'account-bag'"
+        [dragulaModel]='account.operations'>
         <account-operation
           *ngFor="let operation of account.operations; let i = index; let odd = odd;"
           [accountOperation]="operation"
@@ -33,10 +38,15 @@ export class AccountComponent implements OnInit {
 
   partialSums = new Array<{value: Big, collectedValue: Big}>();
 
+  selection = new Array<AccountOperation>();
+
   /* debouncer used to reduce the number of request to the AccountCalculatorService */
   debouncer = new Subject();
 
-  constructor(private accountService: AccountService, private accountCalculator: AccountCalculatorService, private dragulaService: DragulaService) {
+  constructor(private accountService: AccountService,
+    private accountCalculator: AccountCalculatorService,
+    private dragulaService: DragulaService) {
+
     dragulaService.setOptions('account-bag', {
       moves: function (el, container, handle) {
         return handle.className.indexOf('handle') != -1;

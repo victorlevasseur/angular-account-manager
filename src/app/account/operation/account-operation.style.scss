@@ -7,25 +7,37 @@
 
     transition: background-color 0.2s ease-in-out;
 
-    &.even {
-
+    &.selected {
+        background-color: mix($panel_bg_color, $primary_color, 80%);
     }
 
     &.odd {
         background-color: lighten($panel_bg_color, 2%);
+
+        &.selected {
+            background-color: mix(lighten($panel_bg_color, 2%), $primary_color, 80%);
+        }
     }
 
     .handle {
         margin-top: 0;
         margin-bottom: 0;
-        
+
         background-color: transparent;
 
         transition: background-color 0.2s ease-in-out;
     }
 
-    &:hover .handle {
-        background-color: transparentize($primary_color, 0.8);
+    &:hover {
+        .handle {
+            background-color: transparentize($primary_color, 0.8);
+        }
+
+        &.selected {
+            .handle {
+                background-color: transparentize($primary_color, 0.7);
+            }
+        }
     }
 }
 

@@ -75,7 +75,6 @@ export class ComboboxComponent implements OnInit {
   }
 
   onMouseEnter() {
-    console.log("mouseenter");
     this.displayButton = true;
   }
 
