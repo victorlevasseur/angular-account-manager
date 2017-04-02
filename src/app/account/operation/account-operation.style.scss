@@ -1,6 +1,8 @@
 @import '../../styles/colors';
 
 .aam-account-operation {
+    position: relative;
+
     background-color: $panel_bg_color;
 
     color: $text_color;

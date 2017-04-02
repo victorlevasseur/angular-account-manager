@@ -15,7 +15,7 @@ export class SelectableListDirective implements OnInit, OnChanges {
   @Input('aam-selectedItemsChange')
   selectedItemsChange = new EventEmitter<Array<any>>();
 
-  @Input('aam-selectableItems')
+  @Input('aam-selectableModel')
   selectableItems: Array<any> = null;
 
   constructor(private selectionService: SelectionService) {

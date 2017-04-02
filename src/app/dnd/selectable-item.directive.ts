@@ -2,18 +2,22 @@ import {
   Directive,
   Input,
   Output,
+  Optional,
   HostListener,
   EventEmitter,
+  OnInit,
   OnDestroy,
   OnChanges,
+  ElementRef,
   SimpleChanges } from '@angular/core';
 
 import { SelectionService } from './selection.service';
+import { SelectableItemDirectivesListerService } from './selectable-item-directives-lister.service';
 
 @Directive({
   selector: '[aam-selectableItem]'
 })
-export class SelectableItemDirective implements OnDestroy, OnChanges {
+export class SelectableItemDirective implements OnInit, OnDestroy, OnChanges {
 
   @Input('aam-trackBy')
   trackBy: any;
@@ -21,14 +25,23 @@ export class SelectableItemDirective implements OnDestroy, OnChanges {
   @Output('aam-selectStateChange')
   selectedChange = new EventEmitter<boolean>();
 
-  constructor(private selectionService: SelectionService) {
+  constructor(public el: ElementRef, private selectionService: SelectionService, @Optional() private lister: SelectableItemDirectivesListerService) {
     selectionService.selectedChanged.subscribe(() => {
       this.onSelectionChanged();
     });
   }
 
+  ngOnInit() {
+    if(this.lister) {
+      this.lister.registerDirective(this);
+    }
+  }
+
   ngOnDestroy() {
     this.selectionService.removeFromSelection(this.trackBy);
+    if(this.lister) {
+      this.lister.unregisterDirective(this);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -43,10 +56,10 @@ export class SelectableItemDirective implements OnDestroy, OnChanges {
     }
   }
 
-  @HostListener('click', ['$event'])
+  @HostListener('mousedown', ['$event'])
   onClick(event: MouseEvent) {
     let latestSelected = this.selectionService.getLatestSelected(); // Need to keep it before maybe cleaning the selection
-    
+
     if(!event.ctrlKey) {
       this.selectionService.clearSelection();
     }
