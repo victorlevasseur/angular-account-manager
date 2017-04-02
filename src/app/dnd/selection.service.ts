@@ -97,10 +97,8 @@ export class SelectionService {
   }
 
   clearSelection() {
-    let previousSelected = this.selected.slice();
     this.selected.length = 0;
     this.propagateSelectionChange();
-    this.notifyItems(previousSelected);
   }
 
   addToSelection(item): boolean {
@@ -109,7 +107,6 @@ export class SelectionService {
     }
     this.selected.push(item);
     this.propagateSelectionChange();
-    this.notifyItems([item]);
     return true;
   }
 
@@ -133,7 +130,6 @@ export class SelectionService {
     let itemsToAdd = this.selectableItems.slice(startPos, endPos+1);
     this.selected = this.selected.concat(itemsToAdd);
     this.propagateSelectionChange();
-    this.notifyItems(itemsToAdd);
 
     return true;
   }
@@ -142,7 +138,7 @@ export class SelectionService {
     for(var i = 0; i < this.selected.length; ++i) {
       if(this.selected[i] === item) {
         this.selected.splice(i, 1);
-        this.notifyItems([item]);
+        this.propagateSelectionChange();
         return true;
       }
     }
@@ -152,26 +148,9 @@ export class SelectionService {
   selectAll() {
     this.selected = this.selectableItems.slice();
     this.propagateSelectionChange();
-    this.notifyAllItems();
   }
 
   private propagateSelectionChange() {
-    this.selectedChanged.next(this.selected);
-  }
-
-  private notifyItems(items: Array<any>) {
-    for(let i = 0; i < this.selectableDirectives.length; ++i) {
-      let directive = this.selectableDirectives[i];
-      if(items.indexOf(directive.trackBy) !== -1) {
-        directive.notifySelectionChanged(this.isSelected(directive.trackBy));
-      }
-    }
-  }
-
-  private notifyAllItems() {
-    for(let i = 0; i < this.selectableDirectives.length; ++i) {
-      let directive = this.selectableDirectives[i];
-      directive.notifySelectionChanged(this.isSelected(directive.trackBy));
-    }
+    this.selectedChanged.emit(this.selected);
   }
 }

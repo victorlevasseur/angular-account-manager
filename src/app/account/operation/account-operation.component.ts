@@ -24,7 +24,6 @@ import Big = require('big.js/big');
   template: `
       <div aam-selectableItem
         [aam-trackBy]="accountOperation"
-        (aam-selectStateChange)="onSelected($event);"
         (vp-in-view)="onEnterViewport();" [vp-in-view-config]="{everyTime: true}"
         (vp-out-view)="onExitViewport();" [vp-out-view-config]="{everyTime: true}"
         [class]="'aam-account-operation z-depth-1 flex-container horizontal ' + customClass + (selected ? ' selected':'')">
@@ -53,8 +52,6 @@ import Big = require('big.js/big');
   styleUrls: ['account-operation.style.scss']
 })
 export class AccountOperationComponent implements OnInit, OnDestroy {
-  selected = false;
-
   @Input()
   accountOperation: AccountOperation;
 
@@ -70,13 +67,16 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
   @ViewChild('operationRenderer', {read: ViewContainerRef})
   operationRendererContainer: ViewContainerRef;
 
+  private selected = false;
+
   private inViewport = false;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private viewContainerRef: ViewContainerRef,
     private changeDetectorRef: ChangeDetectorRef,
-    private triggerService: TriggerService) { }
+    private triggerService: TriggerService,
+    private selectionService: SelectionService) { }
 
   ngOnInit() {
     // Chargement du composant qui va faire le rendu de la ligne de compte
@@ -87,6 +87,12 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
 
     // Connect to the valueChanged emitter of the AccountOperation
     this.accountOperation.valueChanged.subscribe(() => {this.onAccountOperationValueChanged();});
+
+    this.selectionService.selectedChanged.subscribe((items) => {
+      if(this.inViewport) {
+        this.checkIfSelected();
+      }
+    });
 
     this.triggerViewportCheck();
   }
@@ -99,12 +105,10 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
     this.valueChanged.next();
   }
 
-  onSelected(selected: boolean) {
-    this.selected = selected;
-  }
-
   onEnterViewport() {
     this.inViewport = true;
+    this.checkIfSelected();
+
     this.changeDetectorRef.reattach();
     this.changeDetectorRef.detectChanges();
   }
@@ -117,5 +121,9 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
 
   triggerViewportCheck() {
     this.triggerService.trigger();
+  }
+
+  private checkIfSelected() {
+    this.selected = this.selectionService.isSelected(this.accountOperation);
   }
 };
