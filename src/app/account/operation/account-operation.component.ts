@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ComponentFactoryResolver, ViewContainerRef, OnInit, ViewChild, Optional } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef, OnInit, ViewChild, Optional } from '@angular/core';
 import { AccountOperation, AccountOperationRenderer } from './account-operation';
 import { BankOperation } from './bank-operation';
 
@@ -12,9 +12,10 @@ import Big = require('big.js/big');
       <div aam-selectableItem
         [aam-trackBy]="accountOperation"
         (aam-selectStateChange)="onSelected($event);"
-        aam-dndHandleSelector=".handle"
+        (vp-in-view)="onEnterViewport();" [vp-in-view-config]="{everyTime: true}"
+        (vp-out-view)="onExitViewport();" [vp-out-view-config]="{everyTime: true}"
         [class]="'aam-account-operation z-depth-1 flex-container horizontal ' + customClass + (selected ? ' selected':'')">
-        <div class="flex-item fixed24 handle">&nbsp;</div>
+        <div [class]="'flex-item fixed24 handle ' + (inViewport ? 'viewport' : '')">&nbsp;</div>
         <div class="flex-item unfixed24 flex-container">
           <div class="flex-item perc18">
             <div #operationRenderer></div>
@@ -56,9 +57,12 @@ export class AccountOperationComponent implements OnInit {
   @ViewChild('operationRenderer', {read: ViewContainerRef})
   operationRendererContainer: ViewContainerRef;
 
+  private inViewport = false;
+
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
-    private viewContainerRef: ViewContainerRef) { }
+    private viewContainerRef: ViewContainerRef,
+    private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     // Chargement du composant qui va faire le rendu de la ligne de compte
@@ -77,5 +81,17 @@ export class AccountOperationComponent implements OnInit {
 
   onSelected(selected: boolean) {
     this.selected = selected;
+  }
+
+  onEnterViewport() {
+    this.inViewport = true;
+    this.changeDetectorRef.reattach();
+    this.changeDetectorRef.detectChanges();
+  }
+
+  onExitViewport() {
+    this.inViewport = false;
+    this.changeDetectorRef.detach();
+    this.changeDetectorRef.detectChanges();
   }
 };

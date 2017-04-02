@@ -18,7 +18,7 @@ import Big = require('big.js/big');
     <div class="flex-container vertical" style="height: 100%;">
       <aam-toolbar [items]="toolbarItems"></aam-toolbar>
       <div class="flex-item flex-item-grow">
-        <div class="aam-vscrollable">
+        <div vp-scrollable-content class="aam-vscrollable">
           <account #accountComponent [account]="account"></account>
         </div>
       </div>

@@ -30,6 +30,11 @@
         background-color: transparent;
 
         transition: background-color 0.2s ease-in-out;
+
+        /* TODO Just for testing the viewport linked change detection detach/attach */
+        &.viewport {
+            background-color: red !important;
+        }
     }
 
     &:hover {

@@ -8,6 +8,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { DynamicComponentModule } from 'angular2-dynamic-component/index';
+import { ViewportModule } from '../angular2-viewport-master';
 
 // Setup redux with ngrx
 import { Store, StoreModule } from '@ngrx/store';
@@ -75,7 +76,7 @@ export class RavenErrorHandler implements ErrorHandler {
         ReactiveFormsModule,
         HttpModule,
         DragulaModule,
-        DynamicComponentModule
+        ViewportModule
     ],
     providers: [
       AccountService,
