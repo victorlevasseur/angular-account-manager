@@ -1,4 +1,4 @@
-import { Directive, Input, HostListener, ElementRef } from '@angular/core';
+import { Directive, Input, HostListener, HostBinding, ElementRef } from '@angular/core';
 
 const $ = require('jquery');
 
@@ -17,6 +17,9 @@ export class DndListDirective {
 
   draggingItems: Array<any> = null;
 
+  @HostBinding('style.cursor')
+  cursor: string;
+
   constructor(private el: ElementRef, private selectionService: SelectionService, private lister: SelectableItemDirectivesListerService) {
 
   }
@@ -28,13 +31,31 @@ export class DndListDirective {
       this.draggingItems = this.selectionService.selected.slice();
       this.selectionService.clearSelection();
       this.removeItemsFromModel(this.draggingItems);
+      this.cursor = '-webkit-grabbing';
+    }
+    else if(this.draggingItems) {
+      return false;
     }
   }
 
   @HostListener('document:mouseup', ['$event'])
   onMouseUp(event: MouseEvent) {
     if(this.draggingItems) {
-      let mousePos = event.pageY - $(this.el.nativeElement).offset().top;
+      this.dropItemsAt(event.pageY - $(this.el.nativeElement).offset().top);
+      this.cursor = undefined;
+    }
+  }
+
+  @HostListener('body:mouseleave')
+  onMouseLeaveWindow() {
+    if(this.draggingItems) {
+      this.dropItemsAt(0);
+    }
+  }
+
+  private dropItemsAt(y: number) {
+    if(this.draggingItems) {
+      let mousePos = y;
       let insertionIndex = this.model.length;
 
       if(this.lister.selectableItemDirectives.length > 0) {
@@ -45,7 +66,7 @@ export class DndListDirective {
           for(let i = 0; i < this.lister.selectableItemDirectives.length; ++i) {
             let sel = this.lister.selectableItemDirectives[i];
             if(mousePos < this.getYPositionOfSelectable(sel) + this.getHeightOfSelectable(sel)/2) {
-              insertionIndex = i+1;
+              insertionIndex = i;
               break;
             }
           }
