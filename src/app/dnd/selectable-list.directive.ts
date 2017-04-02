@@ -1,4 +1,4 @@
-import { Directive, Input, ContentChildren, QueryList, OnInit, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
+import { Directive, Input, Output, ContentChildren, QueryList, OnInit, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
 
 import { SelectableItemDirective } from './selectable-item.directive';
 import { SelectionService } from './selection.service';
@@ -12,7 +12,7 @@ export class SelectableListDirective implements OnInit, OnChanges {
   @Input('aam-selectedItems')
   selectedItems = new Array<any>();
 
-  @Input('aam-selectedItemsChange')
+  @Output('aam-selectedItemsChange')
   selectedItemsChange = new EventEmitter<Array<any>>();
 
   @Input('aam-selectableModel')
