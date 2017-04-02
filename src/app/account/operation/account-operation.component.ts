@@ -12,6 +12,7 @@ import Big = require('big.js/big');
       <div aam-selectableItem
         [aam-trackBy]="accountOperation"
         (aam-selectStateChange)="onSelected($event);"
+        aam-dndHandleSelector=".handle"
         [class]="'aam-account-operation z-depth-1 flex-container horizontal ' + customClass + (selected ? ' selected':'')">
         <div class="flex-item fixed24 handle">&nbsp;</div>
         <div class="flex-item unfixed24 flex-container">

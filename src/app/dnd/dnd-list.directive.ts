@@ -20,13 +20,20 @@ export class DndListDirective {
   @HostBinding('style.cursor')
   cursor: string;
 
+  private mouseDragging = false;
+
   constructor(private el: ElementRef, private selectionService: SelectionService, private lister: SelectableItemDirectivesListerService) {
 
   }
 
   @HostListener('mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
-    if(!this.draggingItems && event.buttons === 1) {
+    if(!this.draggingItems && !this.mouseDragging && event.buttons === 1) {
+      this.mouseDragging = true; //To avoid starting d&d in the middle of a refused drag
+
+      if(!this.isOnSelectedHandle(event.target))
+        return;
+
       //Start the drag
       this.draggingItems = this.selectionService.selected.slice();
       this.selectionService.clearSelection();
@@ -43,6 +50,7 @@ export class DndListDirective {
     if(this.draggingItems) {
       this.dropItemsAt(event.pageY - $(this.el.nativeElement).offset().top);
       this.cursor = undefined;
+      this.mouseDragging = false;
     }
   }
 
@@ -53,7 +61,28 @@ export class DndListDirective {
     }
   }
 
-  private dropItemsAt(y: number) {
+  private isOnSelectedHandle(target): boolean {
+    //Check if the target is in an handle of a selected element
+    for(let i = 0; i < this.selectionService.selected.length; ++i) {
+      // Get the directive associated with the item
+      let selectedItem = this.selectionService.selected[i];
+      let associatedDirective = this.lister.getSelectableItemDirective(selectedItem);
+
+      // Get all the handles in the element
+      let jqueryEl = $(associatedDirective.el.nativeElement);
+      let handles = jqueryEl.find(associatedDirective.dndHandleSelector);
+      for(let j = 0; j < handles.size(); ++j) {
+        let handle = handles.get(j);
+        if($.contains(handle, target) || handle == target) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  private dropItemsAt(y: number): void {
     if(this.draggingItems) {
       let mousePos = y;
       let insertionIndex = this.model.length;

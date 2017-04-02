@@ -25,6 +25,9 @@ export class SelectableItemDirective implements OnInit, OnDestroy, OnChanges {
   @Output('aam-selectStateChange')
   selectedChange = new EventEmitter<boolean>();
 
+  @Input('aam-dndHandleSelector')
+  dndHandleSelector: string = '*';
+
   constructor(public el: ElementRef, private selectionService: SelectionService, @Optional() private lister: SelectableItemDirectivesListerService) {
     selectionService.selectedChanged.subscribe(() => {
       this.onSelectionChanged();

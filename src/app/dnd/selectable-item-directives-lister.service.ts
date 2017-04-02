@@ -10,6 +10,16 @@ export class SelectableItemDirectivesListerService {
 
   }
 
+  getSelectableItemDirective(item: any): SelectableItemDirective {
+    for(let i = 0; i < this.selectableItemDirectives.length; ++i) {
+      let directive = this.selectableItemDirectives[i];
+      if(directive.trackBy === item) {
+        return directive;
+      }
+    }
+    return null;
+  }
+
   registerDirective(directive: SelectableItemDirective) {
     this.selectableItemDirectives.push(directive);
   }
