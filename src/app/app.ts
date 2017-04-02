@@ -5,7 +5,6 @@ import { enableProdMode, NgModule, Component, ErrorHandler } from '@angular/core
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { DynamicComponentModule } from 'angular2-dynamic-component/index';
@@ -15,19 +14,13 @@ import { Store, StoreModule } from '@ngrx/store';
 
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 
-import "materialize-css";
-import "angular2-materialize";
 import "rxjs/Rx";
 import Raven = require('raven-js');
-import { MaterializeModule } from "angular2-materialize";
-import { DropdownModule } from "ngx-dropdown";
 
 /**
  * Import our child components
  */
 import { AppComponent } from './components/app.component';
-
-import { routes } from './app.routes';
 
 /**
  * Import the authentication service to be injected into our component
@@ -81,8 +74,6 @@ export class RavenErrorHandler implements ErrorHandler {
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
-        MaterializeModule,
-        RouterModule.forRoot(routes, { useHash: true }),
         DragulaModule,
         DynamicComponentModule
     ],

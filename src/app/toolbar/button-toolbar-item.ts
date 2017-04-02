@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ToolbarItem } from './toolbar-item';
 
 @Component({
+  selector: 'button-toolbar-item',
   template: `
     <div class="aam-toolbar-button" (click)="onClicked();">
       <span *ngIf="icon && icon != ''">aa</span>

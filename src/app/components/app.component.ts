@@ -33,7 +33,6 @@ const remote = require('electron').remote;
         <div class="aam-noscroll">
           <app-tabs-container [tabsList]="tabsList"></app-tabs-container>
         </div>
-        <router-outlet></router-outlet>
       </main>
     </div>
     `,

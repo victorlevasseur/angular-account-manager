@@ -3,8 +3,6 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import { WebWorkerService } from 'angular2-web-worker/web-worker';
-
 import Big = require('big.js/big');
 
 import { Account } from '../account';
@@ -12,9 +10,6 @@ import { AccountOperation } from '../operation/account-operation';
 
 @Injectable()
 export class AccountCalculatorService {
-
-  /* Ugly, needs to find a better solution with real DI, but my previous attempts failed with this particular service! */
-  webWorkerService: WebWorkerService = new WebWorkerService;
 
   constructor() {
 

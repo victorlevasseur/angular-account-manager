@@ -7,10 +7,8 @@ import { ToolbarItem } from './toolbar-item';
   template: `
     <div class="aam-toolbar aam-toolbar-top">
       <div class="aam-toolbar-item" *ngFor="let item of items">
-        <template dynamic-component
-          [componentType]="item.type"
-          [componentContext]="{item: item}">
-        </template>
+        <!-- TODO Replace with dynamic component creation -->
+        <button-toolbar-item [item]="item"></button-toolbar-item>
       </div>
     </div>
   `,
