@@ -19,4 +19,8 @@ export class TriggerService {
 			this._subj.next();
 		});
 	}
+
+	public trigger():void {
+		this._subj.next();
+	}
 }

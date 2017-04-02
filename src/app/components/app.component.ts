@@ -3,6 +3,8 @@
  */
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
+import { TriggerService } from '../../angular2-viewport-master';
+
 import { AccountOperation } from './../account/operation/account-operation';
 import { BankOperation } from './../account/operation/bank-operation';
 import { AccountOperationComponent} from './../account/operation/account-operation.component';
@@ -21,7 +23,7 @@ const remote = require('electron').remote;
     styleUrls: ['../styles/app.style.scss'],
     encapsulation: ViewEncapsulation.None,
     template: `
-    <div class="aam-main-container flex-container vertical">
+    <div class="aam-main-container flex-container vertical" (window:resize)="onResize();">
       <div class="aam-main-tab-header">
           <div class="flex-container">
             <div class="flex-item perc24">
@@ -41,7 +43,7 @@ export class AppComponent implements OnInit {
 
   tabsList: TabsList;
 
-  constructor() {
+  constructor(private triggerService: TriggerService) {
     var tabs: Tab[] = [
       new AccountTab("compte courant.cpt"),
       new AccountTab("pel.cpt"),
@@ -52,23 +54,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    //check authentication
+
   }
 
-  minimizeClicked() {
-    remote.getCurrentWindow().minimize();
-  }
-
-  maximizeClicked() {
-    var window = remote.getCurrentWindow();
-    if (!window.isMaximized()) {
-      window.maximize();
-    } else {
-      window.unmaximize();
-    }
-  }
-
-  closeClicked() {
-    remote.getCurrentWindow().close();
+  onResize() {
+    this.triggerService.trigger();
   }
 }
