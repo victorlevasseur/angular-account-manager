@@ -28,18 +28,18 @@ export class SelectableItemDirective implements OnInit, OnDestroy, OnChanges {
   dndHandleSelector: string = '*';
 
   constructor(public el: ElementRef, private selectionService: SelectionService) {
-    selectionService.selectedChanged.subscribe(() => {
+    /*selectionService.selectedChanged.subscribe(() => {
       this.onSelectionChanged();
-    });
+    });*/
   }
 
   ngOnInit() {
-
+    this.selectionService.registerSelectableItemDirective(this);
   }
 
   ngOnDestroy() {
+    this.selectionService.unregisterSelectableItemDirective(this);
     this.selectionService.removeFromSelection(this.trackBy);
-
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -71,6 +71,10 @@ export class SelectableItemDirective implements OnInit, OnDestroy, OnChanges {
     else {
       this.selectionService.addToSelection(this.trackBy);
     }
+  }
+
+  notifySelectionChanged(status: boolean) {
+    this.selectedChange.next(status);
   }
 
   private onSelectionChanged() {

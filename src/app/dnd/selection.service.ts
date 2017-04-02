@@ -1,14 +1,29 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
+import { SelectableItemDirective } from './selectable-item.directive';
+
 @Injectable()
 export class SelectionService {
 
   selected: Array<any> = null;
   selectedChanged = new EventEmitter<Array<any>>();
-  selectableItems: Array<any> = null;
+
+  selectableItems = new Array<any>();
+  selectableDirectives = new Array<SelectableItemDirective>();
 
   constructor() {
 
+  }
+
+  registerSelectableItemDirective(directive: SelectableItemDirective) {
+    this.selectableDirectives.push(directive);
+  }
+
+  unregisterSelectableItemDirective(directive: SelectableItemDirective) {
+    let index = this.selectableDirectives.indexOf(directive);
+    if(index !== -1) {
+      this.selectableDirectives.splice(index, 1);
+    }
   }
 
   setSelection(selected: Array<any>) {
@@ -82,8 +97,10 @@ export class SelectionService {
   }
 
   clearSelection() {
+    let previousSelected = this.selected.slice();
     this.selected.length = 0;
     this.propagateSelectionChange();
+    this.notifyItems(previousSelected);
   }
 
   addToSelection(item): boolean {
@@ -92,6 +109,7 @@ export class SelectionService {
     }
     this.selected.push(item);
     this.propagateSelectionChange();
+    this.notifyItems([item]);
     return true;
   }
 
@@ -112,8 +130,11 @@ export class SelectionService {
       [startPos, endPos] = [endPos, startPos];
     }
 
-    this.selected = this.selected.concat(this.selectableItems.slice(startPos, endPos+1));
+    let itemsToAdd = this.selectableItems.slice(startPos, endPos+1);
+    this.selected = this.selected.concat(itemsToAdd);
     this.propagateSelectionChange();
+    this.notifyItems(itemsToAdd);
+
     return true;
   }
 
@@ -121,7 +142,7 @@ export class SelectionService {
     for(var i = 0; i < this.selected.length; ++i) {
       if(this.selected[i] === item) {
         this.selected.splice(i, 1);
-        this.propagateSelectionChange();
+        this.notifyItems([item]);
         return true;
       }
     }
@@ -131,9 +152,26 @@ export class SelectionService {
   selectAll() {
     this.selected = this.selectableItems.slice();
     this.propagateSelectionChange();
+    this.notifyAllItems();
   }
 
   private propagateSelectionChange() {
     this.selectedChanged.next(this.selected);
+  }
+
+  private notifyItems(items: Array<any>) {
+    for(let i = 0; i < this.selectableDirectives.length; ++i) {
+      let directive = this.selectableDirectives[i];
+      if(items.indexOf(directive.trackBy) !== -1) {
+        directive.notifySelectionChanged(this.isSelected(directive.trackBy));
+      }
+    }
+  }
+
+  private notifyAllItems() {
+    for(let i = 0; i < this.selectableDirectives.length; ++i) {
+      let directive = this.selectableDirectives[i];
+      directive.notifySelectionChanged(this.isSelected(directive.trackBy));
+    }
   }
 }
