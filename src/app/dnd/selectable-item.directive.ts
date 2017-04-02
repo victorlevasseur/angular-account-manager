@@ -12,7 +12,6 @@ import {
   SimpleChanges } from '@angular/core';
 
 import { SelectionService } from './selection.service';
-import { SelectableItemDirectivesListerService } from './selectable-item-directives-lister.service';
 
 @Directive({
   selector: '[aam-selectableItem]'
@@ -28,23 +27,19 @@ export class SelectableItemDirective implements OnInit, OnDestroy, OnChanges {
   @Input('aam-dndHandleSelector')
   dndHandleSelector: string = '*';
 
-  constructor(public el: ElementRef, private selectionService: SelectionService, @Optional() private lister: SelectableItemDirectivesListerService) {
+  constructor(public el: ElementRef, private selectionService: SelectionService) {
     selectionService.selectedChanged.subscribe(() => {
       this.onSelectionChanged();
     });
   }
 
   ngOnInit() {
-    if(this.lister) {
-      this.lister.registerDirective(this);
-    }
+
   }
 
   ngOnDestroy() {
     this.selectionService.removeFromSelection(this.trackBy);
-    if(this.lister) {
-      this.lister.unregisterDirective(this);
-    }
+
   }
 
   ngOnChanges(changes: SimpleChanges) {

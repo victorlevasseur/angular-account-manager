@@ -41,7 +41,6 @@ import { AccountComponent } from './account/account.component';
 import { AccountOperationComponent } from './account/operation/account-operation.component';
 import { BankOperationComponent} from './account/operation/bank-operation.component';
 
-import { DndListDirective } from './dnd/dnd-list.directive';
 import { SelectableListDirective } from './dnd/selectable-list.directive';
 import { SelectableItemDirective } from './dnd/selectable-item.directive';
 
@@ -110,7 +109,6 @@ export class RavenErrorHandler implements ErrorHandler {
       CurrencyInputDirective,
       DateInputDirective,
       DoubleclickInputDirective,
-      DndListDirective,
       SelectableListDirective,
       SelectableItemDirective
     ],
