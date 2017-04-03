@@ -65,6 +65,9 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
   @Input()
   selected = false;
 
+  @Output()
+  selectedChange = new EventEmitter<boolean>();
+
   @ViewChild('operationRenderer', {read: ViewContainerRef})
   operationRendererContainer: ViewContainerRef;
 

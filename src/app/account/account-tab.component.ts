@@ -76,13 +76,9 @@ export class AccountTabComponent implements OnInit {
   }
 
   removeSelectedOperations() {
-    this.accountComponent.selection.forEach((selectedItem: AccountOperation) => {
-      let itemIndex = this.account.operations.indexOf(selectedItem);
-      if(itemIndex === -1) {
-        return;
-      }
-      this.account.operations.splice(itemIndex, 1);
-    });
+    //TODO: Redo it
+
+
     this.accountComponent.selection = new Set([]);
   }
 }
