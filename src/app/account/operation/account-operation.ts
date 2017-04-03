@@ -2,15 +2,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import Big = require('big.js/big');
 
-@Component({
-  template: `
-    <strong> Unimplemented component! </strong>`
-})
-export class AccountOperationRenderer {
-  @Input()
-  op: AccountOperation;
-}
-
 export abstract class AccountOperation {
 
   valueChanged = new EventEmitter<void>();
@@ -28,4 +19,13 @@ export abstract class AccountOperation {
   protected setValueChanged(): void {
     this.valueChanged.next();
   }
+}
+
+@Component({
+  template: `
+    <strong> Unimplemented component! </strong>`
+})
+export class AccountOperationRenderer {
+  @Input()
+  op: AccountOperation;
 }

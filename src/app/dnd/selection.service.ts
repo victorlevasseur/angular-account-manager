@@ -5,99 +5,72 @@ import { SelectableItemDirective } from './selectable-item.directive';
 @Injectable()
 export class SelectionService {
 
-  selected: Array<any> = null;
-  selectedChanged = new EventEmitter<Array<any>>();
+  selected: Set<any> = null;
+  selectedChanged = new EventEmitter<Set<any>>();
 
   selectableItems = new Array<any>();
-  selectableDirectives = new Array<SelectableItemDirective>();
 
   constructor() {
 
   }
 
-  registerSelectableItemDirective(directive: SelectableItemDirective) {
-    this.selectableDirectives.push(directive);
-  }
-
-  unregisterSelectableItemDirective(directive: SelectableItemDirective) {
-    let index = this.selectableDirectives.indexOf(directive);
-    if(index !== -1) {
-      this.selectableDirectives.splice(index, 1);
-    }
-  }
-
-  setSelection(selected: Array<any>) {
+  setSelection(selected: Set<any>) {
     this.selected = selected;
     this.propagateSelectionChange();
   }
 
   isSelected(item): boolean {
-    for(var i = 0; i < this.selected.length; ++i) {
-      if(this.selected[i] === item) {
-        return true;
-      }
-    }
-    return false;
+    return this.selected.has(item);
   }
 
   getSelectedCount(): number {
-    return this.selected.length;
-  }
-
-  getSelected(i: number) {
-    return this.selected[i];
-  }
-
-  getLatestSelected() {
-    if(this.selected.length == 0) {
-      return null;
-    }
-
-    return this.selected[this.selected.length - 1];
-  }
-
-  getEarliestSelected() {
-    if(this.selected.length == 0) {
-      return null;
-    }
-
-    return this.selected[0];
+    return this.selected.size;
   }
 
   getFirstSelectableSelected() {
-    if(this.selected.length === 0) {
+    if(this.selected.size === 0) {
       return null;
     }
 
-    let firstIndex = this.selectableItems.indexOf(this.selected[0]);
-    for(let i = 1; i < this.selected.length; ++i) {
-      let index = this.selectableItems.indexOf(this.selected[i]);
-      if(index < firstIndex) {
+    let firstIndex = NaN;
+    for (let item of this.selected.values()) {
+      let index = this.selectableItems.indexOf(item);
+      if(isNaN(firstIndex) || index < firstIndex) {
         firstIndex = index;
       }
     }
 
-    return firstIndex;
+    if(isNaN(firstIndex)) {
+      return null;
+    }
+    else {
+      return this.selectableItems[firstIndex].trackBy;
+    }
   }
 
   getLastSelectableSelected() {
-    if(this.getSelectedCount() === 0) {
+    if(this.selected.size === 0) {
       return null;
     }
 
-    let lastIndex = this.selectableItems.indexOf(this.selected[0]);
-    for(let i = 1; i < this.selected.length; ++i) {
-      let index = this.selectableItems.indexOf(this.selected[i]);
-      if(index > lastIndex) {
-        lastIndex = index;
+    let firstIndex = NaN;
+    for (let item of this.selected.values()) {
+      let index = this.selectableItems.indexOf(item);
+      if(isNaN(firstIndex) || index > firstIndex) {
+        firstIndex = index;
       }
     }
 
-    return lastIndex;
+    if(isNaN(firstIndex)) {
+      return null;
+    }
+    else {
+      return this.selectableItems[firstIndex].trackBy;
+    }
   }
 
   clearSelection() {
-    this.selected.length = 0;
+    this.selected.clear();
     this.propagateSelectionChange();
   }
 
@@ -105,7 +78,7 @@ export class SelectionService {
     if(this.isSelected(item)) {
       return false;
     }
-    this.selected.push(item);
+    this.selected.add(item);
     this.propagateSelectionChange();
     return true;
   }
@@ -117,6 +90,8 @@ export class SelectionService {
    */
   addRangeToSelection(from, to): boolean {
     let itemsToSelect = [];
+    console.log(from);
+    console.log(to);
 
     let startPos = this.selectableItems.indexOf(from);
     let endPos = this.selectableItems.indexOf(to);
@@ -128,25 +103,21 @@ export class SelectionService {
     }
 
     let itemsToAdd = this.selectableItems.slice(startPos, endPos+1);
-    this.selected = this.selected.concat(itemsToAdd);
+    for(let i = 0; i < itemsToAdd.length; ++i) {
+      this.selected.add(itemsToAdd[i]);
+    }
     this.propagateSelectionChange();
 
     return true;
   }
 
   removeFromSelection(item): boolean {
-    for(var i = 0; i < this.selected.length; ++i) {
-      if(this.selected[i] === item) {
-        this.selected.splice(i, 1);
-        this.propagateSelectionChange();
-        return true;
-      }
-    }
+    this.selected.delete(item);
     return false;
   }
 
   selectAll() {
-    this.selected = this.selectableItems.slice();
+    this.selected = new Set(this.selectableItems.slice());
     this.propagateSelectionChange();
   }
 

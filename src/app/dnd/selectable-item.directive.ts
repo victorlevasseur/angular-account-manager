@@ -32,11 +32,9 @@ export class SelectableItemDirective implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
-    this.selectionService.registerSelectableItemDirective(this);
   }
 
   ngOnDestroy() {
-    this.selectionService.unregisterSelectableItemDirective(this);
     this.selectionService.removeFromSelection(this.trackBy);
   }
 
@@ -54,7 +52,7 @@ export class SelectableItemDirective implements OnInit, OnDestroy, OnChanges {
 
   @HostListener('mousedown', ['$event'])
   onClick(event: MouseEvent) {
-    let latestSelected = this.selectionService.getLatestSelected(); // Need to keep it before maybe cleaning the selection
+    let latestSelected = this.selectionService.getFirstSelectableSelected(); // Need to keep it before maybe cleaning the selection
 
     if(!event.ctrlKey) {
       this.selectionService.clearSelection();

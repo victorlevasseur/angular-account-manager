@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
@@ -12,6 +12,7 @@
     "paths": {},
     "lib": [
       "dom",
+      "es5",
       "es6"
     ],
     "typeRoots": [

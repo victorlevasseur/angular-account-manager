@@ -22,9 +22,7 @@ import Big = require('big.js/big');
 @Component({
   selector: 'account-operation',
   template: `
-      <div aam-selectableItem
-        [aam-trackBy]="accountOperation"
-        (vp-in-view)="onEnterViewport();" [vp-in-view-config]="{everyTime: true}"
+      <div (vp-in-view)="onEnterViewport();" [vp-in-view-config]="{everyTime: true}"
         (vp-out-view)="onExitViewport();" [vp-out-view-config]="{everyTime: true}"
         [class]="'aam-account-operation z-depth-1 flex-container horizontal ' + customClass + (selected ? ' selected':'')">
         <div [class]="'flex-item fixed24 handle ' + (inViewport ? 'viewport' : '')">&nbsp;</div>
@@ -64,10 +62,11 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
   @Output()
   valueChanged = new EventEmitter<void>();
 
+  @Input()
+  selected = false;
+
   @ViewChild('operationRenderer', {read: ViewContainerRef})
   operationRendererContainer: ViewContainerRef;
-
-  private selected = false;
 
   private inViewport = false;
 
@@ -88,12 +87,6 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
     // Connect to the valueChanged emitter of the AccountOperation
     this.accountOperation.valueChanged.subscribe(() => {this.onAccountOperationValueChanged();});
 
-    this.selectionService.selectedChanged.subscribe((items) => {
-      if(this.inViewport) {
-        this.checkIfSelected();
-      }
-    });
-
     this.triggerViewportCheck();
   }
 
@@ -107,7 +100,6 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
 
   onEnterViewport() {
     this.inViewport = true;
-    this.checkIfSelected();
 
     this.changeDetectorRef.reattach();
     this.changeDetectorRef.detectChanges();
@@ -121,9 +113,5 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
 
   triggerViewportCheck() {
     this.triggerService.trigger();
-  }
-
-  private checkIfSelected() {
-    this.selected = this.selectionService.isSelected(this.accountOperation);
   }
 };

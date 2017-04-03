@@ -22,6 +22,9 @@ import Big = require('big.js/big');
         *ngIf="account"
         class="account-component">
         <account-operation
+          aam-selectableItem
+          [aam-trackBy]="operation"
+          [selected]="selection.has(operation)"
           *ngFor="let operation of account.operations; let i = index; let odd = odd;"
           [accountOperation]="operation"
           [partialSum]="partialSums[i]"
@@ -39,7 +42,7 @@ export class AccountComponent implements OnInit {
 
   partialSums = new Array<{value: Big, collectedValue: Big}>();
 
-  selection = new Array<AccountOperation>();
+  selection = new Set<AccountOperation>();
 
   /* debouncer used to reduce the number of request to the AccountCalculatorService */
   debouncer = new Subject();

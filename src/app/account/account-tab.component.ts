@@ -83,6 +83,6 @@ export class AccountTabComponent implements OnInit {
       }
       this.account.operations.splice(itemIndex, 1);
     });
-    this.accountComponent.selection = [];
+    this.accountComponent.selection = new Set([]);
   }
 }

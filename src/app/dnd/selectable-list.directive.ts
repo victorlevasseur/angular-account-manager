@@ -10,16 +10,16 @@ import { SelectionService } from './selection.service';
 export class SelectableListDirective implements OnInit, OnChanges {
 
   @Input('aam-selectedItems')
-  selectedItems = new Array<any>();
+  selectedItems = new Set<any>();
 
   @Output('aam-selectedItemsChange')
-  selectedItemsChange = new EventEmitter<Array<any>>();
+  selectedItemsChange = new EventEmitter<Set<any>>();
 
   @Input('aam-selectableModel')
   selectableItems: Array<any> = null;
 
   constructor(private selectionService: SelectionService) {
-    selectionService.selectedChanged.subscribe((newSelection: Array<any>) => {
+    selectionService.selectedChanged.subscribe((newSelection: Set<any>) => {
       this.onSelectionChanged(newSelection);
     });
   }
@@ -30,12 +30,13 @@ export class SelectableListDirective implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
     if(changes.hasOwnProperty('selectedItems') && changes['selectedItems']) {
       this.selectionService.setSelection(changes['selectedItems'].currentValue);
     }
   }
 
-  onSelectionChanged(newSelection: Array<any>) {
+  onSelectionChanged(newSelection: Set<any>) {
     this.selectedItems = newSelection;
     this.selectedItemsChange.next(newSelection);
   }
