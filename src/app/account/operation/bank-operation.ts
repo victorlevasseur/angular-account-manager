@@ -1,3 +1,5 @@
+import { Type } from '@angular/core';
+
 import { AccountOperation, AccountOperationRenderer } from './account-operation';
 import { BankOperationComponent } from './bank-operation.component';
 
@@ -56,7 +58,11 @@ export class BankOperation extends AccountOperation {
     return this.collected ? this.getValue() : new Big(0);
   }
 
-  getComponentClass(): { new(...args: any[]): AccountOperationRenderer; } {
+  getComponentClass(): Type<AccountOperationRenderer> {
     return BankOperationComponent;
+  }
+
+  getComponentDefaultHeight(): number {
+    return 28;
   }
 }

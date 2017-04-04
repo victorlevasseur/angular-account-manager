@@ -39,7 +39,9 @@ export class AccountTabComponent implements OnInit {
     new ButtonToolbarItem({
       text: 'Ajouter une opération',
       clickedCallback: (item) => {
-        this.addOperation();
+        for(let i = 0; i < 100; ++i) {
+          this.addOperation();
+        }
       }
     }),
     new ButtonToolbarItem({
@@ -79,6 +81,6 @@ export class AccountTabComponent implements OnInit {
     //TODO: Redo it
 
 
-    this.accountComponent.selection = new Set([]);
+    this.accountComponent.selection.clear();
   }
 }

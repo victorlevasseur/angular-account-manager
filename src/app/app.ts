@@ -33,6 +33,7 @@ import { AccountCalculatorService } from './account/calculator/account-calculato
 import { AccountTabComponent } from './account/account-tab.component';
 import { AccountComponent } from './account/account.component';
 import { AccountOperationComponent } from './account/operation/account-operation.component';
+import { AccountOperationRendererService } from './account/operation/account-operation-renderer.service';
 import { BankOperationComponent} from './account/operation/bank-operation.component';
 
 import { SelectableListDirective } from './dnd/selectable-list.directive';
@@ -82,6 +83,7 @@ export class RavenErrorHandler implements ErrorHandler {
       AccountService,
       AccountCalculatorService,
       UniqueNumberService,
+      AccountOperationRendererService,
       { provide: ErrorHandler, useClass: RavenErrorHandler } // To redirect errors to raven
     ],
     declarations: [

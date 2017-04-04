@@ -3,6 +3,7 @@ import {
   Input,
   Output,
   EventEmitter,
+  ComponentFactory,
   ComponentFactoryResolver,
   ViewContainerRef,
   ChangeDetectorRef,
@@ -14,6 +15,7 @@ import {
 import { TriggerService } from '../../../angular2-viewport-master';
 
 import { AccountOperation, AccountOperationRenderer } from './account-operation';
+import { AccountOperationRendererService } from './account-operation-renderer.service';
 import { BankOperation } from './bank-operation';
 import { SelectionService } from '../../dnd/selection.service';
 
@@ -24,8 +26,9 @@ import Big = require('big.js/big');
   template: `
       <div (vp-in-view)="onEnterViewport();" [vp-in-view-config]="{everyTime: true}"
         (vp-out-view)="onExitViewport();" [vp-out-view-config]="{everyTime: true}"
-        [class]="'aam-account-operation z-depth-1 flex-container horizontal ' + customClass + (selected ? ' selected':'')">
-        <div [class]="'flex-item fixed24 handle ' + (inViewport ? 'viewport' : '')">&nbsp;</div>
+        [class]="'aam-account-operation z-depth-1 flex-container horizontal ' + customClass + (isSelected() ? ' selected':'')"
+        [style.height]="!inViewport ? accountOperation.getComponentDefaultHeight() + 'px' : 'auto'">
+        <div class="flex-item fixed24 handle">&nbsp;</div>
         <div class="flex-item unfixed24 flex-container">
           <div class="flex-item perc18">
             <div #operationRenderer></div>
@@ -63,29 +66,25 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
   valueChanged = new EventEmitter<void>();
 
   @Input()
-  selected = false;
-
-  @Output()
-  selectedChange = new EventEmitter<boolean>();
+  selection: Set<AccountOperation>;
 
   @ViewChild('operationRenderer', {read: ViewContainerRef})
   operationRendererContainer: ViewContainerRef;
 
   private inViewport = false;
 
+  private factory: ComponentFactory<AccountOperationRenderer> = null;
+
   constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
+    private accOpRenderer: AccountOperationRendererService,
     private viewContainerRef: ViewContainerRef,
     private changeDetectorRef: ChangeDetectorRef,
     private triggerService: TriggerService,
-    private selectionService: SelectionService) { }
+    private selectionService: SelectionService) {
+  }
 
   ngOnInit() {
-    // Chargement du composant qui va faire le rendu de la ligne de compte
-    const factory = this.componentFactoryResolver.resolveComponentFactory(this.accountOperation.getComponentClass());
-    const ref = this.operationRendererContainer.createComponent(factory, 0);
-    ref.instance.op = this.accountOperation;
-    ref.changeDetectorRef.detectChanges();
+    this.factory = this.accOpRenderer.getFactory(this.accountOperation.getComponentClass());
 
     // Connect to the valueChanged emitter of the AccountOperation
     this.accountOperation.valueChanged.subscribe(() => {this.onAccountOperationValueChanged();});
@@ -104,11 +103,20 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
   onEnterViewport() {
     this.inViewport = true;
 
+    // Chargement du composant qui va faire le rendu de la ligne de compte
+    this.operationRendererContainer.clear();
+    const ref = this.operationRendererContainer.createComponent(this.factory, 0);
+    ref.instance.op = this.accountOperation;
+    ref.changeDetectorRef.detectChanges();
+
     this.changeDetectorRef.reattach();
     this.changeDetectorRef.detectChanges();
   }
 
   onExitViewport() {
+    // Déchargement du composant
+    this.operationRendererContainer.clear();
+
     this.inViewport = false;
     this.changeDetectorRef.detach();
     this.changeDetectorRef.detectChanges();
@@ -116,5 +124,9 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
 
   triggerViewportCheck() {
     this.triggerService.trigger();
+  }
+
+  isSelected() {
+    return this.selection.has(this.accountOperation);
   }
 };

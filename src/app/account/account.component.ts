@@ -21,7 +21,7 @@ import Big = require('big.js/big');
         class="account-component">
         <account-operation
           (click)="onItemClicked($event, operation, i);"
-          [selected]="selection.has(operation)"
+          [selection]="selection"
           *ngFor="let operation of account.operations; let i = index; let odd = odd;"
           [accountOperation]="operation"
           [partialSum]="partialSums[i]"
@@ -73,7 +73,7 @@ export class AccountComponent implements OnInit {
   }
 
   onItemClicked(event: MouseEvent, op: AccountOperation, i: number) {
-    this.selection = new Set([]);
+    this.selection.clear();
     this.selection.add(op);
   }
 };

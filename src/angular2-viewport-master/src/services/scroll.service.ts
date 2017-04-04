@@ -13,14 +13,15 @@ export class ScrollService {
 
 	constructor() {
 		this.handler = ScrollService._handler.bind(this);
-		this.observable = this._subj.bufferTime(BUFFER_TIME).filter(res => !!res.length).map(res => last(res)).share();
+		this.observable = this._subj.debounceTime(BUFFER_TIME).share();
+		//this.observable = this._subj.bufferTime(BUFFER_TIME).filter(res => !!res.length).map(res => last(res)).share();
 		this.bind(window);
 	}
 
 	/**
 	 * Binds a scroll event to the event target
 	 * to trigger checking position of in-view directive.
-	 * 
+	 *
 	 * Returns unbinding function
 	 */
 	public bind(target: EventTarget): Function {
