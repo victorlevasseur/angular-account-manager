@@ -66,7 +66,11 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
   valueChanged = new EventEmitter<void>();
 
   @Input()
+<<<<<<< HEAD
   selection: Set<AccountOperation>;
+=======
+  selected = false;
+>>>>>>> parent of 7fc3d91... Integrate selection management into the account component to improve performances
 
   @ViewChild('operationRenderer', {read: ViewContainerRef})
   operationRendererContainer: ViewContainerRef;

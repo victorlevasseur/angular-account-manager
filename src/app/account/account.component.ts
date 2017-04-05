@@ -14,14 +14,17 @@ import Big = require('big.js/big');
 @Component({
   selector: 'account',
   template: `
-      <div
+      <div aam-selectableList
+        [(aam-selectedItems)]="selection"
+        [aam-selectableModel]="account.operations"
         [dragula]="'account-bag'"
         [dragulaModel]='account.operations'
         *ngIf="account"
         class="account-component">
         <account-operation
-          (click)="onItemClicked($event, operation, i);"
-          [selection]="selection"
+          aam-selectableItem
+          [aam-trackBy]="operation"
+          [selected]="selection.has(operation)"
           *ngFor="let operation of account.operations; let i = index; let odd = odd;"
           [accountOperation]="operation"
           [partialSum]="partialSums[i]"
@@ -70,10 +73,5 @@ export class AccountComponent implements OnInit {
   /* The debounced callback */
   getNewSumsForAccount() {
     this.partialSums = this.accountCalculator.calculateSums(this.account);
-  }
-
-  onItemClicked(event: MouseEvent, op: AccountOperation, i: number) {
-    this.selection.clear();
-    this.selection.add(op);
   }
 };
