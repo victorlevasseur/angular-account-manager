@@ -14,23 +14,28 @@ import { BankOperation } from './bank-operation';
         </div>
       </div>
       <div class="flex-item perc3">
-        <input appDateInput aam-doubleclickInput [(dateValue)]="op.date" type="text" placeholder="Date"/>
+        {{op.date}}
+        <!--<input appDateInput aam-doubleclickInput [(dateValue)]="op.date" type="text" placeholder="Date"/>-->
       </div>
       <div class="flex-item perc4">
-        <app-combobox aam-doubleclickInput
+        <!--<app-combobox aam-doubleclickInput
           cbContainerClass="full-height"
           [(cbValue)]="op.type"
           [cbDropdownItems]="[{displayString: 'Chèque'}, {displayString: 'Virement'}, {displayString: 'Prélèvement'}, {displayString: 'Chèque n°'}, {displayString: 'Carte bleue'}]">
-        </app-combobox>
+        </app-combobox>-->
+        {{op.type}}
       </div>
       <div class="flex-item perc10">
-        <input aam-doubleclickInput type="text" placeholder="Description" [(ngModel)]="op.description"/>
+        <!--<input aam-doubleclickInput type="text" placeholder="Description" [(ngModel)]="op.description"/>-->
+        {{op.description}}
       </div>
       <div class="flex-item perc3">
-        <input appCurrencyInput aam-doubleclickInput [(currencyValue)]="op.credit" type="text" placeholder="Crédit" />
+        <!--<input appCurrencyInput aam-doubleclickInput [(currencyValue)]="op.credit" type="text" placeholder="Crédit" />-->
+        {{op.credit}}
       </div>
       <div class="flex-item perc3">
-        <input appCurrencyInput aam-doubleclickInput [(currencyValue)]="op.debit" type="text" placeholder="Débit" />
+        {{op.debit}}
+        <!--<input appCurrencyInput aam-doubleclickInput [(currencyValue)]="op.debit" type="text" placeholder="Débit" />-->
       </div>
     </div>`,
   styleUrls: ['bank-operation.style.scss']

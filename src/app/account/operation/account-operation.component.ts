@@ -35,16 +35,16 @@ import Big = require('big.js/big');
           </div>
           <div class="flex-item perc6 flex-container horizontal">
             <div *ngIf="partialSum != undefined" class="operation-value flex-item perc12">
-              <input
+              <!--<input
                 appCurrencyInput [(currencyValue)]="partialSum.value"
                 type="text"
-                readonly/>
+                readonly/>-->{{partialSum.value}}
             </div>
             <div *ngIf="partialSum != undefined" class="operation-collected-value flex-item perc12">
-              <input
+              <!--<input
                 appCurrencyInput [(currencyValue)]="partialSum.collectedValue"
                 type="text"
-                readonly/>
+                readonly/>-->{{partialSum.collectedValue}}
             </div>
           </div>
         </div>
@@ -115,7 +115,7 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
 
   onExitViewport() {
     // Déchargement du composant
-    this.operationRendererContainer.clear();
+    //this.operationRendererContainer.clear();
 
     this.inViewport = false;
     this.changeDetectorRef.detach();
