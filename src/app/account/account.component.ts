@@ -22,10 +22,10 @@ import Big = require('big.js/big');
         *ngIf="account"
         class="account-component">
         <account-operation
+          *ngFor="let operation of account.operations; let i = index; let odd = odd;"
           aam-selectableItem
           [aam-trackBy]="operation"
           [selected]="selection.has(operation)"
-          *ngFor="let operation of account.operations; let i = index; let odd = odd;"
           [accountOperation]="operation"
           [partialSum]="partialSums[i]"
           [customClass]="odd ? 'odd' : 'even'"

@@ -61,7 +61,7 @@ export class SelectableItemDirective implements OnInit, OnDestroy, OnChanges {
     if(event.ctrlKey && this.selectionService.isSelected(this.trackBy)) {
       this.selectionService.removeFromSelection(this.trackBy);
     }
-    else if(event.shiftKey) {
+    else if(event.shiftKey) { //TODO: Improve shift selection logic
       this.selectionService.addRangeToSelection(latestSelected, this.trackBy);
     }
     else {

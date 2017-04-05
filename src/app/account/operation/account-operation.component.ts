@@ -26,7 +26,7 @@ import Big = require('big.js/big');
   template: `
       <div (vp-in-view)="onEnterViewport();" [vp-in-view-config]="{everyTime: true, margin: 500}"
         (vp-out-view)="onExitViewport();" [vp-out-view-config]="{everyTime: true, margin: 500}"
-        [class]="'aam-account-operation z-depth-1 flex-container horizontal ' + customClass + (isSelected() ? ' selected':'')"
+        [class]="'aam-account-operation z-depth-1 flex-container horizontal ' + customClass + (selected ? ' selected':'')"
         [style.height]="!inViewport ? accountOperation.getComponentDefaultHeight() + 'px' : 'auto'">
         <div class="flex-item fixed24 handle">&nbsp;</div>
         <div class="flex-item unfixed24 flex-container">
@@ -66,11 +66,7 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
   valueChanged = new EventEmitter<void>();
 
   @Input()
-<<<<<<< HEAD
-  selection: Set<AccountOperation>;
-=======
   selected = false;
->>>>>>> parent of 7fc3d91... Integrate selection management into the account component to improve performances
 
   @ViewChild('operationRenderer', {read: ViewContainerRef})
   operationRendererContainer: ViewContainerRef;
@@ -128,9 +124,5 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
 
   triggerViewportCheck() {
     this.triggerService.trigger();
-  }
-
-  isSelected() {
-    return this.selection.has(this.accountOperation);
   }
 };

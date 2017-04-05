@@ -44,7 +44,7 @@ export class SelectionService {
       return null;
     }
     else {
-      return this.selectableItems[firstIndex].trackBy;
+      return this.selectableItems[firstIndex];
     }
   }
 
@@ -65,7 +65,7 @@ export class SelectionService {
       return null;
     }
     else {
-      return this.selectableItems[firstIndex].trackBy;
+      return this.selectableItems[firstIndex];
     }
   }
 
@@ -90,8 +90,6 @@ export class SelectionService {
    */
   addRangeToSelection(from, to): boolean {
     let itemsToSelect = [];
-    console.log(from);
-    console.log(to);
 
     let startPos = this.selectableItems.indexOf(from);
     let endPos = this.selectableItems.indexOf(to);
