@@ -7,7 +7,7 @@ import { BankOperation } from './bank-operation';
 @Component({
   selector: 'bank-operation',
   template: `
-    <div class="flex-container horizontal" materialize>
+    <div class="flex-container horizontal bank-operation-container">
       <div class="flex-item perc1">
         <div style="margin-left: 5px; margin-top: 5px">
           <app-checkbox label="" [(checked)]='op.collected'></app-checkbox>
@@ -27,7 +27,7 @@ import { BankOperation } from './bank-operation';
       </div>
       <div class="flex-item perc10">
         <!--<input aam-doubleclickInput type="text" placeholder="Description" [(ngModel)]="op.description"/>-->
-        {{op.description}}
+        <editable-text-field [(value)]="op.description"></editable-text-field>
       </div>
       <div class="flex-item perc3">
         <!--<input appCurrencyInput aam-doubleclickInput [(currencyValue)]="op.credit" type="text" placeholder="Crédit" />-->

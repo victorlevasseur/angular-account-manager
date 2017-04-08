@@ -53,7 +53,7 @@ export class AccountTabComponent implements OnInit {
     new ButtonToolbarItem({
       text: "TEST",
       clickedCallback: (item) => {
-        [this.account.operations[2], this.account.operations[3]] = [this.account.operations[3], this.account.operations[2]];
+        //For tests
       }
     })
   ];

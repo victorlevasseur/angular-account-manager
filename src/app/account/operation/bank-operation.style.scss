@@ -6,3 +6,7 @@ app-checkbox /deep/ input[type='checkbox']+label {
     margin-left: 15px;
     height: 18px;
 }
+
+.bank-operation-container {
+    min-height: 28px;
+}
