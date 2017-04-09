@@ -36,9 +36,12 @@ import { AccountOperationComponent } from './account/operation/account-operation
 import { AccountOperationRendererService } from './account/operation/account-operation-renderer.service';
 import { BankOperationComponent} from './account/operation/bank-operation.component';
 
+import { EditableFieldComponentBase } from './account/operation/editable-fields/editable-field-base.component';
+import { TextFieldEditorComponent } from './account/operation/editable-fields/editors/text-field-editor.component';
+import { FieldEditorsFactoriesService } from './account/operation/editable-fields/editors/field-editors-factories.service';
+import { FieldRendererComponent } from './account/operation/editable-fields/renderers/field-renderer.component';
+import { FieldRenderersFactoriesService } from './account/operation/editable-fields/renderers/field-renderers-factories.service';
 import { EditableTextFieldComponent } from './account/operation/editable-fields/editable-text-field.component';
-import { TextFieldEditorComponent } from './account/operation/editable-fields/text-field-editor.component';
-import { FieldEditorsFactoriesService } from './account/operation/editable-fields/field-editors-factories.service';
 
 import { SelectableListDirective } from './dnd/selectable-list.directive';
 import { SelectableItemDirective } from './dnd/selectable-item.directive';
@@ -89,6 +92,7 @@ export class RavenErrorHandler implements ErrorHandler {
       UniqueNumberService,
       AccountOperationRendererService,
       FieldEditorsFactoriesService,
+      FieldRenderersFactoriesService,
       { provide: ErrorHandler, useClass: RavenErrorHandler } // To redirect errors to raven
     ],
     declarations: [
@@ -110,15 +114,17 @@ export class RavenErrorHandler implements ErrorHandler {
       DoubleclickInputDirective,
       SelectableListDirective,
       SelectableItemDirective,
-      EditableTextFieldComponent,
-      TextFieldEditorComponent
+      TextFieldEditorComponent,
+      FieldRendererComponent,
+      EditableTextFieldComponent
     ],
     bootstrap: [AppComponent],
     entryComponents: [
       BankOperationComponent,
       AccountTabComponent,
       ButtonToolbarItemComponent,
-      TextFieldEditorComponent
+      TextFieldEditorComponent,
+      FieldRendererComponent
     ]
 })
 export class AppModule { }

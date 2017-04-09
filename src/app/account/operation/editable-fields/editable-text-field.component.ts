@@ -1,70 +1,20 @@
 import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-  ViewChild,
-  ViewContainerRef,
-  ComponentRef
+  Component
 } from '@angular/core';
 
-import { FieldEditorBase } from './field-editor-base';
-import { FieldEditorsFactoriesService } from './field-editors-factories.service';
-import { TextFieldEditorComponent } from './text-field-editor.component';
+import { EditableFieldComponentBase, editableFieldMetadata } from './editable-field-base.component';
 
-@Component({
-  selector: 'editable-text-field',
-  template: `
-    <div class="editable-field-container">
-      <div class="editable-field-display" *ngIf="!isEdited()" (dblclick)='startEditing();'>{{value}}</div>
-      <div #editor></div>
-    </div>
-    `,
-  styleUrls: ['editable-fields.style.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class EditableTextFieldComponent {
-  @Input()
-  value: string;
+import { TextFieldEditorComponent } from './editors/text-field-editor.component';
+import { FieldRendererComponent } from './renderers/field-renderer.component';
 
-  @Output()
-  valueChange = new EventEmitter<string>();
+import { FieldEditorsFactoriesService } from './editors/field-editors-factories.service';
+import { FieldRenderersFactoriesService } from './renderers/field-renderers-factories.service';
 
-  aaa: any = null;
-
-  @ViewChild('editor', {read: ViewContainerRef})
-  private editorContainer: ViewContainerRef;
-
-  private editor: ComponentRef<FieldEditorBase<string>> = null;
-
-  constructor(private factoryService: FieldEditorsFactoriesService) {
-
-  }
-
-  isEdited(): boolean {
-    return this.editor != null;
-  }
-
-  ngOnInit() {
-    console.log(this.editor);
-  }
-
-  private startEditing() {
-    if(this.editor) {
-      this.stopEditing();
-    }
-    this.editor = this.editorContainer.createComponent(this.factoryService.getFactory(TextFieldEditorComponent));
-    this.editor.instance.value = this.value;
-    this.editor.instance.valueValidated.subscribe((newValue: string) => this.valueChange.emit(newValue));
-    this.editor.instance.close.subscribe(() => this.stopEditing());
-  }
-
-  private stopEditing() {
-    if(!this.editor) {
-      return;
-    }
-    this.editorContainer.clear();
-    this.editor = null;
+@Component(editableFieldMetadata('editable-text-field'))
+export class EditableTextFieldComponent extends EditableFieldComponentBase<string> {
+  constructor(
+    renderersService: FieldRenderersFactoriesService,
+    editorsService: FieldEditorsFactoriesService) {
+    super(FieldRendererComponent, TextFieldEditorComponent, renderersService, editorsService);
   }
 }
