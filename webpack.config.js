@@ -126,8 +126,6 @@ var config = {
         // Copies project static assets.
         //
         // See: https://www.npmjs.com/package/copy-webpack-plugin
-        new CopyWebpackPlugin([{ from: 'src/assets', to: 'assets' }]),
-
         new CopyWebpackPlugin([{ from: 'src/electronApp', to: '.' }]),
         /**
        * Plugin LoaderOptionsPlugin (experimental)

@@ -4,7 +4,7 @@
 <head>
 
     <title>
-        Angular 2 Electron
+        Angular Account Manager
     </title>
 
     <meta charset="utf-8">
@@ -32,15 +32,34 @@
     <meta name="theme-color" content="#00bcd4">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- end favicon -->
-
+    <script src="assets/please-wait.min.js"></script>
+    <link href="assets/please-wait.css" rel="stylesheet">
+    <link href="assets/3-wave.css" rel="stylesheet">
 </head>
 
 <body style="margin: 0;">
 
+    <script>
+        window.loading_screen = window.pleaseWait({
+            logo: "assets/logo.png",
+            backgroundColor: '#4285f4',
+            loadingHtml: `
+                <div style="color: white !important;">
+                    <div class="app-title" style="font-family: Arial;font-size: 32px; font-weight: bold; font">
+                        ANGULAR ACCOUNT MANAGER
+                    </div>
+                    <div class="sk-wave">
+                        <div class="sk-rect sk-rect1" style="background-color: white;"></div>
+                        <div class="sk-rect sk-rect2" style="background-color: white;"></div>
+                        <div class="sk-rect sk-rect3" style="background-color: white;"></div>
+                        <div class="sk-rect sk-rect4" style="background-color: white;"></div>
+                        <div class="sk-rect sk-rect5" style="background-color: white;"></div>
+                    </div>
+                </div>
+            `});
+    </script>
+
     <account-manager-app>
-        <div class="progress">
-            <div class="indeterminate"></div>
-        </div>
         Chargement...
     </account-manager-app>
 

@@ -95,7 +95,8 @@ export class RavenErrorHandler implements ErrorHandler {
       AccountOperationRendererService,
       FieldEditorsFactoriesService,
       FieldRenderersFactoriesService,
-      { provide: ErrorHandler, useClass: RavenErrorHandler } // To redirect errors to raven
+      { provide: ErrorHandler, useClass: RavenErrorHandler }, // To redirect errors to raven
+      { provide: 'CloseLoadingScreen', useValue: () => { (window as any).loading_screen.finish() } } // To close the loading screen when done loading
     ],
     declarations: [
       AppComponent,
@@ -130,4 +131,5 @@ export class RavenErrorHandler implements ErrorHandler {
     ]
 })
 export class AppModule { }
+
 platformBrowserDynamic().bootstrapModule(AppModule);

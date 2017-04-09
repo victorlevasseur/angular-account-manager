@@ -1,7 +1,14 @@
 /**
  * Import decorators and services from angular
  */
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewEncapsulation,
+  Inject,
+  Optional
+} from '@angular/core';
 
 import { TriggerService } from '../../angular2-viewport-master';
 
@@ -39,11 +46,13 @@ const remote = require('electron').remote;
     </div>
     `,
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
 
   tabsList: TabsList;
 
-  constructor(private triggerService: TriggerService) {
+  constructor(
+    private triggerService: TriggerService,
+    @Optional() @Inject('CloseLoadingScreen') private closeLoadingScreen: () => void) {
     var tabs: Tab[] = [
       new AccountTab("compte courant.cpt"),
       new AccountTab("pel.cpt"),
@@ -55,6 +64,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  ngAfterViewInit() {
+    if(this.closeLoadingScreen) {
+      this.closeLoadingScreen();
+    }
   }
 
   onResize() {

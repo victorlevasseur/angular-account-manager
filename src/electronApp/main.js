@@ -21,9 +21,6 @@ const createWindow = () => {
   // Tell Electron where to load the entry point from
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
-
   // Clear out the main window when the app is closed
   mainWindow.on('closed', () => {
     mainWindow = null;
