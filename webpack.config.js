@@ -25,8 +25,8 @@ var config = {
 
     // Config for our build files
     output: {
-        path: helpers.root('build/app/dist'),
-        publicPath: 'dist',
+        path: helpers.root('build/app/'),
+        publicPath: '.',
         filename: '[name].js',
         sourceMapFilename: '[name].map',
         chunkFilename: '[id].chunk.js'
@@ -97,6 +97,11 @@ var config = {
             {
                 test: /\.svg/,
                 loader: 'svg-url-loader'
+            },
+
+            {
+                test: /src\/electronApp\/index.html/,
+                loader: ['file-loader?name=index.html', 'html-loader']
             }
         ]
     },
@@ -122,6 +127,8 @@ var config = {
         //
         // See: https://www.npmjs.com/package/copy-webpack-plugin
         new CopyWebpackPlugin([{ from: 'src/assets', to: 'assets' }]),
+
+        new CopyWebpackPlugin([{ from: 'src/electronApp', to: '.' }]),
         /**
        * Plugin LoaderOptionsPlugin (experimental)
        *
