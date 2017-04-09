@@ -20,9 +20,7 @@ var config = {
 
     // our angular app
     entry: {
-        'polyfills': './src/polyfills.ts',
-        'vendor': './src/vendor.ts',
-        'app': './src/app/app',
+        'app': './src/app/app.ts',
     },
 
     // Config for our build files
@@ -110,7 +108,13 @@ var config = {
         //
         // See: https://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
         // See: https://github.com/webpack/docs/wiki/optimization#multi-page-app
-        new webpack.optimize.CommonsChunkPlugin({ name: ['vendor', 'polyfills'], minChunks: Infinity }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            minChunks: function (module) {
+               // this assumes your vendor imports exist in the node_modules directory
+               return module.context && module.context.indexOf('node_modules') !== -1;
+            }
+        }),
         // Plugin: CopyWebpackPlugin
         // Description: Copy files and directories in webpack.
         //

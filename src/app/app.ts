@@ -1,3 +1,5 @@
+require('./polyfills.ts'); //TODO: Require it from the index.html
+
 /*
  * Angular Modules
  */
