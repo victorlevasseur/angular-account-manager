@@ -14,8 +14,8 @@ import { BankOperation } from './bank-operation';
         </div>
       </div>
       <div class="flex-item perc3">
-        {{op.date|date:'dd/MM/y'}}
         <!--<input appDateInput aam-doubleclickInput [(dateValue)]="op.date" type="text" placeholder="Date"/>-->
+        <editable-date-field [(value)]="op.date"></editable-date-field>
       </div>
       <div class="flex-item perc4">
         <!--<app-combobox aam-doubleclickInput

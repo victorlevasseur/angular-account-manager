@@ -7,19 +7,21 @@ import {
   ElementRef
 } from '@angular/core';
 
+import * as moment from 'moment';
+
 import { FieldEditorBase } from './field-editor-base';
 
 @Component({
   template: `
     <div class="field-editor-container" aam-click-outside-event (clickOutside)="close.emit()">
-      <input #textField class="text-field-input" type="text" [value]="value" (input)="onInputChange($event.target.value);" />
+      <input #textField class="text-field-input" type="text" [value]="value?.utc().format('DD/MM/YYYY')" (input)="onInputChange($event.target.value);" />
     </div>
   `,
   styleUrls: ['field-editors.style.scss']
 })
-export class TextFieldEditorComponent implements FieldEditorBase<string>, AfterViewInit {
-  value: string;
-  valueChange = new EventEmitter<string>();
+export class DateFieldEditorComponent implements FieldEditorBase<moment.Moment>, AfterViewInit {
+  value: moment.Moment;
+  valueChange = new EventEmitter<moment.Moment>();
   close = new EventEmitter<void>();
 
   @ViewChild('textField', {read: ElementRef})
@@ -30,6 +32,7 @@ export class TextFieldEditorComponent implements FieldEditorBase<string>, AfterV
   }
 
   onInputChange(newValue: string) {
-    this.valueChange.emit(newValue);
+    let newDate = moment.utc(this.inputDOM.nativeElement.value, "DD/MM/YYYY");
+    this.valueChange.emit(newDate);
   }
 }

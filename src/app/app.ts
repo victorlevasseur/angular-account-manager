@@ -40,10 +40,13 @@ import { BankOperationComponent} from './account/operation/bank-operation.compon
 
 import { EditableFieldComponentBase } from './account/operation/editable-fields/editable-field-base.component';
 import { TextFieldEditorComponent } from './account/operation/editable-fields/editors/text-field-editor.component';
+import { DateFieldEditorComponent } from './account/operation/editable-fields/editors/date-field-editor.component';
 import { FieldEditorsFactoriesService } from './account/operation/editable-fields/editors/field-editors-factories.service';
 import { FieldRendererComponent } from './account/operation/editable-fields/renderers/field-renderer.component';
+import { DateFieldRendererComponent } from './account/operation/editable-fields/renderers/date-field-renderer.component';
 import { FieldRenderersFactoriesService } from './account/operation/editable-fields/renderers/field-renderers-factories.service';
 import { EditableTextFieldComponent } from './account/operation/editable-fields/editable-text-field.component';
+import { EditableDateFieldComponent } from './account/operation/editable-fields/editable-date-field.component';
 
 import { SelectableListDirective } from './dnd/selectable-list.directive';
 import { SelectableItemDirective } from './dnd/selectable-item.directive';
@@ -118,8 +121,11 @@ export class RavenErrorHandler implements ErrorHandler {
       SelectableListDirective,
       SelectableItemDirective,
       TextFieldEditorComponent,
+      DateFieldEditorComponent,
       FieldRendererComponent,
-      EditableTextFieldComponent
+      DateFieldRendererComponent,
+      EditableTextFieldComponent,
+      EditableDateFieldComponent
     ],
     bootstrap: [AppComponent],
     entryComponents: [
@@ -127,7 +133,9 @@ export class RavenErrorHandler implements ErrorHandler {
       AccountTabComponent,
       ButtonToolbarItemComponent,
       TextFieldEditorComponent,
-      FieldRendererComponent
+      DateFieldEditorComponent,
+      FieldRendererComponent,
+      DateFieldRendererComponent
     ]
 })
 export class AppModule { }

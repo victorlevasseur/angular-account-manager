@@ -71,9 +71,8 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     // As the renderers input are set when created (not by an angular binding, we need to manually update it)
-    if(changes.hasOwnProperty('value') && changes['value'] && this.renderer) {
-      this.renderer.instance.value = changes['value'].currentValue;
-      this.renderer.changeDetectorRef.markForCheck();  // Manually declare an "input" change
+    if(changes.hasOwnProperty('value') && changes['value']) {
+      this.updateRenderer();
     }
   }
 
@@ -83,7 +82,10 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
     }
     this.editor = this.editorContainer.createComponent(this.editorsService.getFactory(this.editorType));
     this.editor.instance.value = this.value;
-    this.editor.instance.valueValidated.subscribe((newValue: T) => this.valueChange.emit(newValue));
+    this.editor.instance.valueChange.subscribe((newValue: T) => {
+      this.valueChange.emit(newValue);
+      this.updateRenderer(); // The renderer is not binded with a real @Input, so need to mark it for change
+    });
     this.editor.instance.close.subscribe(() => this.stopEditing());
   }
 
@@ -93,5 +95,12 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
     }
     this.editorContainer.clear();
     this.editor = null;
+  }
+
+  private updateRenderer() {
+    if(this.renderer) {
+      this.renderer.instance.value = this.value;
+      this.renderer.changeDetectorRef.markForCheck();
+    }
   }
 }

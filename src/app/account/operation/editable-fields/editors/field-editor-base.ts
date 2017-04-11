@@ -15,9 +15,6 @@ export interface FieldEditorBase<T> {
   /// Emits on every change of the value
   valueChange: EventEmitter<T>;
 
-  /// Emits on every valid change of the value
-  valueValidated: EventEmitter<T>;
-
   /// Emits when the editor wants to close
   close: EventEmitter<void>;
 }
