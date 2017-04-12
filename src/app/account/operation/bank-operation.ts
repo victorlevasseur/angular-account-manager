@@ -63,6 +63,6 @@ export class BankOperation extends AccountOperation {
   }
 
   getComponentDefaultHeight(): number {
-    return 28;
+    return 29;
   }
 }

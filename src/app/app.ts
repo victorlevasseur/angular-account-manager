@@ -39,14 +39,20 @@ import { AccountOperationRendererService } from './account/operation/account-ope
 import { BankOperationComponent} from './account/operation/bank-operation.component';
 
 import { EditableFieldComponentBase } from './account/operation/editable-fields/editable-field-base.component';
+
 import { TextFieldEditorComponent } from './account/operation/editable-fields/editors/text-field-editor.component';
 import { DateFieldEditorComponent } from './account/operation/editable-fields/editors/date-field-editor.component';
+import { CurrencyFieldEditorComponent } from './account/operation/editable-fields/editors/currency-field-editor.component';
 import { FieldEditorsFactoriesService } from './account/operation/editable-fields/editors/field-editors-factories.service';
+
 import { FieldRendererComponent } from './account/operation/editable-fields/renderers/field-renderer.component';
 import { DateFieldRendererComponent } from './account/operation/editable-fields/renderers/date-field-renderer.component';
+import { CurrencyFieldRendererComponent } from './account/operation/editable-fields/renderers/currency-field-renderer.component';
 import { FieldRenderersFactoriesService } from './account/operation/editable-fields/renderers/field-renderers-factories.service';
+
 import { EditableTextFieldComponent } from './account/operation/editable-fields/editable-text-field.component';
 import { EditableDateFieldComponent } from './account/operation/editable-fields/editable-date-field.component';
+import { EditableCurrencyFieldComponent } from './account/operation/editable-fields/editable-currency-field.component';
 
 import { SelectableListDirective } from './dnd/selectable-list.directive';
 import { SelectableItemDirective } from './dnd/selectable-item.directive';
@@ -122,10 +128,13 @@ export class RavenErrorHandler implements ErrorHandler {
       SelectableItemDirective,
       TextFieldEditorComponent,
       DateFieldEditorComponent,
+      CurrencyFieldEditorComponent,
       FieldRendererComponent,
       DateFieldRendererComponent,
+      CurrencyFieldRendererComponent,
       EditableTextFieldComponent,
-      EditableDateFieldComponent
+      EditableDateFieldComponent,
+      EditableCurrencyFieldComponent
     ],
     bootstrap: [AppComponent],
     entryComponents: [
@@ -134,8 +143,10 @@ export class RavenErrorHandler implements ErrorHandler {
       ButtonToolbarItemComponent,
       TextFieldEditorComponent,
       DateFieldEditorComponent,
+      CurrencyFieldEditorComponent,
       FieldRendererComponent,
-      DateFieldRendererComponent
+      DateFieldRendererComponent,
+      CurrencyFieldRendererComponent
     ]
 })
 export class AppModule { }

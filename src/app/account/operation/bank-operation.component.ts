@@ -30,12 +30,10 @@ import { BankOperation } from './bank-operation';
         <editable-text-field [(value)]="op.description"></editable-text-field>
       </div>
       <div class="flex-item perc3">
-        <!--<input appCurrencyInput aam-doubleclickInput [(currencyValue)]="op.credit" type="text" placeholder="Crédit" />-->
-        {{op.credit}}
+        <editable-currency-field [(value)]="op.credit"></editable-currency-field>
       </div>
       <div class="flex-item perc3">
-        {{op.debit}}
-        <!--<input appCurrencyInput aam-doubleclickInput [(currencyValue)]="op.debit" type="text" placeholder="Débit" />-->
+        <editable-currency-field [(value)]="op.debit"></editable-currency-field>
       </div>
     </div>`,
   styleUrls: ['bank-operation.style.scss']

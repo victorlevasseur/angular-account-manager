@@ -11,13 +11,7 @@ import { AccountOperation } from '../operation/account-operation';
 @Injectable()
 export class AccountCalculatorService {
 
-  constructor() {
-
-  }
-
   calculateSums(account: Account): Array<{value: Big, collectedValue: Big}> {
-    console.log("Start a new sums calculation...")
-
     var result = Array<{value: Big, collectedValue: Big}>(account.operations.length);
     for(var i = 0; i < result.length; i++) {
       result[i] = {
@@ -25,8 +19,6 @@ export class AccountCalculatorService {
         collectedValue: account.operations[i].getCollectedValue().plus(i != 0 ? result[i-1].collectedValue : new Big(0))
       };
     }
-
-    console.log("...Ended");
     return result;
   }
 }
