@@ -32,4 +32,8 @@ export class TextFieldEditorComponent implements FieldEditorBase<string>, AfterV
   onInputChange(newValue: string) {
     this.valueChange.emit(newValue);
   }
+
+  getCustomInputs(): string[] {
+    return [];
+  }
 }

@@ -10,7 +10,8 @@ import {
   Type,
   AfterViewInit,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  SimpleChange
 } from '@angular/core';
 
 import { FieldEditorBase } from './editors/field-editor-base';
@@ -69,17 +70,66 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
   ngAfterViewInit() {
     this.renderer = this.rendererContainer.createComponent(this.renderersService.getFactory(this.rendererType));
     this.renderer.instance.value = this.value; // Not a real angular binding, we will have to update the value ourselves
+    this.initCustomRendererInputs();
     this.renderer.changeDetectorRef.detectChanges();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // As the renderers input are set when created (not by an angular binding, we need to manually update it)
-    if(changes.hasOwnProperty('value') && changes['value']) {
-      this.updateRenderer();
+
+    for(let changedProperty in changes) {
+      let change = changes[changedProperty];
+      if(changedProperty === 'value') {
+        // As the renderers input are set when created (not by an angular binding, we need to manually update it)
+        this.updateRendererValue();
+      }
+      else if(changedProperty === 'disabled') {
+        if(change.currentValue) {
+          this.stopEditing(); // Stop editing if disabled is set to true
+        }
+      }
+      else if(changedProperty.substr(0, 2) === 'r-') {
+        this.updateCustomRendererInput(changedProperty, change);
+      }
+      else if(changedProperty.substr(0, 2) === 'e-') {
+        this.updateCustomEditorInput(changedProperty, change);
+      }
     }
-    else if(changes.hasOwnProperty('disabled') && changes['disabled']) {
-      this.stopEditing(); // Stop editing if disabled is set to true
+  }
+
+  private initCustomRendererInputs() {
+    for(let unprefixedInputName of this.renderer.instance.getCustomInputs()) {
+      let inputName = 'r-' + unprefixedInputName;
+      if(inputName in this) {
+        this.renderer.instance[unprefixedInputName] = this[inputName];
+      }
     }
+  }
+
+  private updateCustomRendererInput(inputName: string, change: SimpleChange) {
+    let unprefixedInputName = inputName.substr(2, 0);
+    if(this.renderer.instance.getCustomInputs().indexOf(unprefixedInputName) !== -1) {
+      this.renderer.instance[unprefixedInputName] = change.currentValue;
+      this.renderer.changeDetectorRef.markForCheck();
+    }
+  }
+
+  private initCustomEditorInputs() {
+    for(let unprefixedInputName of this.editor.instance.getCustomInputs()) {
+      let inputName = 'r-' + unprefixedInputName;
+      if(inputName in this) {
+        this.editor.instance[unprefixedInputName] = this[inputName];
+      }
+    }
+  }
+
+  private updateCustomEditorInput(inputName: string, change: SimpleChange) {
+    let unprefixedInputName = inputName.substr(2, 0);
+    if(this.editor.instance.getCustomInputs().indexOf(unprefixedInputName) !== -1) {
+      this.editor.instance[unprefixedInputName] = change.currentValue;
+      this.editor.changeDetectorRef.markForCheck();
+    }
+
+    this.editor.changeDetectorRef.markForCheck();
   }
 
   private startEditing() {
@@ -93,8 +143,9 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
     this.editor.instance.value = this.value;
     this.editor.instance.valueChange.subscribe((newValue: T) => {
       this.valueChange.emit(newValue);
-      this.updateRenderer(); // The renderer is not binded with a real @Input, so need to mark it for change
+      this.updateRendererValue(); // The renderer is not binded with a real @Input, so need to mark it for change
     });
+    this.initCustomEditorInputs();
     this.editor.instance.close.subscribe(() => this.stopEditing());
   }
 
@@ -106,7 +157,7 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
     this.editor = null;
   }
 
-  private updateRenderer() {
+  private updateRendererValue() {
     if(this.renderer) {
       this.renderer.instance.value = this.value;
       this.renderer.changeDetectorRef.markForCheck();

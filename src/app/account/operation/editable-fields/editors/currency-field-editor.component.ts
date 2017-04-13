@@ -44,4 +44,8 @@ export class CurrencyFieldEditorComponent implements FieldEditorBase<Big>, After
       this.valueChange.emit(new Big(0));
     }
   }
+
+  getCustomInputs(): string[] {
+    return [];
+  }
 }

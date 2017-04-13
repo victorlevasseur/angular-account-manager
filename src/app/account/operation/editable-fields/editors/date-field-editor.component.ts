@@ -35,4 +35,8 @@ export class DateFieldEditorComponent implements FieldEditorBase<moment.Moment>,
     let newDate = moment.utc(this.inputDOM.nativeElement.value, "DD/MM/YYYY");
     this.valueChange.emit(newDate);
   }
+
+  getCustomInputs(): string[] {
+    return [];
+  }
 }
