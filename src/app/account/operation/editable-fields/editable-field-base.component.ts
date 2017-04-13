@@ -41,6 +41,9 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
   @Output()
   valueChange = new EventEmitter<T>();
 
+  @Input()
+  disabled = false;
+
   @ViewChild('renderer', {read: ViewContainerRef})
   private rendererContainer: ViewContainerRef;
 
@@ -74,9 +77,15 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
     if(changes.hasOwnProperty('value') && changes['value']) {
       this.updateRenderer();
     }
+    else if(changes.hasOwnProperty('disabled') && changes['disabled']) {
+      this.stopEditing(); // Stop editing if disabled is set to true
+    }
   }
 
   private startEditing() {
+    if(this.disabled) {
+      return;
+    }
     if(this.editor) {
       this.stopEditing();
     }
