@@ -128,8 +128,6 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
       this.editor.instance[unprefixedInputName] = change.currentValue;
       this.editor.changeDetectorRef.markForCheck();
     }
-
-    this.editor.changeDetectorRef.markForCheck();
   }
 
   private startEditing() {
