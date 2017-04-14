@@ -38,16 +38,10 @@ import Big = require('big.js/big');
           </div>
           <div class="flex-item perc6 flex-container horizontal">
             <div *ngIf="partialSum != undefined" class="operation-value flex-item perc12">
-              <!--<input
-                appCurrencyInput [(currencyValue)]="partialSum.value"
-                type="text"
-                readonly/>-->{{partialSum.value}}
+              <editable-currency-field [value]="partialSum.value" disabled="true"></editable-currency-field>
             </div>
             <div *ngIf="partialSum != undefined" class="operation-collected-value flex-item perc12">
-              <!--<input
-                appCurrencyInput [(currencyValue)]="partialSum.collectedValue"
-                type="text"
-                readonly/>-->{{partialSum.collectedValue}}
+              <editable-currency-field [value]="partialSum.collectedValue" disabled="true"></editable-currency-field>
             </div>
           </div>
         </div>
