@@ -10,13 +10,13 @@ import {
  */
 export class FieldEditorBase<T> {
   /// The input value
-  value: T;
+  public value: T;
 
   /// Emits on every change of the value
-  valueChange: EventEmitter<T>;
+  public valueChange = new EventEmitter<T>();
 
   /// Emits when the editor wants to close
-  close: EventEmitter<void>;
+  public close = new EventEmitter<void>();
 
   /**
    * The editor must declare the custom "inputs" that he needs
@@ -27,5 +27,13 @@ export class FieldEditorBase<T> {
    */
   getCustomInputs(): string[] {
     return [];
+  }
+
+  /**
+   * Tells whether an editor closes on Enter or not.
+   * true by default
+   */
+  closesOnEnter(): boolean {
+    return true;
   }
 }

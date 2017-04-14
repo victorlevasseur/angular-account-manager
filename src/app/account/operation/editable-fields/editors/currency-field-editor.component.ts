@@ -19,13 +19,14 @@ import { FieldEditorBase } from './field-editor-base';
   `,
   styleUrls: ['field-editors.style.scss', 'currency-field-editor.style.scss']
 })
-export class CurrencyFieldEditorComponent implements FieldEditorBase<Big>, AfterViewInit {
-  value: Big;
-  valueChange = new EventEmitter<Big>();
-  close = new EventEmitter<void>();
+export class CurrencyFieldEditorComponent extends FieldEditorBase<Big> implements AfterViewInit {
 
   @ViewChild('textField', {read: ElementRef})
   inputDOM: ElementRef;
+
+  constructor() {
+    super();
+  }
 
   ngAfterViewInit() {
     this.inputDOM.nativeElement.focus();

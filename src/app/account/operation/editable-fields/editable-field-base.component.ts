@@ -22,8 +22,8 @@ import { FieldRenderersFactoriesService } from './renderers/field-renderers-fact
 export let editableFieldMetadata = (selector: string) => { return {
     selector: selector,
     template: `
-      <div class="editable-field-container">
-        <div class="editable-field-display" [hidden]="isEdited()" (dblclick)='startEditing();'>
+      <div class="editable-field-container" (keypress)="onKeyPress($event);">
+        <div class="editable-field-display" [hidden]="isEditing()" (dblclick)='startEditing();'>
           <div #renderer></div>
         </div>
         <div #editor></div>
@@ -63,10 +63,6 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
 
   }
 
-  isEdited(): boolean {
-    return this.editor != null;
-  }
-
   ngAfterViewInit() {
     this.renderer = this.rendererContainer.createComponent(this.renderersService.getFactory(this.rendererType));
     this.renderer.instance.value = this.value; // Not a real angular binding, we will have to update the value ourselves
@@ -75,7 +71,6 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-
     for(let changedProperty in changes) {
       let change = changes[changedProperty];
       if(changedProperty === 'value') {
@@ -92,6 +87,14 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
       }
       else if(changedProperty.substr(0, 2) === 'e-') {
         this.updateCustomEditorInput(changedProperty, change);
+      }
+    }
+  }
+
+  onKeyPress(keyEvent: KeyboardEvent) {
+    if(keyEvent.key === 'Enter') {
+      if(this.isEditing() && this.editor.instance.closesOnEnter()) {
+        this.stopEditing();
       }
     }
   }
@@ -145,6 +148,10 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
     });
     this.initCustomEditorInputs();
     this.editor.instance.close.subscribe(() => this.stopEditing());
+  }
+
+  private isEditing(): boolean {
+    return this.editor != null;
   }
 
   private stopEditing() {

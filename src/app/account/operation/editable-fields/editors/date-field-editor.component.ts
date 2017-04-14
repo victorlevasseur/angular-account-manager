@@ -19,13 +19,14 @@ import { FieldEditorBase } from './field-editor-base';
   `,
   styleUrls: ['field-editors.style.scss']
 })
-export class DateFieldEditorComponent implements FieldEditorBase<moment.Moment>, AfterViewInit {
-  value: moment.Moment;
-  valueChange = new EventEmitter<moment.Moment>();
-  close = new EventEmitter<void>();
+export class DateFieldEditorComponent extends FieldEditorBase<moment.Moment> implements AfterViewInit {
 
   @ViewChild('textField', {read: ElementRef})
   inputDOM: ElementRef;
+
+  constructor() {
+    super();
+  }
 
   ngAfterViewInit() {
     this.inputDOM.nativeElement.focus();

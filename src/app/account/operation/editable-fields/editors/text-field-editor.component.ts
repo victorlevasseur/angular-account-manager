@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   ChangeDetectionStrategy,
+  OnInit,
   AfterViewInit,
   ViewChild,
   ElementRef
@@ -12,24 +13,32 @@ import { FieldEditorBase } from './field-editor-base';
 @Component({
   template: `
     <div class="field-editor-container" aam-click-outside-event (clickOutside)="close.emit()">
-      <input #textField class="text-field-input" type="text" [value]="value" (input)="onInputChange($event.target.value);" />
+      <input
+        #textField
+        class="text-field-input"
+        type="text"
+        [value]="value"
+        (input)="onInputChange($event.target.value);" />
     </div>
   `,
   styleUrls: ['field-editors.style.scss']
 })
-export class TextFieldEditorComponent implements FieldEditorBase<string>, AfterViewInit {
-  value: string;
-  valueChange = new EventEmitter<string>();
-  close = new EventEmitter<void>();
+export class TextFieldEditorComponent extends FieldEditorBase<string> implements AfterViewInit {
 
   @ViewChild('textField', {read: ElementRef})
   inputDOM: ElementRef;
+
+  constructor() {
+    super();
+
+    console.log(this);
+  }
 
   ngAfterViewInit() {
     this.inputDOM.nativeElement.focus();
   }
 
-  onInputChange(newValue: string) {
+  onInputChange(newValue: string): void {
     this.valueChange.emit(newValue);
   }
 
