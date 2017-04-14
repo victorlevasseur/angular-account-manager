@@ -8,8 +8,11 @@ import {
   ViewContainerRef,
   ChangeDetectorRef,
   OnInit,
+  OnChanges,
   OnDestroy,
+  SimpleChanges,
   ViewChild,
+  ComponentRef,
   Optional } from '@angular/core';
 
 import { TriggerService } from '../../../angular2-viewport-master';
@@ -52,7 +55,7 @@ import Big = require('big.js/big');
     `,
   styleUrls: ['account-operation.style.scss']
 })
-export class AccountOperationComponent implements OnInit, OnDestroy {
+export class AccountOperationComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   accountOperation: AccountOperation;
 
@@ -75,6 +78,8 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
 
   private factory: ComponentFactory<AccountOperationRenderer> = null;
 
+  private renderer: ComponentRef<AccountOperationRenderer> = null;
+
   constructor(
     private accOpRenderer: AccountOperationRendererService,
     private viewContainerRef: ViewContainerRef,
@@ -92,6 +97,15 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
     this.triggerViewportCheck();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if('accountOperation' in changes) {
+      if(this.renderer) {
+        // Update the renderer operation instance to reflect the change in this component
+        this.renderer.instance.op = changes['accountOperation'].currentValue;
+      }
+    }
+  }
+
   ngOnDestroy() {
     this.triggerViewportCheck();
   }
@@ -104,19 +118,17 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
     this.inViewport = true;
 
     // Chargement du composant qui va faire le rendu de la ligne de compte
+    //TODO: Peut-être le charger depuis le début
     this.operationRendererContainer.clear();
-    const ref = this.operationRendererContainer.createComponent(this.factory, 0);
-    ref.instance.op = this.accountOperation;
-    ref.changeDetectorRef.detectChanges();
+    this.renderer = this.operationRendererContainer.createComponent(this.factory, 0);
+    this.renderer.instance.op = this.accountOperation;
+    this.renderer.changeDetectorRef.detectChanges();
 
     this.changeDetectorRef.reattach();
     this.changeDetectorRef.detectChanges();
   }
 
   onExitViewport() {
-    // Déchargement du composant
-    //this.operationRendererContainer.clear();
-
     this.inViewport = false;
     this.changeDetectorRef.detach();
     this.changeDetectorRef.detectChanges();
