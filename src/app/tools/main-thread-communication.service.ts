@@ -51,11 +51,8 @@ export class MainThreadCommunicationService {
         if(reply.error) {
           reject(reply.error);
         }
-        else if(reply.payload) {
-          resolve(reply.payload);
-        }
         else {
-          reject("");
+          resolve(reply.payload);
         }
       });
 
@@ -63,5 +60,18 @@ export class MainThreadCommunicationService {
       ipcRenderer.send(sendChannel, {payload: msg});
     });
     return promise;
+  }
+
+  /**
+   * Add a callback to listen to a channel.
+   * The channel is of the form {channel}:events with {channel} being the
+   * first arg of the function.
+   */
+  listen<U>(channel: string, callback: (U) => void): void {
+    ipcRenderer.on(channel + ':events', callback);
+  }
+
+  unlisten<U>(channel: string, callback: (U) => void): void {
+    ipcRenderer.removeListener(channel + ':events', callback);
   }
 }
