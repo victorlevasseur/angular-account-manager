@@ -1,7 +1,7 @@
 /**
  * Include our app
  */
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 
 // browser-window creates a native window
 let mainWindow = null;

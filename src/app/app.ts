@@ -56,6 +56,7 @@ import { ComboboxComponent } from './tools/combobox.component';
 import { CurrencyInputDirective } from './tools/currency-input.directive';
 import { DateInputDirective } from './tools/date-input.directive';
 import { DoubleclickInputDirective } from './tools/doubleclick-input.directive';
+import { MainThreadCommunicationService } from './tools/main-thread-communication.service';
 import { UniqueNumberService } from './tools/unique-number.service';
 
 import * as editableFields from './account/operation/editable-fields';
@@ -90,6 +91,7 @@ export class RavenErrorHandler implements ErrorHandler {
       AccountCalculatorService,
       UniqueNumberService,
       AccountOperationRendererService,
+      MainThreadCommunicationService,
       { provide: ErrorHandler, useClass: RavenErrorHandler }, // To redirect errors to raven
       { provide: 'CloseLoadingScreen', useValue: () => { (window as any).loading_screen.finish() } } // To close the loading screen when done loading
     ].concat(editableFields.globalProviders),
