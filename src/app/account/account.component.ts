@@ -45,7 +45,7 @@ export class AccountComponent implements OnInit {
   selection = new Set<AccountOperation>();
 
   /* debouncer used to reduce the number of request to the AccountCalculatorService */
-  debouncer = new Subject();
+  valueChanged = new Subject();
 
   constructor(private accountService: AccountService,
     private accountCalculator: AccountCalculatorService,
@@ -56,18 +56,25 @@ export class AccountComponent implements OnInit {
         return handle.className.indexOf('handle') != -1;
       }
     });
+
+    dragulaService.drop.subscribe(() => {
+      this.updateSums();
+    })
   }
 
   ngOnInit(): void {
-    this.debouncer
+    this.valueChanged
       .debounceTime(100)
       .subscribe(() => {this.getNewSumsForAccount();});
   }
 
+  updateSums() {
+    this.valueChanged.next();
+  }
+
   /* The callback called each time an operation's value has changed */
   onValueChanged(operation: AccountOperation, index: number): void {
-    this.partialSums.length = 0;
-    this.debouncer.next();
+    this.updateSums();
   }
 
   /* The debounced callback */

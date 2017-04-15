@@ -1,4 +1,10 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  Input,
+  ViewChild
+} from '@angular/core';
 
 import { AccountComponent } from './account.component';
 import { AccountService } from './account.service';
@@ -26,7 +32,7 @@ import Big = require('big.js/big');
   `,
   providers: [SelectionService]
 })
-export class AccountTabComponent implements OnInit {
+export class AccountTabComponent implements OnInit, AfterViewInit {
   @Input()
   filename: string;
 
@@ -66,6 +72,10 @@ export class AccountTabComponent implements OnInit {
     this.account = this.accountService.getAccount(this.filename);
   }
 
+  ngAfterViewInit() {
+    this.accountComponent.updateSums();
+  }
+
   addOperation() {
     this.account.operations.push(new BankOperation(
       false,
@@ -75,6 +85,7 @@ export class AccountTabComponent implements OnInit {
       new Big(0),
       new Big(0)
     ));
+    this.accountComponent.updateSums();
   }
 
   removeSelectedOperations() {
@@ -86,5 +97,6 @@ export class AccountTabComponent implements OnInit {
       this.account.operations.splice(itemIndex, 1);
     });
     this.accountComponent.selection = new Set([]);
+    this.accountComponent.updateSums();
   }
 }
