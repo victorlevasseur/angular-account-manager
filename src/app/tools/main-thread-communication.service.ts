@@ -18,9 +18,9 @@ interface IpcReply<T> {
 @Injectable()
 export class MainThreadCommunicationService {
   /**
-   * Send a message on a channel with a serialized payload of type T:
+   * Send a message on a channel with a serialized payload of type T.
    * The channel is of the form {channel}:message with {channel} the
-   * parameter given to the function
+   * parameter given to the function.
    * {
    *   payload: SERIALIZED_VERSION_OF_MSG
    * }
@@ -48,7 +48,6 @@ export class MainThreadCommunicationService {
     let promise = new Promise<U>((resolve, reject) => {
       // register a callback for a single reply
       ipcRenderer.once(replyChannel, (event: any, reply: IpcReply<U>) => {
-        console.log(reply);
         if(reply.error) {
           reject(reply.error);
         }
@@ -61,7 +60,7 @@ export class MainThreadCommunicationService {
       });
 
       // send the message
-      ipcRenderer.send(sendChannel, msg);
+      ipcRenderer.send(sendChannel, {payload: msg});
     });
     return promise;
   }
