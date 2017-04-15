@@ -8,7 +8,7 @@ import { ComboboxItem } from './comboboxitem';
   template: `
     <div materialize [class]="'flex-container horizontal ' + containerClass" (mouseenter)="onMouseEnter();" (mouseleave)="onMouseLeave()">
       <input [class]="'flex-item unfixed32 ' + inputClass" type="text" [value]="value" (input)="valueChange.emit($event.target.value)"/>
-      <div aam-click-outside-event class="flex-item fixed32 full-height" (clickOutside)="onClickOutside();">
+      <div *ngIf="dropdownItems" aam-click-outside-event class="flex-item fixed32" (clickOutside)="onClickOutside();">
         <button
           [class]="'btn btn-flat dropdown-bt ' + buttonClass"
           (click)="onDropdownButtonClicked()"
@@ -67,6 +67,7 @@ export class ComboboxComponent implements OnInit {
   ngOnInit() {
     // If the output is not connected, connect it to the default callback
     // which just set the combobox value according
+    // TODO Manage a callback change
     if(this.dropdownItemSelected.observers.length == 0) {
       this.dropdownItemSelected.subscribe((selected: ComboboxItem) => {
         this.value = selected.value != null ? selected.value : selected.displayString;

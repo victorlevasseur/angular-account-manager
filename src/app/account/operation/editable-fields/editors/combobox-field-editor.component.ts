@@ -9,21 +9,24 @@ import {
 } from '@angular/core';
 
 import { FieldEditorBase } from './field-editor-base';
+import { ComboboxItem } from '../../../../tools/comboboxitem';
 
 @Component({
   template: `
     <div class="field-editor-container" aam-click-outside-event (clickOutside)="close.emit()">
-      <input
-        #textField
-        class="text-field-input"
-        type="text"
-        [value]="value"
-        (input)="onInputChange($event.target.value);" />
+      <app-combobox
+        cbContainerClass="text-field-input"
+        [cbValue]="value"
+        (cbValueChange)="onInputChange($event);"
+        [cbDropdownItems]="choices">
+      </app-combobox>
     </div>
   `,
   styleUrls: ['field-editors.style.scss']
 })
-export class TextFieldEditorComponent extends FieldEditorBase<string> implements AfterViewInit {
+export class ComboboxFieldEditorComponent extends FieldEditorBase<string> implements AfterViewInit {
+
+  choices: Array<ComboboxItem>;
 
   @ViewChild('textField', {read: ElementRef})
   inputDOM: ElementRef;
@@ -33,7 +36,7 @@ export class TextFieldEditorComponent extends FieldEditorBase<string> implements
   }
 
   ngAfterViewInit() {
-    this.inputDOM.nativeElement.focus();
+
   }
 
   onInputChange(newValue: string): void {
@@ -41,6 +44,6 @@ export class TextFieldEditorComponent extends FieldEditorBase<string> implements
   }
 
   getCustomInputs(): string[] {
-    return [];
+    return ['choices'];
   }
 }

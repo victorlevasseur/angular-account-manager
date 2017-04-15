@@ -82,10 +82,10 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
           this.stopEditing(); // Stop editing if disabled is set to true
         }
       }
-      else if(changedProperty.substr(0, 2) === 'r-') {
+      else if(changedProperty.substr(0, 1) === 'r') {
         this.updateCustomRendererInput(changedProperty, change);
       }
-      else if(changedProperty.substr(0, 2) === 'e-') {
+      else if(this.isEditing() && changedProperty.substr(0, 1) === 'e') {
         this.updateCustomEditorInput(changedProperty, change);
       }
     }
@@ -101,7 +101,7 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
 
   private initCustomRendererInputs() {
     for(let unprefixedInputName of this.renderer.instance.getCustomInputs()) {
-      let inputName = 'r-' + unprefixedInputName;
+      let inputName = 'r' + unprefixedInputName;
       if(inputName in this) {
         this.renderer.instance[unprefixedInputName] = this[inputName];
       }
@@ -109,7 +109,7 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
   }
 
   private updateCustomRendererInput(inputName: string, change: SimpleChange) {
-    let unprefixedInputName = inputName.substr(2, 0);
+    let unprefixedInputName = inputName.substr(1, 0);
     if(this.renderer.instance.getCustomInputs().indexOf(unprefixedInputName) !== -1) {
       this.renderer.instance[unprefixedInputName] = change.currentValue;
       this.renderer.changeDetectorRef.markForCheck();
@@ -118,7 +118,7 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
 
   private initCustomEditorInputs() {
     for(let unprefixedInputName of this.editor.instance.getCustomInputs()) {
-      let inputName = 'r-' + unprefixedInputName;
+      let inputName = 'e' + unprefixedInputName;
       if(inputName in this) {
         this.editor.instance[unprefixedInputName] = this[inputName];
       }
@@ -126,7 +126,7 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
   }
 
   private updateCustomEditorInput(inputName: string, change: SimpleChange) {
-    let unprefixedInputName = inputName.substr(2, 0);
+    let unprefixedInputName = inputName.substr(1, 0);
     if(this.editor.instance.getCustomInputs().indexOf(unprefixedInputName) !== -1) {
       this.editor.instance[unprefixedInputName] = change.currentValue;
       this.editor.changeDetectorRef.markForCheck();

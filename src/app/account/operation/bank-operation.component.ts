@@ -14,7 +14,6 @@ import { BankOperation } from './bank-operation';
         </div>
       </div>
       <div class="flex-item perc3">
-        <!--<input appDateInput aam-doubleclickInput [(dateValue)]="op.date" type="text" placeholder="Date"/>-->
         <editable-date-field [(value)]="op.date"></editable-date-field>
       </div>
       <div class="flex-item perc4">
@@ -23,10 +22,12 @@ import { BankOperation } from './bank-operation';
           [(cbValue)]="op.type"
           [cbDropdownItems]="[{displayString: 'Chèque'}, {displayString: 'Virement'}, {displayString: 'Prélèvement'}, {displayString: 'Chèque n°'}, {displayString: 'Carte bleue'}]">
         </app-combobox>-->
-        {{op.type}}
+        <editable-text-combobox-field
+          [(value)]="op.type"
+          [echoices]="[{displayString: 'Chèque'}, {displayString: 'Virement'}, {displayString: 'Prélèvement'}, {displayString: 'Chèque n°'}, {displayString: 'Carte bleue'}]" >
+        </editable-text-combobox-field>
       </div>
       <div class="flex-item perc10">
-        <!--<input aam-doubleclickInput type="text" placeholder="Description" [(ngModel)]="op.description"/>-->
         <editable-text-field [(value)]="op.description"></editable-text-field>
       </div>
       <div class="flex-item perc3">
