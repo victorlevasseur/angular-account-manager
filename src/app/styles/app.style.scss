@@ -129,3 +129,24 @@ input[type='text']:focus:not(:read-only) {
 .main-toolbar .btn {
     margin: 0px;
 }
+
+.main-toolbar .extra-menu-dropdown {
+    width: 170px;
+
+    li {
+        padding: 8px !important;
+
+        background-color: lighten($primary_color, 5%) !important;
+
+        font-family: 'Roboto';
+        font-size: 12pt;
+
+        &:hover {
+            background-color: lighten($primary_color, 10%) !important;
+        }
+
+        &:active {
+            background-color: lighten($primary_color, 15%) !important;
+        }
+    }
+}

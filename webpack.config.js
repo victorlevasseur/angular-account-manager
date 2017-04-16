@@ -69,7 +69,7 @@ var config = {
             },
             {
                 test: /\.scss$/,
-                exclude: /node_modules/,
+                /*exclude: /node_modules/,*/
                 loaders: ['to-string-loader', 'css-loader', 'sass-loader'] // sass-loader not scss-loader
             },
 
@@ -147,11 +147,11 @@ var config = {
                     resourcePath: 'src'
                 },
                 worker: {
-					output: {
-						filename: "hash.worker.js",
-						chunkFilename: "[id].hash.worker.js"
-					}
-				}
+          					output: {
+          						filename: "hash.worker.js",
+          						chunkFilename: "[id].hash.worker.js"
+          					}
+        				}
             }
         }),
 

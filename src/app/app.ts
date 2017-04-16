@@ -56,6 +56,8 @@ import { ComboboxComponent } from './tools/combobox.component';
 import { CurrencyInputDirective } from './tools/currency-input.directive';
 import { DateInputDirective } from './tools/date-input.directive';
 import { DoubleclickInputDirective } from './tools/doubleclick-input.directive';
+import { DropdownButtonComponent } from './tools/dropdown-button.component';
+import { DropdownItemDirective } from './tools/dropdown-item.directive';
 import { MainThreadCommunicationService } from './tools/main-thread-communication.service';
 import { UniqueNumberService } from './tools/unique-number.service';
 
@@ -112,6 +114,8 @@ export class RavenErrorHandler implements ErrorHandler {
       CurrencyInputDirective,
       DateInputDirective,
       DoubleclickInputDirective,
+      DropdownButtonComponent,
+      DropdownItemDirective,
       SelectableListDirective,
       SelectableItemDirective,
     ].concat(editableFields.components),
