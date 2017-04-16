@@ -1,6 +1,7 @@
 @import '~dragula/dist/dragula';
 @import './colors';
 @import './roboto';
+@import './buttons';
 
 .account-operations {
     margin: 8px;
@@ -89,7 +90,7 @@ input[type='text']:focus:not(:read-only) {
 .flex-container.horizontal {
     flex-direction: row;
 
-    .flex-item.flex-item-grow {
+    & > .flex-item.flex-item-grow {
         flex-grow: 1;
         width: 0;
     }
@@ -98,7 +99,7 @@ input[type='text']:focus:not(:read-only) {
 .flex-container.vertical {
     flex-direction: column;
 
-    .flex-item.flex-item-grow {
+    & > .flex-item.flex-item-grow {
         flex-grow: 1;
         height: 0;
     }
@@ -119,4 +120,12 @@ input[type='text']:focus:not(:read-only) {
     .flex-item.unfixed#{$i} {
         width: calc(100% - #{$i}px);
     }
+}
+
+.main-toolbar {
+    padding: 0px;
+}
+
+.main-toolbar .btn {
+    margin: 0px;
 }

@@ -32,8 +32,12 @@ const remote = require('electron').remote;
     template: `
     <div class="aam-main-container flex-container vertical" (window:resize)="onResize();">
       <div class="aam-main-tab-header">
-          <div class="flex-container">
-            <div class="flex-item perc24">
+          <div class="flex-container horizontal">
+            <div class="flex-item main-toolbar flex-container horizontal">
+              <div class="btn btn-flat full-height"><span>Nouveau</span></div>
+              <div class="btn btn-flat full-height">Ouvrir</div>
+            </div>
+            <div class="flex-item flex-item-grow">
               <app-tabs-header [tabsList]="tabsList"></app-tabs-header>
             </div>
           </div>

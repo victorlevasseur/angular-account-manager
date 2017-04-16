@@ -1,7 +1,7 @@
 /**
  * Include our app
  */
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, MenuItem } = require('electron');
 
 // browser-window creates a native window
 let mainWindow = null;
@@ -14,9 +14,34 @@ app.on('window-all-closed', () => {
   }
 });
 
+const initMenu = () => {
+  /*let menu = Menu.buildFromTemplate([
+    {
+      label: 'Fichier',
+      submenu: [
+        {
+          label: 'Nouveau'
+        },
+        {
+          label: 'Ouvrir'
+        },
+        {
+          label: 'Enregistrer'
+        },
+        {
+          label: 'Enregistrer sous...'
+        }
+      ]
+    }
+  ]);
+
+  Menu.setApplicationMenu(menu);*/
+}
+
 const createWindow = () => {
   // Initialize the window to our specified dimensions
   mainWindow = new BrowserWindow({ width: 1200, height: 900 });
+  initMenu();
 
   // Tell Electron where to load the entry point from
   mainWindow.loadURL('file://' + __dirname + '/index.html');
