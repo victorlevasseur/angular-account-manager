@@ -20,6 +20,8 @@ import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import "rxjs/Rx";
 import Raven = require('raven-js');
 
+import { ColumnSizersModule } from '../column-sizers';
+
 /**
  * Import our child components
  */
@@ -86,7 +88,8 @@ export class RavenErrorHandler implements ErrorHandler {
         ReactiveFormsModule,
         HttpModule,
         DragulaModule,
-        ViewportModule
+        ViewportModule,
+        ColumnSizersModule
     ],
     providers: [
       AccountService,
