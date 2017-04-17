@@ -42,6 +42,7 @@ const remote = require('electron').remote;
               <dropdown-button buttonClass="btn btn-flat full-height" dropdownClass="extra-menu-dropdown">
                 <span buttonHtml><i class="fa fa-lg fa-ellipsis-h" aria-hidden="true"></i></span>
                 <li dropdownItem><i class="fa fa-fw fa-cog" aria-hidden="true"></i>&nbsp;Paramètres</li>
+                <li dropdownItem (click)="onDevtoolsClicked();"><i class="fa fa-fw fa-tools" aria-hidden="true"></i>&nbsp;Devtools</li>
                 <li dropdownItem (click)="onCloseClicked();"><i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>&nbsp;Quitter</li>
               </dropdown-button>
             </div>
@@ -86,6 +87,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   onResize() {
     this.triggerService.trigger();
+  }
+
+  onDevtoolsClicked() {
+    remote.getCurrentWindow().webContents.openDevTools();
   }
 
   onCloseClicked() {
