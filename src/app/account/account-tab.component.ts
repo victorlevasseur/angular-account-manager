@@ -45,9 +45,9 @@ export class AccountTabComponent implements OnInit, AfterViewInit {
     new ButtonToolbarItem({
       text: 'Ajouter une opération',
       clickedCallback: (item) => {
-        for(let i = 0; i < 100; ++i) {
+        //for(let i = 0; i < 100; ++i) {
           this.addOperation();
-        }
+        //}
       }
     }),
     new ButtonToolbarItem({
@@ -82,7 +82,6 @@ export class AccountTabComponent implements OnInit, AfterViewInit {
       moment.utc(),
       "",
       "",
-      new Big(0),
       new Big(0)
     ));
     this.accountComponent.updateSums();

@@ -4,23 +4,27 @@ import Big = require('big.js/big');
 
 export abstract class AccountOperation {
 
+  private _value: Big = 0;
   valueChanged = new EventEmitter<void>();
+
+  get value(): Big {
+    return this._value;
+  }
+
+  set value(newValue: Big) {
+    this._value = newValue;
+    this.valueChanged.emit();
+  }
 
   constructor() {
 
   }
-
-  abstract getValue(): Big;
 
   abstract getCollectedValue(): Big;
 
   abstract getComponentClass(): Type<AccountOperationRenderer>;
 
   abstract getComponentDefaultHeight(): number;
-
-  protected setValueChanged(): void {
-    this.valueChanged.next();
-  }
 }
 
 @Component({

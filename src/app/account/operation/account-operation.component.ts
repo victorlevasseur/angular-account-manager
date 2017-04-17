@@ -33,15 +33,12 @@ import Big = require('big.js/big');
         [style.height]="!inViewport ? accountOperation.getComponentDefaultHeight() + 'px' : 'auto'">
         <div class="flex-item fixed24 handle">&nbsp;</div>
         <div class="flex-item unfixed24 flex-container">
-          <div class="flex-item perc18">
+          <div class="flex-item perc21">
             <div #operationRenderer></div>
           </div>
-          <div class="flex-item perc6 flex-container horizontal">
-            <div *ngIf="partialSum != undefined" class="operation-value flex-item perc12">
-              <editable-currency-field [value]="partialSum.value" disabled="true"></editable-currency-field>
-            </div>
-            <div *ngIf="partialSum != undefined" class="operation-collected-value flex-item perc12">
-              <editable-currency-field [value]="partialSum.collectedValue" disabled="true"></editable-currency-field>
+          <div class="flex-item perc3 flex-container horizontal">
+            <div *ngIf="partialSum != undefined" class="operation-value flex-item perc24">
+              <editable-currency-field [value]="partialSum.value" rcolorize="false" disabled="true"></editable-currency-field>
             </div>
           </div>
         </div>

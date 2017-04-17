@@ -82,10 +82,10 @@ export class EditableFieldComponentBase<T> implements AfterViewInit, OnChanges {
           this.stopEditing(); // Stop editing if disabled is set to true
         }
       }
-      else if(changedProperty.substr(0, 1) === 'r') {
+      else if(this.renderer && changedProperty.substr(0, 1) === 'r') {
         this.updateCustomRendererInput(changedProperty, change);
       }
-      else if(this.isEditing() && changedProperty.substr(0, 1) === 'e') {
+      else if(this.editor && changedProperty.substr(0, 1) === 'e') {
         this.updateCustomEditorInput(changedProperty, change);
       }
     }

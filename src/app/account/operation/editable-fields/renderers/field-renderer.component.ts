@@ -5,7 +5,8 @@ import {
 } from '@angular/core';
 
 @Component({
-  template: `{{value}}`
+  template: `<div class="field-renderer">{{value}}</div>`,
+  styleUrls: ['field-renderer.style.scss']
 })
 export class FieldRendererComponent<T> {
   value: T;

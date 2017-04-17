@@ -15,7 +15,7 @@ export class AccountCalculatorService {
     var result = Array<{value: Big, collectedValue: Big}>(account.operations.length);
     for(var i = 0; i < result.length; i++) {
       result[i] = {
-        value: account.operations[i].getValue().plus(i != 0 ? result[i-1].value : new Big(0)),
+        value: account.operations[i].value.plus(i != 0 ? result[i-1].value : new Big(0)),
         collectedValue: account.operations[i].getCollectedValue().plus(i != 0 ? result[i-1].collectedValue : new Big(0))
       };
     }

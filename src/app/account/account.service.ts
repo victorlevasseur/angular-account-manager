@@ -15,40 +15,35 @@ export class AccountService {
         moment.utc(),
         "Virement",
         "Salaire",
-        new Big(1500),
-        new Big(0)
+        new Big(1500)
       ),
       new BankOperation(
         false,
         moment.utc(),
         "Chèque",
         "Noël des enfants",
-        new Big(0),
-        new Big(35)
+        new Big(-35)
       ),
       new BankOperation(
         true,
         moment.utc(),
         "Virement",
         "Salaire 2",
-        new Big(1200.45),
-        new Big(0)
+        new Big(1200.45)
       ),
       new BankOperation(
         true,
         moment.utc(),
         "Virement",
         "Loyer",
-        new Big(0),
-        new Big(700)
+        new Big(-700)
       ),
       new BankOperation(
         false,
         moment.utc(),
         "Chèque #1",
         "E.Leclerc",
-        new Big(0),
-        new Big(123.65)
+        new Big(-123.65)
       )
     ];
     /*account.operations = [];
@@ -58,8 +53,7 @@ export class AccountService {
         moment.utc(),
         "Chèque #1",
         "E.Leclerc",
-        new Big(0),
-        new Big(123.65)
+        new Big(0)
       ));
     }*/
 

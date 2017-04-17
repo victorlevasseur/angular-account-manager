@@ -1,5 +1,6 @@
 import {
-  Component
+  Component,
+  Input
 } from '@angular/core';
 
 import { EditableFieldComponentBase, editableFieldMetadata } from './editable-field-base.component';
@@ -14,6 +15,10 @@ import Big = require('big.js/big');
 
 @Component(editableFieldMetadata('editable-currency-field'))
 export class EditableCurrencyFieldComponent extends EditableFieldComponentBase<Big> {
+  
+  @Input('rcolorize')
+  rcolorize: boolean = true;
+
   constructor(
     renderersService: FieldRenderersFactoriesService,
     editorsService: FieldEditorsFactoriesService) {

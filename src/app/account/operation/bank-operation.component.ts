@@ -17,24 +17,16 @@ import { BankOperation } from './bank-operation';
         <editable-date-field [(value)]="op.date"></editable-date-field>
       </div>
       <div class="flex-item perc4">
-        <!--<app-combobox aam-doubleclickInput
-          cbContainerClass="full-height"
-          [(cbValue)]="op.type"
-          [cbDropdownItems]="[{displayString: 'Chèque'}, {displayString: 'Virement'}, {displayString: 'Prélèvement'}, {displayString: 'Chèque n°'}, {displayString: 'Carte bleue'}]">
-        </app-combobox>-->
         <editable-text-combobox-field
           [(value)]="op.type"
           [echoices]="[{displayString: 'Chèque'}, {displayString: 'Virement'}, {displayString: 'Prélèvement'}, {displayString: 'Chèque n°'}, {displayString: 'Carte bleue'}]" >
         </editable-text-combobox-field>
       </div>
-      <div class="flex-item perc10">
+      <div class="flex-item perc13">
         <editable-text-field [(value)]="op.description"></editable-text-field>
       </div>
       <div class="flex-item perc3">
-        <editable-currency-field [(value)]="op.credit"></editable-currency-field>
-      </div>
-      <div class="flex-item perc3">
-        <editable-currency-field [(value)]="op.debit"></editable-currency-field>
+        <editable-currency-field [(value)]="op.value"></editable-currency-field>
       </div>
     </div>`,
   styleUrls: ['bank-operation.style.scss']

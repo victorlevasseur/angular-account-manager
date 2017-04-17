@@ -1,0 +1,13 @@
+.currency-field-renderer {
+    text-align: right;
+    font-family: monospace;
+    font-weight: bold;
+
+    &.positive {
+        background-color: transparentize(green, 0.9);
+    }
+
+    &.negative {
+        background-color: transparentize(red, 0.9);
+    }
+}
