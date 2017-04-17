@@ -59,7 +59,7 @@ export class AccountTabComponent implements OnInit, AfterViewInit {
     new ButtonToolbarItem({
       text: "TEST",
       clickedCallback: (item) => {
-        //For tests
+        this.accountComponent.columnsSizes.push(['value', 250]);
       }
     })
   ];

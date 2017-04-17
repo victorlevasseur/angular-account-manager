@@ -2,17 +2,20 @@ import {
   NgModule
 } from '@angular/core';
 
-import { ColumnCellComponent } from './column-cell.component';
-import { ColumnRowComponent } from './column-row.component';
+import { ColumnCellDirective } from './column-cell.directive';
+import { ColumnsContainerRowComponent } from './columns-container-row.component';
+import { ColumnsContainerDirective } from './columns-container.directive';
 
 @NgModule({
   exports: [
-    ColumnCellComponent,
-    ColumnRowComponent
+    ColumnCellDirective,
+    ColumnsContainerRowComponent,
+    ColumnsContainerDirective
   ],
   declarations: [
-    ColumnCellComponent,
-    ColumnRowComponent
+    ColumnCellDirective,
+    ColumnsContainerRowComponent,
+    ColumnsContainerDirective
   ]
 })
 export class ColumnSizersModule {

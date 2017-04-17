@@ -20,7 +20,8 @@ import Big = require('big.js/big');
         [dragula]="'account-bag'"
         [dragulaModel]='account.operations'
         *ngIf="account"
-        class="account-component">
+        class="account-component"
+        columns-container [(columnsSizes)]="columnsSizes">
         <account-operation
           *ngFor="let operation of account.operations; let i = index; let odd = odd;"
           aam-selectableItem
@@ -46,6 +47,14 @@ export class AccountComponent implements OnInit {
 
   /* debouncer used to reduce the number of request to the AccountCalculatorService */
   valueChanged = new Subject();
+
+  columnsSizes = [
+    ["handle", 24],
+    ["renderer", -1],
+    ["collected", 24],
+    ["date", 120],
+    ["description", -1]
+  ];
 
   constructor(private accountService: AccountService,
     private accountCalculator: AccountCalculatorService,

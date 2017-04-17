@@ -7,28 +7,28 @@ import { BankOperation } from './bank-operation';
 @Component({
   selector: 'bank-operation',
   template: `
-    <div class="flex-container horizontal bank-operation-container">
-      <div class="flex-item perc1">
+    <columns-container-row class="bank-operation-container">
+      <div column-cell columnName="collected">
         <div style="margin-left: 5px; margin-top: 5px">
           <app-checkbox label="" [(checked)]='op.collected'></app-checkbox>
         </div>
       </div>
-      <div class="flex-item perc3">
+      <div column-cell columnName="date">
         <editable-date-field [(value)]="op.date"></editable-date-field>
       </div>
-      <div class="flex-item perc4">
+      <div column-cell columnName="type">
         <editable-text-combobox-field
           [(value)]="op.type"
           [echoices]="[{displayString: 'Chèque'}, {displayString: 'Virement'}, {displayString: 'Prélèvement'}, {displayString: 'Chèque n°'}, {displayString: 'Carte bleue'}]" >
         </editable-text-combobox-field>
       </div>
-      <div class="flex-item perc13">
+      <div column-cell columnName="description">
         <editable-text-field [(value)]="op.description"></editable-text-field>
       </div>
-      <div class="flex-item perc3">
+      <div column-cell columnName="value">
         <editable-currency-field [(value)]="op.value"></editable-currency-field>
       </div>
-    </div>`,
+    </columns-container-row>`,
   styleUrls: ['bank-operation.style.scss']
 })
 export class BankOperationComponent extends AccountOperationRenderer {

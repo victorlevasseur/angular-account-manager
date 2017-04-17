@@ -29,19 +29,21 @@ import Big = require('big.js/big');
   template: `
       <div (vp-in-view)="onEnterViewport();" [vp-in-view-config]="{everyTime: true, margin: 500}"
         (vp-out-view)="onExitViewport();" [vp-out-view-config]="{everyTime: true, margin: 500}"
-        [class]="'aam-account-operation z-depth-1 flex-container horizontal ' + customClass + (selected ? ' selected':'')"
+        [class]="'aam-account-operation z-depth-1 ' + customClass + (selected ? ' selected':'')"
         [style.height]="!inViewport ? accountOperation.getComponentDefaultHeight() + 'px' : 'auto'">
-        <div class="flex-item fixed24 handle">&nbsp;</div>
-        <div class="flex-item unfixed24 flex-container">
-          <div class="flex-item perc21">
+        <columns-container-row>
+          <div column-cell columnName="handle">
+            <div class="handle">&nbsp;</div>
+          </div>
+          <div column-cell columnName="renderer">
             <div #operationRenderer></div>
           </div>
-          <div class="flex-item perc3 flex-container horizontal">
+          <div column-cell columnName="partialSum">
             <div *ngIf="partialSum != undefined" class="operation-value flex-item perc24">
               <editable-currency-field [value]="partialSum.value" rcolorize="false" disabled="true"></editable-currency-field>
             </div>
           </div>
-        </div>
+        </columns-container-row>
       </div>
     `,
   styleUrls: ['account-operation.style.scss']
