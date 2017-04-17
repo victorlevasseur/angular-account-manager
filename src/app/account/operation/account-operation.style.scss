@@ -29,6 +29,8 @@
 
         background-color: transparent;
 
+        user-select: none;
+
         transition: background-color 0.2s ease-in-out;
 
         /* TODO Just for testing the viewport linked change detection detach/attach */
