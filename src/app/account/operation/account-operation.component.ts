@@ -14,11 +14,13 @@ import {
   ViewChild,
   ComponentRef,
   Optional } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 import { TriggerService } from '../../../angular2-viewport-master';
 
 import { AccountOperation, AccountOperationRenderer } from './account-operation';
 import { AccountOperationRendererService } from './account-operation-renderer.service';
+import { AccountPartialSum } from '../calculator/account-calculator.service';
 import { BankOperation } from './bank-operation';
 import { SelectionService } from '../../dnd/selection.service';
 
@@ -40,8 +42,8 @@ import Big = require('big.js/big');
             <div #operationRenderer></div>
           </div>
           <div column-cell columnName="partialSum">
-            <div *ngIf="partialSum != undefined" class="operation-value flex-item perc24">
-              <editable-currency-field [value]="partialSum.value" rcolorize="false" disabled="true"></editable-currency-field>
+            <div class="operation-value flex-item perc24">
+              <editable-currency-field [value]="partialSumValue$ | async" rcolorize="false" disabled="true"></editable-currency-field>
             </div>
           </div>
         </columns-container-row>
@@ -53,8 +55,10 @@ export class AccountOperationComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   accountOperation: AccountOperation;
 
-  @Input()
-  partialSum: {value: Big, collectedValue: Big};
+  @Input('partialSums$')
+  partialSums$: Observable<AccountPartialSum>; // Observable notifying for all operations, need to filter it
+  partialSumValue$: Observable<Big>;
+  partialSumCollectedValue$: Observable<Big>;
 
   @Input()
   customClass: String = "";
@@ -89,11 +93,14 @@ export class AccountOperationComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if('accountOperation' in changes) {
+    if(changes['accountOperation']) {
       if(this.renderer) {
         // Update the renderer operation instance to reflect the change in this component
         this.renderer.instance.op = changes['accountOperation'].currentValue;
       }
+    }
+    if(changes['partialSums$']) {
+      this.updatePartialSumsObservables();
     }
   }
 
@@ -105,7 +112,7 @@ export class AccountOperationComponent implements OnInit, OnChanges, OnDestroy {
     this.valueChanged.next();
   }
 
-  onEnterViewport() {
+  onEnterViewport(): void {
     this.inViewport = true;
 
     // Chargement du composant qui va faire le rendu de la ligne de compte
@@ -119,13 +126,25 @@ export class AccountOperationComponent implements OnInit, OnChanges, OnDestroy {
     this.changeDetectorRef.detectChanges();
   }
 
-  onExitViewport() {
+  onExitViewport(): void {
     this.inViewport = false;
     this.changeDetectorRef.detach();
     this.changeDetectorRef.detectChanges();
   }
 
-  triggerViewportCheck() {
+  triggerViewportCheck(): void {
     this.triggerService.trigger();
+  }
+
+  private updatePartialSumsObservables(): void {
+    console.log('aaaaaaaa');
+    let currentOperationPartialSum$ = this.partialSums$
+      .filter((partialSum) => partialSum.operation === this.accountOperation);
+
+    this.partialSumValue$ = currentOperationPartialSum$
+      .map((partialSum) => partialSum.value);
+
+    this.partialSumCollectedValue$ = currentOperationPartialSum$
+      .map((partialSum) => partialSum.collectedValue);
   }
 };

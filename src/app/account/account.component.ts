@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, Optional } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 
 import { AccountService } from './account.service';
-import { AccountCalculatorService } from './calculator/account-calculator.service';
+import { AccountCalculatorService, AccountPartialSum } from './calculator/account-calculator.service';
 import { Account } from './account';
 import { AccountOperation } from './operation/account-operation';
 import { BankOperation } from './operation/bank-operation';
@@ -25,7 +26,7 @@ import Big = require('big.js/big');
         <account-operation
           *ngFor="let operation of account.operations; let i = index; let odd = odd;"
           [accountOperation]="operation"
-          [partialSum]="partialSums[i]"
+          [partialSums$]="partialSums$"
           [customClass]="odd ? 'odd' : 'even'"
           (valueChanged)="onValueChanged(account.operation, i)">
         </account-operation>
@@ -38,10 +39,11 @@ export class AccountComponent implements OnInit {
   @Input()
   account: Account;
 
+  partialSums$: Observable<AccountPartialSum>;
   partialSums = new Array<{value: Big, collectedValue: Big}>();
 
   /* debouncer used to reduce the number of request to the AccountCalculatorService */
-  valueChanged = new Subject();
+  valueChanged$ = new Subject();
 
   columnsSizes = [
     ["handle", 24],
@@ -72,17 +74,21 @@ export class AccountComponent implements OnInit {
 
     dragulaService.drop.subscribe(() => {
       this.updateSums();
-    })
+    });
+
+    // Get the partial sums values changes for the current account
+    this.partialSums$ = accountCalculator.operationsPartialSums$
+      .filter((partialSum) => partialSum.account === this.account);
   }
 
   ngOnInit(): void {
-    this.valueChanged
+    this.valueChanged$
       .debounceTime(100)
       .subscribe(() => {this.getNewSumsForAccount();});
   }
 
   updateSums() {
-    this.valueChanged.next();
+    this.valueChanged$.next();
   }
 
   /* The callback called each time an operation's value has changed */
@@ -92,6 +98,6 @@ export class AccountComponent implements OnInit {
 
   /* The debounced callback */
   getNewSumsForAccount() {
-    this.partialSums = this.accountCalculator.calculateSums(this.account);
+    this.accountCalculator.calculateSums(this.account);
   }
 };

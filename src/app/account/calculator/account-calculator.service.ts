@@ -8,17 +8,32 @@ import Big = require('big.js/big');
 import { Account } from '../account';
 import { AccountOperation } from '../operation/account-operation';
 
+export interface AccountPartialSum {
+  account: Account;
+  operation: AccountOperation;
+  value: Big;
+  collectedValue: Big;
+}
+
 @Injectable()
 export class AccountCalculatorService {
 
-  calculateSums(account: Account): Array<{value: Big, collectedValue: Big}> {
-    var result = Array<{value: Big, collectedValue: Big}>(account.operations.length);
-    for(var i = 0; i < result.length; i++) {
-      result[i] = {
-        value: account.operations[i].value.plus(i != 0 ? result[i-1].value : new Big(0)),
-        collectedValue: account.operations[i].getCollectedValue().plus(i != 0 ? result[i-1].collectedValue : new Big(0))
-      };
+  operationsPartialSums$ = new Subject<AccountPartialSum>();
+
+  calculateSums(account: Account): void {
+    let value: Big;
+    let collectedValue: Big;
+
+    for(let i = 0; i < account.operations.length; i++) {
+      value = account.operations[i].value.plus(i != 0 ? value : new Big(0));
+      collectedValue = account.operations[i].value.plus(i != 0 ? value : new Big(0));
+
+      this.operationsPartialSums$.next({
+        account: account,
+        operation: account.operations[i],
+        value: new Big(value),
+        collectedValue: new Big(collectedValue)
+      });
     }
-    return result;
   }
 }

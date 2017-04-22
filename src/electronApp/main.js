@@ -36,7 +36,7 @@ const initMenu = () => {
   ]);
 
   Menu.setApplicationMenu(menu);*/
-  Menu.setApplicationMenu(null);
+  //Menu.setApplicationMenu(null);
 }
 
 const createWindow = () => {
