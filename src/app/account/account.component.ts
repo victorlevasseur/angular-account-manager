@@ -7,6 +7,7 @@ import { AccountCalculatorService } from './calculator/account-calculator.servic
 import { Account } from './account';
 import { AccountOperation } from './operation/account-operation';
 import { BankOperation } from './operation/bank-operation';
+import { SelectionService } from '../dnd/selection.service';
 
 import * as moment from 'moment';
 import Big = require('big.js/big');
@@ -15,7 +16,6 @@ import Big = require('big.js/big');
   selector: 'account',
   template: `
       <div aam-selectableList
-        [(aam-selectedItems)]="selection"
         [aam-selectableModel]="account.operations"
         [dragula]="'account-bag'"
         [dragulaModel]='account.operations'
@@ -24,9 +24,6 @@ import Big = require('big.js/big');
         columns-container [(columnsSizes)]="columnsSizes">
         <account-operation
           *ngFor="let operation of account.operations; let i = index; let odd = odd;"
-          aam-selectableItem
-          [aam-trackBy]="operation"
-          [selected]="selection.has(operation)"
           [accountOperation]="operation"
           [partialSum]="partialSums[i]"
           [customClass]="odd ? 'odd' : 'even'"
@@ -35,15 +32,13 @@ import Big = require('big.js/big');
       </div>
     `,
   styleUrls: ['./account.style.scss'],
-  providers: [DragulaService] // To provide a different dragula service for each account
+  providers: [DragulaService, SelectionService] // To provide a different dragula service for each account
 })
 export class AccountComponent implements OnInit {
   @Input()
   account: Account;
 
   partialSums = new Array<{value: Big, collectedValue: Big}>();
-
-  selection = new Set<AccountOperation>();
 
   /* debouncer used to reduce the number of request to the AccountCalculatorService */
   valueChanged = new Subject();
@@ -56,9 +51,18 @@ export class AccountComponent implements OnInit {
     ["description", -1]
   ];
 
+  get selection() {
+    return this.selectionService.selected;
+  }
+
+  set selection(value: Iterable<any>) {
+    this.selectionService.setSelection(value);
+  }
+
   constructor(private accountService: AccountService,
     private accountCalculator: AccountCalculatorService,
-    private dragulaService: DragulaService) {
+    private dragulaService: DragulaService,
+    private selectionService: SelectionService) {
 
     dragulaService.setOptions('account-bag', {
       moves: function (el, container, handle) {

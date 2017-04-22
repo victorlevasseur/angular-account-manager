@@ -88,13 +88,14 @@ export class AccountTabComponent implements OnInit, AfterViewInit {
   }
 
   removeSelectedOperations() {
-    this.accountComponent.selection.forEach((selectedItem: AccountOperation) => {
+    for(let selected of this.accountComponent.selection) {
+      let selectedItem = selected as AccountOperation;
       let itemIndex = this.account.operations.indexOf(selectedItem);
       if(itemIndex === -1) {
         return;
       }
       this.account.operations.splice(itemIndex, 1);
-    });
+    }
     this.accountComponent.selection = new Set([]);
     this.accountComponent.updateSums();
   }

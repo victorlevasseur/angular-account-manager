@@ -29,8 +29,9 @@ import Big = require('big.js/big');
   template: `
       <div (vp-in-view)="onEnterViewport();" [vp-in-view-config]="{everyTime: true, margin: 500}"
         (vp-out-view)="onExitViewport();" [vp-out-view-config]="{everyTime: true, margin: 500}"
-        [class]="'aam-account-operation z-depth-1 ' + customClass + (selected ? ' selected':'')"
-        [style.height]="!inViewport ? accountOperation.getComponentDefaultHeight() + 'px' : 'auto'">
+        [class]="'aam-account-operation z-depth-1 ' + customClass"
+        [style.height]="!inViewport ? accountOperation.getComponentDefaultHeight() + 'px' : 'auto'"
+        aam-selectableItem [aam-trackBy]="accountOperation">
         <columns-container-row>
           <div column-cell columnName="handle">
             <div class="handle">&nbsp;</div>
@@ -60,9 +61,6 @@ export class AccountOperationComponent implements OnInit, OnChanges, OnDestroy {
 
   @Output()
   valueChanged = new EventEmitter<void>();
-
-  @Input()
-  selected = false;
 
   @ViewChild('operationRenderer', {read: ViewContainerRef})
   operationRendererContainer: ViewContainerRef;

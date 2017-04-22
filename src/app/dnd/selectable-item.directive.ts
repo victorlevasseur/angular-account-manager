@@ -4,14 +4,18 @@ import {
   Output,
   Optional,
   HostListener,
+  HostBinding,
   EventEmitter,
   OnInit,
   OnDestroy,
   OnChanges,
   ElementRef,
+  Renderer2,
   SimpleChanges } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
-import { SelectionService } from './selection.service';
+import { SelectionService, SelectionStateChangeInfo } from './selection.service';
 
 @Directive({
   selector: '[aam-selectableItem]'
@@ -19,34 +23,54 @@ import { SelectionService } from './selection.service';
 export class SelectableItemDirective implements OnInit, OnDestroy, OnChanges {
 
   @Input('aam-trackBy')
-  trackBy: any;
+  trackBy: any = null;
 
-  @Output('aam-selectStateChange')
-  selectedChange = new EventEmitter<boolean>();
+  @Input('aam-selectedClass')
+  selectedClass: string = 'selected';
 
-  @Input('aam-dndHandleSelector')
-  dndHandleSelector: string = '*';
+  private selected$Sub: Subscription;
 
-  constructor(public el: ElementRef, private selectionService: SelectionService) {
+  constructor(public el: ElementRef, private renderer: Renderer2, private selectionService: SelectionService) {
+    this.selected$Sub = selectionService.selected$
+      .filter((info: SelectionStateChangeInfo, index: number): boolean => {
+        return info.item === this.trackBy;
+      })
+      .map((info: SelectionStateChangeInfo) => {
+        return info.selected;
+      }).subscribe((selected: boolean) => {
+        this.addSelectedClass(selected);
+      });
+  }
 
+  private addSelectedClass(select: boolean) {
+    if(select) {
+      this.renderer.addClass(this.el.nativeElement, this.selectedClass);
+    }
+    else {
+      this.renderer.removeClass(this.el.nativeElement, this.selectedClass);
+    }
   }
 
   ngOnInit() {
+    //this.addSelectedClass(this.selectionService.isSelected(this.trackBy));
   }
 
   ngOnDestroy() {
-    this.selectionService.removeFromSelection(this.trackBy);
+    this.selectionService.select(this.trackBy, false);
+    this.selected$Sub.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes.hasOwnProperty('trackBy') && changes['trackBy'] && !changes['trackBy'].isFirstChange()) {
+    if(changes['trackBy'] && !changes['trackBy'].isFirstChange()) {
       let oldTrackBy = changes['trackBy'].previousValue;
       let newTrackBy = changes['trackBy'].currentValue;
 
       if(this.selectionService.isSelected(oldTrackBy)) {
-        this.selectionService.removeFromSelection(oldTrackBy);
-        this.selectionService.addToSelection(newTrackBy);
+        this.selectionService.select(oldTrackBy, false);
+        this.selectionService.select(newTrackBy);
       }
+
+      this.addSelectedClass(this.selectionService.isSelected(newTrackBy));
     }
   }
 
@@ -59,13 +83,13 @@ export class SelectableItemDirective implements OnInit, OnDestroy, OnChanges {
     }
 
     if(event.ctrlKey && this.selectionService.isSelected(this.trackBy)) {
-      this.selectionService.removeFromSelection(this.trackBy);
+      this.selectionService.select(this.trackBy, false);
     }
     else if(event.shiftKey) { //TODO: Improve shift selection logic
       this.selectionService.addRangeToSelection(latestSelected, this.trackBy);
     }
     else {
-      this.selectionService.addToSelection(this.trackBy);
+      this.selectionService.select(this.trackBy);
     }
   }
 }

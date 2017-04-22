@@ -1,22 +1,54 @@
 import { Injectable, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 import { SelectableItemDirective } from './selectable-item.directive';
+
+export interface SelectionStateChangeInfo {
+  item: any;
+  selected: boolean;
+}
 
 @Injectable()
 export class SelectionService {
 
-  selected: Set<any> = null;
-  selectedChanged = new EventEmitter<Set<any>>();
+  selected = new Set<any>();
+
+  private notifySelection = new Subject<SelectionStateChangeInfo>();
+  selected$ = this.notifySelection.share();
 
   selectableItems = new Array<any>();
 
   constructor() {
-
+    this.selected$.subscribe((info: SelectionStateChangeInfo) => {
+      if(info.selected) {
+        this.selected.add(info.item);
+      }
+      else {
+        this.selected.delete(info.item);
+      }
+    });
   }
 
-  setSelection(selected: Set<any>) {
-    this.selected = selected;
-    this.propagateSelectionChange();
+  select(item: any, select = true) {
+    this.notifySelection.next({
+      item: item,
+      selected: select
+    });
+  }
+
+  clearSelection() {
+    while(this.selected.size > 0) {
+      let firstItem = this.selected.values().next().value;
+      this.select(firstItem, false);
+    }
+  }
+
+  setSelection(selected: Iterable<any>) {
+    this.clearSelection();
+    for(let item of selected) {
+      this.select(item);
+    }
   }
 
   isSelected(item): boolean {
@@ -69,20 +101,6 @@ export class SelectionService {
     }
   }
 
-  clearSelection() {
-    this.selected.clear();
-    this.propagateSelectionChange();
-  }
-
-  addToSelection(item): boolean {
-    if(this.isSelected(item)) {
-      return false;
-    }
-    this.selected.add(item);
-    this.propagateSelectionChange();
-    return true;
-  }
-
   /**
    * Add the items in the interval [from, to]
    * to the selection.
@@ -102,24 +120,13 @@ export class SelectionService {
 
     let itemsToAdd = this.selectableItems.slice(startPos, endPos+1);
     for(let i = 0; i < itemsToAdd.length; ++i) {
-      this.selected.add(itemsToAdd[i]);
+      this.select(itemsToAdd[i]);
     }
-    this.propagateSelectionChange();
 
     return true;
   }
 
-  removeFromSelection(item): boolean {
-    this.selected.delete(item);
-    return false;
-  }
-
   selectAll() {
-    this.selected = new Set(this.selectableItems.slice());
-    this.propagateSelectionChange();
-  }
-
-  private propagateSelectionChange() {
-    this.selectedChanged.emit(this.selected);
+    this.setSelection(this.selectableItems);
   }
 }
