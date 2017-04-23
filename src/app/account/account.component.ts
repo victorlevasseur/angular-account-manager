@@ -21,26 +21,32 @@ import Big = require('big.js/big');
         [dragula]="'account-bag'"
         [dragulaModel]='account.operations'
         *ngIf="account"
-        class="account-component"
+        class="account-component flex-container vertical"
         columns-container [(columnsSizes)]="columnsSizes">
-        <columns-container-row>
-          <column-header-cell columnName="handle">
-            <div class="column-header">E</div>
-          </column-header-cell>
-          <column-header-cell columnName="renderer">
-            <div class="column-header"></div>
-          </column-header-cell>
-          <column-header-cell columnName="partialSum">
-            <div class="column-header">Somme</div>
-          </column-header-cell>
-        </columns-container-row>
-        <account-operation
-          *ngFor="let operation of account.operations; let i = index; let odd = odd;"
-          [accountOperation]="operation"
-          [partialSums$]="partialSums$"
-          [customClass]="odd ? 'odd' : 'even'"
-          (valueChanged)="onValueChanged(account.operation, i)">
-        </account-operation>
+        <div>
+          <columns-container-row>
+            <column-header-cell columnName="handle">
+              <div class="column-header">E</div>
+            </column-header-cell>
+            <column-header-cell columnName="renderer">
+              <div class="column-header"></div>
+            </column-header-cell>
+            <column-header-cell columnName="partialSum">
+              <div class="column-header">Somme</div>
+            </column-header-cell>
+          </columns-container-row>
+        </div>
+        <div class="flex-item flex-item-grow">
+          <div aam-vscrollable class="aam-vscrollable">
+            <account-operation
+              *ngFor="let operation of account.operations; let i = index; let odd = odd;"
+              [accountOperation]="operation"
+              [partialSums$]="partialSums$"
+              [customClass]="odd ? 'odd' : 'even'"
+              (valueChanged)="onValueChanged(account.operation, i)">
+            </account-operation>
+          </div>
+        </div>
       </div>
     `,
   styleUrls: ['./account.style.scss'],
