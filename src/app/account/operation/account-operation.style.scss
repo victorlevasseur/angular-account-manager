@@ -9,17 +9,17 @@
 
     cursor: inherit;
 
-    transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.1s ease-in-out;
 
     &.selected {
         background-color: mix($panel_bg_color, $primary_color, 80%);
     }
 
     &.odd {
-        background-color: lighten($panel_bg_color, 2%);
+        background-color: lighten($panel_bg_color, 1%);
 
         &.selected {
-            background-color: mix(lighten($panel_bg_color, 2%), $primary_color, 80%);
+            background-color: mix(lighten($panel_bg_color, 1%), $primary_color, 80%);
         }
     }
 
@@ -33,7 +33,7 @@
 
         user-select: none;
 
-        transition: background-color 0.2s ease-in-out;
+        transition: background-color 0.1s ease-in-out;
 
         /* TODO Just for testing the viewport linked change detection detach/attach */
         &.viewport {

@@ -5,11 +5,19 @@
 
     height: 100%;
 
-    /deep/ .column-header {
-        padding: 7px;
+    /deep/ .columns-headers {
+        padding-right: 16px;
 
-        color: $text_color;
-        font-size: 10pt;
-        text-align: center;
+        background-color: $toolbar_border_color;
+
+        /deep/ .column-header {
+            padding: 7px;
+
+            border-right: solid 1px $panel_bg_color;
+
+            color: $text_color;
+            font-size: 10pt;
+            text-align: center;
+        }
     }
 }

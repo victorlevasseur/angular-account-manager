@@ -15,40 +15,7 @@ import Big = require('big.js/big');
 
 @Component({
   selector: 'account',
-  template: `
-      <div aam-selectableList
-        [aam-selectableModel]="account.operations"
-        [dragula]="'account-bag'"
-        [dragulaModel]='account.operations'
-        *ngIf="account"
-        class="account-component flex-container vertical"
-        columns-container [(columnsSizes)]="columnsSizes">
-        <div>
-          <columns-container-row>
-            <column-header-cell columnName="handle">
-              <div class="column-header">E</div>
-            </column-header-cell>
-            <column-header-cell columnName="renderer">
-              <div class="column-header"></div>
-            </column-header-cell>
-            <column-header-cell columnName="partialSum">
-              <div class="column-header">Somme</div>
-            </column-header-cell>
-          </columns-container-row>
-        </div>
-        <div class="flex-item flex-item-grow">
-          <div aam-vscrollable class="aam-vscrollable">
-            <account-operation
-              *ngFor="let operation of account.operations; let i = index; let odd = odd;"
-              [accountOperation]="operation"
-              [partialSums$]="partialSums$"
-              [customClass]="odd ? 'odd' : 'even'"
-              (valueChanged)="onValueChanged(account.operation, i)">
-            </account-operation>
-          </div>
-        </div>
-      </div>
-    `,
+  templateUrl: './account.template.html',
   styleUrls: ['./account.style.scss'],
   providers: [DragulaService, SelectionService] // To provide a different dragula service for each account
 })
