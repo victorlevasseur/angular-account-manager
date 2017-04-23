@@ -4,4 +4,12 @@
     position: relative;
 
     padding: 4px;
+
+    /deep/ .column-header {
+        padding: 7px;
+
+        color: $text_color;
+        font-size: 10pt;
+        text-align: center;
+    }
 }

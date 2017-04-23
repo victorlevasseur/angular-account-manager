@@ -23,6 +23,17 @@ import Big = require('big.js/big');
         *ngIf="account"
         class="account-component"
         columns-container [(columnsSizes)]="columnsSizes">
+        <columns-container-row>
+          <column-header-cell columnName="handle">
+            <div class="column-header">E</div>
+          </column-header-cell>
+          <column-header-cell columnName="renderer">
+            <div class="column-header"></div>
+          </column-header-cell>
+          <column-header-cell columnName="partialSum">
+            <div class="column-header">Somme</div>
+          </column-header-cell>
+        </columns-container-row>
         <account-operation
           *ngFor="let operation of account.operations; let i = index; let odd = odd;"
           [accountOperation]="operation"
