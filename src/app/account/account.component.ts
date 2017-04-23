@@ -40,10 +40,9 @@ export class AccountComponent implements OnInit {
   account: Account;
 
   partialSums$: Observable<AccountPartialSum>;
-  partialSums = new Array<{value: Big, collectedValue: Big}>();
 
   /* debouncer used to reduce the number of request to the AccountCalculatorService */
-  valueChanged$ = new Subject();
+  valueChanged$ = new Subject<number>();
 
   columnsSizes = [
     ["handle", 24],
@@ -84,11 +83,11 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {
     this.valueChanged$
       .debounceTime(100)
-      .subscribe(() => {this.getNewSumsForAccount();});
+      .subscribe((firstIndex: number) => {this.getNewSumsForAccount(firstIndex);});
   }
 
-  updateSums() {
-    this.valueChanged$.next();
+  updateSums(firstOperationIndex: number = 0) {
+    this.valueChanged$.next(firstOperationIndex);
   }
 
   /* The callback called each time an operation's value has changed */
@@ -97,7 +96,7 @@ export class AccountComponent implements OnInit {
   }
 
   /* The debounced callback */
-  getNewSumsForAccount() {
-    this.accountCalculator.calculateSums(this.account);
+  getNewSumsForAccount(firstOperationIndex: number = 0) {
+    this.accountCalculator.calculateSums(this.account, firstOperationIndex);
   }
 };

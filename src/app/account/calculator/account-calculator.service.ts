@@ -20,11 +20,11 @@ export class AccountCalculatorService {
 
   operationsPartialSums$ = new Subject<AccountPartialSum>();
 
-  calculateSums(account: Account): void {
+  calculateSums(account: Account, startingAtOperation: number = 0): void {
     let value: Big;
     let collectedValue: Big;
 
-    for(let i = 0; i < account.operations.length; i++) {
+    for(let i = startingAtOperation; i < account.operations.length; i++) {
       value = account.operations[i].value.plus(i != 0 ? value : new Big(0));
       collectedValue = account.operations[i].value.plus(i != 0 ? value : new Big(0));
 
