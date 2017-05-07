@@ -56,7 +56,6 @@ export class AccountComponent implements OnInit {
     });
 
     dragulaService.drop.subscribe((e) => {
-      console.log(e);
       this.updateSums();
     });
 
@@ -69,6 +68,8 @@ export class AccountComponent implements OnInit {
     this.valueChanged$
       .debounceTime(100)
       .subscribe((firstIndex: number) => {this.getNewSumsForAccount(firstIndex);});
+
+    this.updateSums();
   }
 
   updateSums(firstOperationIndex: number = 0) {

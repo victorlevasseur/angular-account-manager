@@ -92,7 +92,6 @@ export class RavenErrorHandler implements ErrorHandler {
         ColumnSizersModule
     ],
     providers: [
-      AccountService,
       AccountCalculatorService,
       UniqueNumberService,
       AccountOperationRendererService,

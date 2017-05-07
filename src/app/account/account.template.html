@@ -29,7 +29,8 @@
                 [accountOperation]="operation"
                 [partialSums$]="partialSums$"
                 [customClass]="odd ? 'odd' : 'even'"
-                (valueChanged)="onValueChanged(account.operation, i)">
+                (valueChanged)="onValueChanged(account.operation, i)"
+                [attr.data-operation-id]="i">
             </account-operation>
         </div>
     </div>

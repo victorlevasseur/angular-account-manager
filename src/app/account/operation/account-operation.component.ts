@@ -43,7 +43,7 @@ import Big = require('big.js/big');
           </div>
           <div column-cell columnName="partialSum">
             <div class="operation-value flex-item perc24">
-              <editable-currency-field [value]="partialSumValue$ | async" rcolorize="false" disabled="true"></editable-currency-field>
+              <editable-currency-field [value]="partialSumValue$|async" rcolorize="false" disabled="true"></editable-currency-field>
             </div>
           </div>
         </columns-container-row>
@@ -137,7 +137,6 @@ export class AccountOperationComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private updatePartialSumsObservables(): void {
-    console.log('aaaaaaaa');
     let currentOperationPartialSum$ = this.partialSums$
       .filter((partialSum) => partialSum.operation === this.accountOperation);
 

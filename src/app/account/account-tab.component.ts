@@ -2,9 +2,12 @@ import {
   Component,
   OnInit,
   AfterViewInit,
+  OnDestroy,
   Input,
   ViewChild
 } from '@angular/core';
+
+import { Subscription } from 'rxjs/Subscription';
 
 import { AccountComponent } from './account.component';
 import { AccountService } from './account.service';
@@ -24,17 +27,21 @@ import Big = require('big.js/big');
     <div class="flex-container vertical" style="height: 100%;">
       <aam-toolbar [items]="toolbarItems"></aam-toolbar>
       <div class="flex-item flex-item-grow">
-        <account #accountComponent [account]="account"></account>
+        <account #accountComponent *ngIf="account != null" [account]="account"></account>
+        <div *ngIf="account == null">
+          Chargement...
+        </div>
       </div>
     </div>
   `,
-  providers: [SelectionService]
+  providers: [SelectionService, AccountService]
 })
 export class AccountTabComponent implements OnInit, AfterViewInit {
   @Input()
   filename: string;
 
-  account: Account;
+  account: Account = null;
+  accountLoadedSubscription: Subscription;
 
   @ViewChild('accountComponent')
   accountComponent: AccountComponent;
@@ -67,11 +74,19 @@ export class AccountTabComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.account = this.accountService.getAccount(this.filename);
+    this.accountService.loadAccount(this.filename)
+      .then((account) => {
+        console.log(account);
+        this.account = account;
+      });
   }
 
   ngAfterViewInit() {
-    this.accountComponent.updateSums();
+
+  }
+
+  ngOnDestroy() {
+    this.accountLoadedSubscription.unsubscribe();
   }
 
   addOperation() {
