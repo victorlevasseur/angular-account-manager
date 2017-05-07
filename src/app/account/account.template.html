@@ -1,29 +1,18 @@
 <div aam-selectableList
     [aam-selectableModel]="account.operations"
-    [dragula]="'account-bag'"
-    [dragulaModel]='account.operations'
     *ngIf="account"
     class="account-component flex-container vertical"
     columns-container [(columnsSizes)]="columnsSizes">
     <div class="columns-headers">
         <columns-container-row>
             <column-header-cell columnName="handle">
-                <div class="column-header">&nbsp;</div>
+                <div class="column-header">Poignée</div>
             </column-header-cell>
             <column-header-cell columnName="collected">
-                <div class="column-header">E</div>
+                <div class="column-header">Encaissé</div>
             </column-header-cell>
-            <column-header-cell columnName="date">
-                <div class="column-header">Date</div>
-            </column-header-cell>
-            <column-header-cell columnName="type">
-                <div class="column-header">Type</div>
-            </column-header-cell>
-            <column-header-cell columnName="description">
-                <div class="column-header">Description</div>
-            </column-header-cell>
-            <column-header-cell columnName="value">
-                <div class="column-header">Valeur</div>
+            <column-header-cell columnName="renderer">
+                <!-- TODO: Specific columns headers for each operation type -->
             </column-header-cell>
             <column-header-cell columnName="partialSum">
                 <div class="column-header">Somme</div>
@@ -31,7 +20,10 @@
         </columns-container-row>
     </div>
     <div class="flex-item flex-item-grow">
-        <div aam-vscrollable class="aam-vscrollable">
+        <div
+            aam-vscrollable class="aam-vscrollable"
+            [dragula]="'account-bag'"
+            [dragulaModel]='account.operations'>
             <account-operation
                 *ngFor="let operation of account.operations; let i = index; let odd = odd;"
                 [accountOperation]="operation"

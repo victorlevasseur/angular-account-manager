@@ -55,7 +55,8 @@ export class AccountComponent implements OnInit {
       }
     });
 
-    dragulaService.drop.subscribe(() => {
+    dragulaService.drop.subscribe((e) => {
+      console.log(e);
       this.updateSums();
     });
 
